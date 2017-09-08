@@ -18,17 +18,17 @@
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
-    <Filter Include="Generated Files">
+    <Filter Include="Form Files\Generated Files">
       <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Generated Files\Debug">
+    <Filter Include="Form Files\Generated Files\Debug">
       <UniqueIdentifier>{5b8777f9-5140-4762-93b7-005972106c3a}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
-    <Filter Include="Generated Files\Release">
+    <Filter Include="Form Files\Generated Files\Release">
       <UniqueIdentifier>{43ab4725-0a55-425d-9f4f-d59a46fd36a3}</UniqueIdentifier>
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
@@ -42,16 +42,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp">
-      <Filter>Generated Files\Debug</Filter>
+      <Filter>Form Files\Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_mainwindow.cpp">
-      <Filter>Generated Files</Filter>
+      <Filter>Form Files\Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="renderingwidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_renderingwidget.cpp">
-      <Filter>Generated Files\Debug</Filter>
+      <Filter>Form Files\Generated Files\Debug</Filter>
     </ClCompile>
     <ClCompile Include="ArcBall.cpp">
       <Filter>Source Files</Filter>
@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h">
-      <Filter>Generated Files</Filter>
+      <Filter>Form Files\Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="globalFunctions.h">
       <Filter>Header Files</Filter>
