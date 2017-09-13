@@ -59,12 +59,6 @@
     <ClCompile Include="HE_mesh\Mesh3D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DictMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OptSolverParaSet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -96,13 +90,7 @@
     <ClInclude Include="HE_mesh\Vec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DictMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OptSolverParaSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

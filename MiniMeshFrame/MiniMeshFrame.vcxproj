@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArcBall.cpp" />
-    <ClCompile Include="DictMesh.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_mainwindow.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
@@ -163,7 +162,6 @@
     <ClCompile Include="HE_mesh\Mesh3D.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="OptSolverParaSet.cpp" />
     <ClCompile Include="renderingwidget.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -208,12 +206,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcBall.h" />
-    <ClInclude Include="DictMesh.h" />
     <ClInclude Include="GeneratedFiles\ui_mainwindow.h" />
     <ClInclude Include="globalFunctions.h" />
     <ClInclude Include="HE_mesh\Mesh3D.h" />
     <ClInclude Include="HE_mesh\Vec.h" />
-    <ClInclude Include="OptSolverParaSet.h" />
     <ClInclude Include="resource.h" />
     <CustomBuild Include="renderingwidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

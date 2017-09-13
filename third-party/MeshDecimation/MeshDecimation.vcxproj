@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AED484BC-745D-40F3-8374-D89441EF753E}</ProjectGuid>
-    <RootNamespace>SparseReconstruction</RootNamespace>
+    <ProjectGuid>{1FEBD96A-5876-45FD-983B-3849182B0C69}</ProjectGuid>
+    <RootNamespace>MeshDecimation</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -81,12 +81,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USE_MATH_DEFINES;-D_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -115,21 +110,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\MiniMeshFrame\DictMesh.cpp" />
-    <ClCompile Include="..\MiniMeshFrame\OptMeshInit.cpp" />
-    <ClCompile Include="..\MiniMeshFrame\SparseEncoding.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="src\mdMeshDecimator.h" />
+    <ClInclude Include="src\mdSArray.h" />
+    <ClInclude Include="src\mdVector.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.gitattributes" />
-    <None Include="..\.gitignore" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\mdMeshDecimator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MiniMeshFrame\DictMesh.h" />
-    <ClInclude Include="..\MiniMeshFrame\OptMeshInit.h" />
-    <ClInclude Include="..\MiniMeshFrame\OptSolverParaSet.h" />
-    <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h" />
-    <ClInclude Include="..\MiniMeshFrame\TriMesh.h" />
+    <None Include="src\mdVector.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

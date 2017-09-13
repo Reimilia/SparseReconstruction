@@ -1,17 +1,11 @@
 #pragma once
 
-// Add library support for OpenMesh
-//#include <OpenMesh\Core\Mesh\Traits.hh>
-//#include <OpenMesh\Core\Mesh\Attributes.hh>
-//#include <OpenMesh\Core\Mesh\PolyMesh_ArrayKernelT.hh>
-//#include <OpenMesh\Core\Mesh\PolyMeshT.hh>
-#include <OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh>
-
 // Add library for eigen
 #include "Eigen\Core"
 #include "Eigen\Sparse"
 
 // Inner include
+#include "TriMesh.h"
 #include "OptSolverParaSet.h"
 
 /*
@@ -20,27 +14,7 @@ This Program shall define the mesh we used in this program, and embed the solver
 
 //temporary typedef
 // TODO Define some terms in a more efficient way
-typedef  Eigen::Matrix<double, 3, Eigen::Dynamic> Mat3Xd;
 
-struct MyTraits : public OpenMesh::DefaultTraits
-{
-	// use double valued coordinates
-	typedef OpenMesh::Vec3d Point;
-	// use vertex normals and vertex colors
-	VertexAttributes(OpenMesh::Attributes::Normal | OpenMesh::Attributes::Color);
-
-	// store the previous halfedge
-	HalfedgeAttributes(OpenMesh::Attributes::PrevHalfedge);
-	// use face normals
-	FaceAttributes( OpenMesh::Attributes::Normal );
-
-	// store a face handle for each vertex
-	template <class Base, class Refs> struct VertexT : public Base
-	{
-		int some_additional_index;
-	};
-};
-typedef OpenMesh::TriMesh_ArrayKernelT<MyTraits>  MyMesh;
 
 class DictMesh
 {
@@ -53,6 +27,7 @@ protected:
 
 	// Parameter Set
 	OptSolverParaSet opt_para_;
+	void	SetDefaultOptPara();
 
 	// check if the solution mesh has already get
 	bool	is_solver_already_run_ = false;
@@ -78,15 +53,24 @@ public:
 	DictMesh(Mat3Xd input_data);
 	// Point-cloud plus normal
 	DictMesh(Mat3Xd input_data, Mat3Xd normal);
+	// Destructor Func.
 	~DictMesh();
 
 	bool SetInputPointClouds(Mat3Xd input_data);
 	bool SetInputNormals(Mat3Xd input_normals);
 
+	bool SetOptSolverPara(OptSolverParaSet para);
+	inline OptSolverParaSet GetOptSolverPara() { return opt_para_; }
+
 	//Solve with custom parameter
 	bool DictReconstruction(OptSolverParaSet para);
-	//Solve with default parameter
+	//Solve with default/settled parameter
 	bool DictReconstruction();
+
+	inline bool IsSolverAlreadyRun() { return is_solver_already_run_; }
+	bool		GetMeshResult(MyMesh &mesh);
+	bool		WriteMeshResult(const char* fouts);
+
 
 protected:
 	
@@ -99,6 +83,10 @@ protected:
 	// Iterative two-steps to update sparse coding and dictionary position
 	void CallSparseCoding();
 	void CallDictionaryUpdate();
+
+	// For convenience, we need to obtain system energy (i.e. the value of optimized problem)
+	// Thus we need implement this method to monitor the process
+	double ObtainSystemEnergy();
 /*
 Unit test implementation here
 */

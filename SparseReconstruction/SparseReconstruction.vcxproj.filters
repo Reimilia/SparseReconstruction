@@ -13,10 +13,25 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\SparseReconstrucion">
+      <UniqueIdentifier>{e43e9a72-0469-47f8-935c-04b36709981d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\SparseReconstruction">
+      <UniqueIdentifier>{40f230d4-03f1-4f26-9165-e63dc1f89ce7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MiniMeshFrame\DictMesh.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MiniMeshFrame\OptMeshInit.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MiniMeshFrame\SparseEncoding.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -26,5 +41,22 @@
     <None Include="..\.gitignore">
       <Filter>资源文件</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\MiniMeshFrame\DictMesh.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MiniMeshFrame\OptMeshInit.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MiniMeshFrame\OptSolverParaSet.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\MiniMeshFrame\TriMesh.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

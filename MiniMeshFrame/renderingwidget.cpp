@@ -308,7 +308,7 @@ void RenderingWidget::LoadTexture()
 
 	tex1 = QGLWidget::convertToGLFormat(buf);
 	glBindTexture(GL_TEXTURE_2D, texture_[0]);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR	);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 	gluBuild2DMipmaps(GL_TEXTURE_2D, GL_RGB, tex1.width(), tex1.height(),
 		GL_RGBA, GL_UNSIGNED_BYTE, tex1.bits());
