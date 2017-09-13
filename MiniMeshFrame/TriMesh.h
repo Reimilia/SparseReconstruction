@@ -3,7 +3,7 @@
 #include <Eigen\Core>
 #include <OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh>
 
-typedef  Eigen::Matrix<double, 3, Eigen::Dynamic> Mat3Xd;
+typedef  Eigen::Matrix3Xd Mat3Xd;
 
 //Typedef traits here
 struct MyTraits : public OpenMesh::DefaultTraits

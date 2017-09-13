@@ -20,12 +20,13 @@ protected:
     Mat3Xd		input_points_P_;
 	Mat3Xd		input_normals_N_;
 	Eigen::SparseMatrix<double> encoding_B_;
-
+	
 	
 
 public:
 	OptMeshInit();
 	~OptMeshInit();
+	
 	
 
 };

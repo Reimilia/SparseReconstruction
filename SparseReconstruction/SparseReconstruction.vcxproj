@@ -131,6 +131,13 @@
     <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h" />
     <ClInclude Include="..\MiniMeshFrame\TriMesh.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\lib\x64\glut32.lib" />
+    <Library Include="..\lib\x64\OpenMeshCore.lib" />
+    <Library Include="..\lib\x64\OpenMeshCored.lib" />
+    <Library Include="..\lib\x64\OpenMeshTools.lib" />
+    <Library Include="..\lib\x64\OpenMeshToolsd.lib" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
