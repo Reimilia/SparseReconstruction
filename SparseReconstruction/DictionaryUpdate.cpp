@@ -1,3 +1,5 @@
+#pragma once
+
 #include "DictionaryUpdate.h"
 #include <math.h>
 
@@ -53,7 +55,7 @@ DictionaryUpdate::DictionaryUpdate( Mesh3D &_mesh_, Eigen::MatrixXd &_V_, const 
 	Z_ = P_ - V_ * B_;
 
 	D_.resize(3, wid_P_);
-	D_.setZero;
+	D_.setZero();
 }
 
 DictionaryUpdate::~DictionaryUpdate()
@@ -63,12 +65,12 @@ DictionaryUpdate::~DictionaryUpdate()
 
 bool DictionaryUpdate::init()
 {
-
+	return true;
 }
 
 bool DictionaryUpdate::test()
 {
-	
+	return true;
 }
 
 bool DictionaryUpdate::solver()
@@ -79,6 +81,7 @@ bool DictionaryUpdate::solver()
 		DualUpdate();
 		PenaltyUpdate();
 	}
+	return true;
 }
 
 
@@ -89,7 +92,7 @@ double DictionaryUpdate::ComputeEnergy()
 	double energy_edge = 0;
 	for (auto it = mesh_.edges_begin(); it != mesh_.edges_end(); it++)
 	{
-		energy_edge = pow(mesh_.calc_edge_length(it), 2);
+		energy_edge = pow(mesh_.calc_edge_length(*it), 2);
 	}
 	energy_edge /= mesh_.n_edges();
 
@@ -132,8 +135,8 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
-		L.insert(it->idx(), it->idx()) = mesh_.valence(it);
-		for (auto vit = mesh_.vv_begin(it); vit != mesh_.vv_end(it); vit++)
+		L.insert(it->idx(), it->idx()) = mesh_.valence(*it);
+		for (auto vit = mesh_.vv_begin(*it); vit != mesh_.vv_end(*it); vit++)
 		{
 			L.insert(it->idx(), vit->idx()) = -1;
 			L.insert(vit->idx(), it->idx()) = -1;
@@ -163,7 +166,7 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
-		mesh_.set_point(it, Mesh3D::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
+		mesh_.set_point(*it, Mesh3D::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
 	}
 }
 

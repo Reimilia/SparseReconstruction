@@ -14,14 +14,15 @@
 class OptMeshInit
 {
 protected:
-	MyMesh		dict_mesh_;
+	// resampling size
 	int			mesh_size_;
-	Mat3Xd		dictionary_point_V_;
-    Mat3Xd		input_points_P_;
-	Mat3Xd		input_normals_N_;
-	Eigen::SparseMatrix<double> encoding_B_;
 	
-	
+	// kNN parameter
+	int			triset_control_number_;
+
+	// on default we use possion sample method
+
+
 
 public:
 	OptMeshInit();
