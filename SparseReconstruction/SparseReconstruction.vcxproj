@@ -118,6 +118,7 @@
     <ClCompile Include="..\MiniMeshFrame\DictMesh.cpp" />
     <ClCompile Include="..\MiniMeshFrame\OptMeshInit.cpp" />
     <ClCompile Include="..\MiniMeshFrame\SparseEncoding.cpp" />
+    <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,7 @@
     <ClInclude Include="..\MiniMeshFrame\OptSolverParaSet.h" />
     <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h" />
     <ClInclude Include="..\MiniMeshFrame\TriMesh.h" />
+    <ClInclude Include="DictionaryUpdate.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\lib\x64\glut32.lib" />
