@@ -115,23 +115,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\MiniMeshFrame\DictMesh.cpp" />
-    <ClCompile Include="..\MiniMeshFrame\OptMeshInit.cpp" />
-    <ClCompile Include="..\MiniMeshFrame\SparseEncoding.cpp" />
     <ClCompile Include="DictionaryUpdate.cpp" />
+    <ClCompile Include="DictMesh.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="OptMeshInit.cpp" />
+    <ClCompile Include="SparseEncoding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
     <None Include="..\.gitignore" />
+    <None Include="..\bin\x64\glut32.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MiniMeshFrame\DictMesh.h" />
-    <ClInclude Include="..\MiniMeshFrame\OptMeshInit.h" />
-    <ClInclude Include="..\MiniMeshFrame\OptSolverParaSet.h" />
-    <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h" />
-    <ClInclude Include="..\MiniMeshFrame\TriMesh.h" />
     <ClInclude Include="DictionaryUpdate.h" />
+    <ClInclude Include="DictMesh.h" />
+    <ClInclude Include="OptMeshInit.h" />
+    <ClInclude Include="OptSolverParaSet.h" />
+    <ClInclude Include="SparseEncoding.h" />
+    <ClInclude Include="TriMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\lib\x64\glut32.lib" />

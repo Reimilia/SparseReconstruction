@@ -24,17 +24,17 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\MiniMeshFrame\DictMesh.cpp">
-      <Filter>源文件\SparseReconstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MiniMeshFrame\OptMeshInit.cpp">
-      <Filter>源文件\SparseReconstruction</Filter>
-    </ClCompile>
-    <ClCompile Include="..\MiniMeshFrame\SparseEncoding.cpp">
-      <Filter>源文件\SparseReconstruction</Filter>
-    </ClCompile>
     <ClCompile Include="DictionaryUpdate.cpp">
-      <Filter>源文件</Filter>
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="DictMesh.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="OptMeshInit.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
+    <ClCompile Include="SparseEncoding.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,25 +44,28 @@
     <None Include="..\.gitignore">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="..\bin\x64\glut32.dll">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\MiniMeshFrame\DictMesh.h">
+    <ClInclude Include="DictMesh.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
-    <ClInclude Include="..\MiniMeshFrame\OptMeshInit.h">
+    <ClInclude Include="OptMeshInit.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
-    <ClInclude Include="..\MiniMeshFrame\OptSolverParaSet.h">
+    <ClInclude Include="OptSolverParaSet.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
-    <ClInclude Include="..\MiniMeshFrame\SparseEncoding.h">
+    <ClInclude Include="SparseEncoding.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
-    <ClInclude Include="..\MiniMeshFrame\TriMesh.h">
+    <ClInclude Include="TriMesh.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
     <ClInclude Include="DictionaryUpdate.h">
-      <Filter>头文件</Filter>
+      <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
