@@ -36,6 +36,9 @@
     <ClCompile Include="SparseEncoding.cpp">
       <Filter>源文件\SparseReconstruction</Filter>
     </ClCompile>
+    <ClCompile Include="TriSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -66,6 +69,12 @@
     </ClInclude>
     <ClInclude Include="DictionaryUpdate.h">
       <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="TriangleProjection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TriSet.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

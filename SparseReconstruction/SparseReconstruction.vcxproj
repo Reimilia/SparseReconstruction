@@ -121,6 +121,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
     <ClCompile Include="SparseEncoding.cpp" />
+    <ClCompile Include="TriSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes" />
@@ -133,7 +134,9 @@
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />
     <ClInclude Include="SparseEncoding.h" />
+    <ClInclude Include="TriangleProjection.h" />
     <ClInclude Include="TriMesh.h" />
+    <ClInclude Include="TriSet.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="..\lib\x64\glut32.lib" />

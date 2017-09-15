@@ -1,7 +1,8 @@
-#include <iostream>
+
+#include "TriangleProjection.h"
 
 int main(int argc, char *argv[])
 {
-	std::cout << "Hello World!" << std::endl;
+	ProjectionTest();
 	return 0;
 }

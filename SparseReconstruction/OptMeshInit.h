@@ -20,13 +20,16 @@ protected:
 	// kNN parameter
 	int			triset_control_number_;
 
-	// on default we use possion sample method
-
+	
+	void CallDownSampling();
+	TriSet GenerateTriangleSet();
+	void 
 
 
 public:
 	OptMeshInit();
 	~OptMeshInit();
+	
 	
 	
 
