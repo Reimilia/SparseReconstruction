@@ -22,8 +22,7 @@ protected:
 
 	
 	void CallDownSampling();
-	TriSet GenerateTriangleSet();
-	void 
+	 
 
 
 public:
