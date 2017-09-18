@@ -20,7 +20,7 @@ class DictMesh
 {
 protected:
 	// Reconstruction Mesh from Point Clouds
-	MyMesh  recon_mesh_;
+	TriMesh  recon_mesh_;
 
 	// Mesh size
 	int		dict_mesh_size_;
@@ -68,7 +68,7 @@ public:
 	bool DictReconstruction();
 
 	inline bool IsSolverAlreadyRun() { return is_solver_already_run_; }
-	bool		GetMeshResult(MyMesh &mesh);
+	bool		GetMeshResult(TriMesh &mesh);
 	bool		WriteMeshResult(const char* fouts);
 
 

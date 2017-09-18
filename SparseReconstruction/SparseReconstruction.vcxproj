@@ -118,8 +118,10 @@
   <ItemGroup>
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
+    <ClCompile Include="EnergyFunc.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
+    <ClCompile Include="ProjErrWithEdgeReg.cpp" />
     <ClCompile Include="SparseEncoding.cpp" />
     <ClCompile Include="TriSet.cpp" />
   </ItemGroup>
@@ -131,8 +133,11 @@
   <ItemGroup>
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
+    <ClInclude Include="EnergyFunc.h" />
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />
+    <ClInclude Include="ProjErrWithEdgeReg.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SparseEncoding.h" />
     <ClInclude Include="TriangleProjection.h" />
     <ClInclude Include="TriMesh.h" />

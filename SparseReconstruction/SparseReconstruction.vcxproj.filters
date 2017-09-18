@@ -39,6 +39,12 @@
     <ClCompile Include="TriSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="EnergyFunc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjErrWithEdgeReg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -74,6 +80,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="TriSet.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="EnergyFunc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjErrWithEdgeReg.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
