@@ -4,38 +4,42 @@
 	For initialization process, we need a triangle set for each given point.
 
 	This set will sort the triangle with designate energy function with respect
-	to the point and triangle
+	to the point and triangle.
 
 */
 
 //TODO : Connect to ANN 
-#include <Eigen\Core>
 #include <vector>
+#include <ANN\ANN.h>
+#include <Eigen\Sparse>
+#include "Triangle.h"
 
-
-class TriSet
+namespace TriProj
 {
-protected:
-	
-	int kNN_size_;
+	class TriSet
+	{
+	protected:
 
-	bool is_initialized_ = false;
-	
+		int kNN_size_;
 
-public:
-	TriSet();
-	TriSet(int kNN_size, std::vector<Eigen::Vector3d> input_points);
-	~TriSet();
+		bool is_initialized_ = false;
 
-	bool InitializeKdTree(int kNN_size, std::vector<Eigen::Vector3d> input_points);
+		ANNkd_tree	*kdtree_;
 
+	public:
+		TriSet(int kNN_size, std::vector<Vec3d> input_points);
+		~TriSet();
 
-	bool GetTriangleTriplet(Eigen::Vector3d query_point, 
-		std::vector<Eigen::Vector3i> &triangle_set);
+		bool GenerateSparseEncoding(Eigen::Vector3d query_point,
+			Eigen::Vector3i &triangle_set,
+			Eigen::Triplet<double> &B_encoding
+		);
 
-	bool SetQuerySize(int k);
+		bool SetQuerySize(int k);
 
-};
+	};
+}
+
 
 
 /*

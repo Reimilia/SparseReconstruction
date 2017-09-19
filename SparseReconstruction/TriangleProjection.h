@@ -15,7 +15,6 @@ argmin ||p - (ax+by+cz)||
 #include "Triangle.h"
 
 namespace  TriProj {
-	
 	Eigen::Vector3d ProjectionPoint(Eigen::Vector3d P, Eigen::Vector3d X,
 		Eigen::Vector3d Y, Eigen::Vector3d Z)
 	{

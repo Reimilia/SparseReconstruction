@@ -51,8 +51,8 @@ namespace TriProj
 		Vec3d BarycentricCoord();
 		Vec3d ProjectedError();
 		double ProjectedErrorNorm();
-		double EdgeNorm();
-		double NormalNorm(Vec3d PNormal);
+		double EdgeRegNorm();
+		double NormalRegNorm(Vec3d PNormal);
 		
 		bool IsBarycentricValid();
 
