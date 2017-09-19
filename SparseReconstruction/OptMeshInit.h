@@ -9,7 +9,7 @@
 
 	1.	Once get point input, it will first do a resampling process to set up dictionary
 	2.	Then it will recursively set up mesh
-	3.	Finally it will calculate V and B
+	3.	Finally it will calculate B
 */
 class OptMeshInit
 {
@@ -22,12 +22,20 @@ protected:
 
 	
 	void CallDownSampling();
-	 
+	void FindProjectionRelation();
+	bool ManifoldCheck();
+
+	//Only pass triplet, since sparse matrix will only need for V-subproblem
+	//We don't necessarily need it in B-subproblem since we will instead maintain 
+	//the prioirty queue, which exactly follows the mesh topology.
+	std::vector<Eigen::Triplet<double>> GetInitSparseEncoding();
 
 
 public:
 	OptMeshInit();
 	~OptMeshInit();
+
+	
 	
 	
 	

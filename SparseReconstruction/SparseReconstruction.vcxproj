@@ -121,6 +121,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
     <ClCompile Include="SparseEncoding.cpp" />
+    <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="TriSet.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +135,7 @@
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />
     <ClInclude Include="SparseEncoding.h" />
+    <ClInclude Include="Triangle.h" />
     <ClInclude Include="TriangleProjection.h" />
     <ClInclude Include="TriMesh.h" />
     <ClInclude Include="TriSet.h" />
