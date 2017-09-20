@@ -18,6 +18,161 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="OpenMesh\Core\Geometry\Config.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\LoopSchemeMaskT.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\MathDefs.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\NormalConeT.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\Plane3d.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\QuadricT.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\Vector11T.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\VectorT.hh" />
+    <ClInclude Include="OpenMesh\Core\Geometry\VectorT_inc.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\BinaryHelper.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\exporter\BaseExporter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\exporter\ExporterT.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\importer\BaseImporter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\importer\ImporterT.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\IOInstances.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\IOManager.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\MeshIO.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\OFFFormat.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\OMFormat.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\Options.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\BaseReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\OBJReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\OFFReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\OMReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\PLYReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\reader\STLReader.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\SR_binary.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\SR_binary_spec.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\SR_rbo.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\SR_store.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\SR_types.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\StoreRestore.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\BaseWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\OBJWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\OFFWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\OMWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\PLYWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\STLWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\IO\writer\VTKWriter.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\ArrayItems.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\ArrayKernel.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\AttribKernelT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\Attributes.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\BaseKernel.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\BaseMesh.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\Casts.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\CirculatorsT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\FinalMeshItemsT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\gen\circulators_header.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\gen\circulators_template.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\gen\footer.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\gen\iterators_header.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\gen\iterators_template.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\Handles.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\IteratorsT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\PolyConnectivity.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\PolyMeshT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\PolyMesh_ArrayKernelT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\Status.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\Traits.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\TriConnectivity.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\TriMeshT.hh" />
+    <ClInclude Include="OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh" />
+    <ClInclude Include="OpenMesh\Core\System\compiler.hh" />
+    <ClInclude Include="OpenMesh\Core\System\config.h" />
+    <ClInclude Include="OpenMesh\Core\System\config.hh" />
+    <ClInclude Include="OpenMesh\Core\System\mostream.hh" />
+    <ClInclude Include="OpenMesh\Core\System\omstream.hh" />
+    <ClInclude Include="OpenMesh\Core\System\OpenMeshDLLMacros.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\AutoPropertyHandleT.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\BaseProperty.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\color_cast.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\Endian.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\GenProg.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\Noncopyable.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\Property.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\PropertyContainer.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\PropertyManager.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\RandomNumberGenerator.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\SingletonT.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\vector_cast.hh" />
+    <ClInclude Include="OpenMesh\Core\Utils\vector_traits.hh" />
+    <ClInclude Include="OpenMesh\Tools\Dualizer\meshDualT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\ArrayKernelT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\AttribKernelT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\bindT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\color_cast.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\PropertyKernel.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\PropertyT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\Traits.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\TriMesh_OSGArrayKernelT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\VectorAdapter.hh" />
+    <ClInclude Include="OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Smoother\LaplaceSmootherT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Smoother\SmootherT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Smoother\smooth_mesh.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\Config.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\conio.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\getopt.h" />
+    <ClInclude Include="OpenMesh\Tools\Utils\GLConstAsString.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\Gnuplot.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\HeapT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\MeshCheckerT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\NumLimitsT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\StripifierT.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\TestingFramework.hh" />
+    <ClInclude Include="OpenMesh\Tools\Utils\Timer.hh" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="OpenMesh\Core\Geometry\NormalConeT.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\BinaryHelper.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\IOManager.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\OMFormat.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\OMFormatT.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\BaseReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\OBJReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\OFFReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\OMReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\PLYReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\reader\STLReader.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\BaseWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\OBJWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\OFFWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\OMWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\PLYWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\STLWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\IO\writer\VTKWriter.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\ArrayKernel.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\ArrayKernelT.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\BaseKernel.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\PolyConnectivity.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\PolyMeshT.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\TriConnectivity.cc" />
+    <ClCompile Include="OpenMesh\Core\Mesh\TriMeshT.cc" />
+    <ClCompile Include="OpenMesh\Core\System\omstream.cc" />
+    <ClCompile Include="OpenMesh\Core\Utils\BaseProperty.cc" />
+    <ClCompile Include="OpenMesh\Core\Utils\Endian.cc" />
+    <ClCompile Include="OpenMesh\Core\Utils\RandomNumberGenerator.cc" />
+    <ClCompile Include="OpenMesh\Core\Utils\SingletonT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Smoother\LaplaceSmootherT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Smoother\SmootherT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Utils\conio.cc" />
+    <ClCompile Include="OpenMesh\Tools\Utils\getopt.c" />
+    <ClCompile Include="OpenMesh\Tools\Utils\Gnuplot.cc" />
+    <ClCompile Include="OpenMesh\Tools\Utils\MeshCheckerT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Utils\StripifierT.cc" />
+    <ClCompile Include="OpenMesh\Tools\Utils\Timer.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_bool.inl" />
+    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_fundamentals.inl" />
+    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_string.inl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}</ProjectGuid>
     <RootNamespace>OpenMesh</RootNamespace>
@@ -38,13 +193,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -68,7 +223,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(ProjectDir);$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -78,10 +238,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level1</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Lib>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -103,6 +267,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
