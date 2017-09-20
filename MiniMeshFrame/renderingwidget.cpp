@@ -233,7 +233,7 @@ void RenderingWidget::ReadMesh()
 {
 	QString filename = QFileDialog::
 		getOpenFileName(this, tr("Read Mesh"),
-		"..", tr("Meshes (*.obj)"));
+			"..", tr("Meshes (*.obj;*.off)"));
 
 	if (filename.isEmpty())
 	{
@@ -447,18 +447,15 @@ void RenderingWidget::DrawEdge(bool bv)
 	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin(); 
 		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{
-		glBegin(GL_LINE_LOOP);
+		glBegin(GL_LINE_LOOP);	
 		
-		for(TriMesh::FaceEdgeIter e_it = ptr_mesh_.fe_iter(*f_it); e_it.is_valid(); ++e_it)
+		for (TriMesh::FaceVertexIter v_it = ptr_mesh_.fv_iter(*f_it); v_it.is_valid(); ++v_it)
 		{
-			TriMesh::VertexHandle v_handle =
-				ptr_mesh_.from_vertex_handle(ptr_mesh_.halfedge_handle(*e_it, 0));
-			
-			TriMesh::Normal n_pos= ptr_mesh_.normal(v_handle);
+			//Get vertex handle from halfedge_handle
+			TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
+			TriMesh::Normal n_pos = ptr_mesh_.normal(*f_it);
 			const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
 			glNormal3dv(normal);
-
-			TriMesh::Point v_pos = ptr_mesh_.point(v_handle);
 			const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
 			glVertex3dv(vertex);
 
