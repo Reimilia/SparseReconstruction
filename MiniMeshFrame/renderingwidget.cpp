@@ -240,19 +240,27 @@ void RenderingWidget::ReadMesh()
 		emit(operatorInfo(QString("Read Mesh Failed!")));
 		return;
 	}
-	//中文路径支持
 	QTextCodec *code = QTextCodec::codecForName("GB2312");
 	//QTextCodec::setCodecForLocale(code);
 	std::string filedir = code->fromUnicode(filename).data();
 
+	//read options
+	OpenMesh::IO::Options r_pot;
+	r_pot += OpenMesh::IO::Options::VertexNormal;
+	r_pot += OpenMesh::IO::Options::VertexTexCoord;
+
 	QByteArray byfilename = filename.toLocal8Bit();
-	if (!OpenMesh::IO::read_mesh(ptr_mesh_, filedir))
+	if (!OpenMesh::IO::read_mesh(ptr_mesh_, filedir, r_pot))
 	{
 		std::cout << filedir << std::endl;
 		std::cerr << "read error\n";
 		system("pause");
 		exit(1);
 	}
+
+	ptr_mesh_.request_halfedge_normals();
+	ptr_mesh_.request_face_normals();
+	ptr_mesh_.update_normals();
 
 	//	m_pMesh->LoadFromOBJFile(filename.toLatin1().data());
 	emit(operatorInfo(QString("Read Mesh from") + filename + QString(" Done")));
@@ -420,7 +428,6 @@ void RenderingWidget::DrawPoints(bool bv)
 		TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
 		const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
 		glVertex3dv(vertex);
-		
 	}
 		
 	glEnd();
@@ -435,6 +442,7 @@ void RenderingWidget::DrawEdge(bool bv)
 	{
 		return;
 	}
+
 
 	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin(); 
 		f_it != ptr_mesh_.faces_end(); ++f_it)
@@ -469,30 +477,24 @@ void RenderingWidget::DrawFace(bool bv)
 		return;
 	}
 
-	
-
 	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin();
 		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{
 		glBegin(GL_TRIANGLES);
-		for (TriMesh::FaceEdgeIter e_it = ptr_mesh_.fe_iter(*f_it); e_it.is_valid(); ++e_it)
+		TriMesh::Normal n_pos = ptr_mesh_.normal(*f_it);
+		const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
+		glNormal3dv(normal);
+		for (TriMesh::FaceVertexIter v_it = ptr_mesh_.fv_iter(*f_it); v_it.is_valid(); ++v_it)
 		{
 			//Get vertex handle from halfedge_handle
-			TriMesh::VertexHandle v_handle =
-				ptr_mesh_.from_vertex_handle(ptr_mesh_.halfedge_handle(*e_it, 0));
-
-			TriMesh::Normal n_pos = ptr_mesh_.normal(v_handle);
-			const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
-			glNormal3dv(normal);
-
-			TriMesh::Point v_pos = ptr_mesh_.point(v_handle);
+			TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
 			const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
 			glVertex3dv(vertex);
 
 		}
 		glEnd();
 	}
-
+	
 	
 }
 
