@@ -11,7 +11,7 @@
 #include <QtWidgets/QAction>
 #include <QTextCodec>
 
-#include <OpenMesh\Core\IO\MeshIO.hh>
+
 
 
 #include "SparseReconstruction\TriMesh.h"

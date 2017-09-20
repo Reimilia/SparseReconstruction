@@ -1,6 +1,9 @@
 #pragma once
 // Add library support for OpenMesh
 #include <Eigen\Core>
+
+#include <OpenMesh\Core\IO\MeshIO.hh>
+#include <OpenMesh\Core\Mesh\Traits.hh>
 #include <OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh>
 
 typedef  Eigen::Matrix3Xd Mat3Xd;

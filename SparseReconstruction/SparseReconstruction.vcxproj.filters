@@ -56,9 +56,6 @@
     <None Include="..\.gitignore">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="..\bin\x64\glut32.dll">
-      <Filter>资源文件</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DictMesh.h">
@@ -97,22 +94,5 @@
     <ClInclude Include="Triangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\lib\x64\glut32.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\lib\x64\OpenMeshCore.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\lib\x64\OpenMeshCored.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\lib\x64\OpenMeshTools.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\lib\x64\OpenMeshToolsd.lib">
-      <Filter>资源文件</Filter>
-    </Library>
   </ItemGroup>
 </Project>

@@ -84,11 +84,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\include;$(SolutionDir)\third-party\OpenMesh;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_USE_MATH_DEFINES;_CRT_SECURE_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenMeshCored.lib;OpenMeshToolsd.lib;glut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,6 @@
   <ItemGroup>
     <None Include="..\.gitattributes" />
     <None Include="..\.gitignore" />
-    <None Include="..\bin\x64\glut32.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DictionaryUpdate.h" />
@@ -148,11 +147,9 @@
     <ClInclude Include="TriSet.h" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\lib\x64\glut32.lib" />
-    <Library Include="..\lib\x64\OpenMeshCore.lib" />
-    <Library Include="..\lib\x64\OpenMeshCored.lib" />
-    <Library Include="..\lib\x64\OpenMeshTools.lib" />
-    <Library Include="..\lib\x64\OpenMeshToolsd.lib" />
+    <ProjectReference Include="..\third-party\OpenMesh\OpenMesh.vcxproj">
+      <Project>{c3e38f02-d009-4e3d-8dd8-6e2b062010bd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
