@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\Core">
+      <UniqueIdentifier>{8d8dbb24-8dad-42ff-8786-70121b6f48cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Tools">
+      <UniqueIdentifier>{f3b18be2-4523-48e2-b703-a2749b1dc6d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Core">
+      <UniqueIdentifier>{4ca9d774-76b0-4765-88b1-c2938f2c1c97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Tools">
+      <UniqueIdentifier>{508206a4-4a80-439e-a398-bbefa0bcdd99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\Geometry">
+      <UniqueIdentifier>{57009b0b-2d52-4d20-98ef-6392ce09b2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\IO">
+      <UniqueIdentifier>{2989bcbd-072d-4139-a8d1-695383c070ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\Mesh">
+      <UniqueIdentifier>{0581003b-5f36-46e5-990f-f9ae852ce37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\System">
+      <UniqueIdentifier>{958e222d-b5a6-496e-a7e4-ec8637bd3149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\Template">
+      <UniqueIdentifier>{66aecdbf-18a7-4210-957b-1795841b66cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Core\Utils">
+      <UniqueIdentifier>{8fe02974-af41-4c5a-a0ee-ce6eff4a2d95}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

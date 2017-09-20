@@ -1,10 +1,9 @@
 #pragma once
 
 #include <Eigen\Core>
-
-
+#include <Eigen\Dense>
 /*
-	Triangle Class that support some basic operation.
+
 	Include but not only include:
 	1.	projection
 	2.  edge_length

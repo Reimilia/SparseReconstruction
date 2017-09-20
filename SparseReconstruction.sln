@@ -6,8 +6,13 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SparseReconstruction", "SparseReconstruction\SparseReconstruction.vcxproj", "{AED484BC-745D-40F3-8374-D89441EF753E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MiniMeshFrame", "MiniMeshFrame\MiniMeshFrame.vcxproj", "{1886128B-54E9-48D4-B327-A9F82B15CA03}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AED484BC-745D-40F3-8374-D89441EF753E} = {AED484BC-745D-40F3-8374-D89441EF753E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MeshDecimation", "third-party\MeshDecimation\MeshDecimation.vcxproj", "{1FEBD96A-5876-45FD-983B-3849182B0C69}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenMesh", "third-party\OpenMesh\OpenMesh.vcxproj", "{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +88,26 @@ Global
 		{1FEBD96A-5876-45FD-983B-3849182B0C69}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{1FEBD96A-5876-45FD-983B-3849182B0C69}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{1FEBD96A-5876-45FD-983B-3849182B0C69}.RelWithDebInfo|x86.Build.0 = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Debug|x64.ActiveCfg = Debug|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Debug|x64.Build.0 = Debug|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Debug|x86.ActiveCfg = Debug|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Debug|x86.Build.0 = Debug|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.MinSizeRel|x64.ActiveCfg = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.MinSizeRel|x64.Build.0 = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.MinSizeRel|x86.ActiveCfg = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.MinSizeRel|x86.Build.0 = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release_debug|x64.ActiveCfg = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release_debug|x64.Build.0 = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release_debug|x86.ActiveCfg = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release_debug|x86.Build.0 = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release|x64.ActiveCfg = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release|x64.Build.0 = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release|x86.ActiveCfg = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.Release|x86.Build.0 = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.RelWithDebInfo|x64.ActiveCfg = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.RelWithDebInfo|x64.Build.0 = Release|x64
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
+		{C3E38F02-D009-4E3D-8DD8-6E2B062010BD}.RelWithDebInfo|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

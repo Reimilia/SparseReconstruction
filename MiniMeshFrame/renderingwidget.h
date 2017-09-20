@@ -3,8 +3,19 @@
 
 #include <QGLWidget>
 #include <QEvent>
-#include "HE_mesh/Vec.h"
+#include <QKeyEvent>
+#include <QColorDialog>
+#include <QFileDialog>
 
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QAction>
+#include <QTextCodec>
+
+#include <OpenMesh\Core\IO\MeshIO.hh>
+
+
+#include "SparseReconstruction\TriMesh.h"
+#include "HE_mesh\Vec.h"
 using trimesh::vec;
 using trimesh::point;
 
@@ -68,7 +79,7 @@ private:
 public:
 	MainWindow					*ptr_mainwindow_;
 	CArcBall					*ptr_arcball_;
-	Mesh3D						*ptr_mesh_;
+	TriMesh						ptr_mesh_;
 
 	// Texture
 	GLuint						texture_[1];
@@ -91,5 +102,4 @@ public:
 private:
 	
 };
-
 #endif // RENDERINGWIDGET_H

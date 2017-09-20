@@ -1,25 +1,17 @@
 #include "renderingwidget.h"
-#include <QKeyEvent>
-#include <QColorDialog>
-#include <QFileDialog>
+
 #include <iostream>
-#include <QtWidgets/QMenu>
-#include <QtWidgets/QAction>
-#include <QTextCodec>
 #include <gl/GLU.h>
 #include <gl/glut.h>
-#include <algorithm>
 #include "mainwindow.h"
 #include "ArcBall.h"
 #include "globalFunctions.h"
-#include "HE_mesh/Mesh3D.h"
 
 RenderingWidget::RenderingWidget(QWidget *parent, MainWindow* mainwindow)
 : QGLWidget(parent), ptr_mainwindow_(mainwindow), eye_distance_(5.0),
 has_lighting_(false), is_draw_point_(true), is_draw_edge_(false), is_draw_face_(false), is_draw_texture_(false)
 {
 	ptr_arcball_ = new CArcBall(width(), height());
-	ptr_mesh_ = new Mesh3D();
 
 	is_load_texture_ = false;
 	is_draw_axes_ = false;
@@ -32,7 +24,6 @@ has_lighting_(false), is_draw_point_(true), is_draw_edge_(false), is_draw_face_(
 RenderingWidget::~RenderingWidget()
 {
 	SafeDelete(ptr_arcball_);
-	SafeDelete(ptr_mesh_);
 }
 
 void RenderingWidget::initializeGL()
@@ -250,21 +241,28 @@ void RenderingWidget::ReadMesh()
 		return;
 	}
 	//中文路径支持
-	QTextCodec *code = QTextCodec::codecForName("gd18030");
-	QTextCodec::setCodecForLocale(code);
+	QTextCodec *code = QTextCodec::codecForName("GB2312");
+	//QTextCodec::setCodecForLocale(code);
+	std::string filedir = code->fromUnicode(filename).data();
 
 	QByteArray byfilename = filename.toLocal8Bit();
-	ptr_mesh_->LoadFromOBJFile(byfilename.data());
+	if (!OpenMesh::IO::read_mesh(ptr_mesh_, filedir))
+	{
+		std::cout << filedir << std::endl;
+		std::cerr << "read error\n";
+		system("pause");
+		exit(1);
+	}
 
 	//	m_pMesh->LoadFromOBJFile(filename.toLatin1().data());
 	emit(operatorInfo(QString("Read Mesh from") + filename + QString(" Done")));
-	emit(meshInfo(ptr_mesh_->num_of_vertex_list(), ptr_mesh_->num_of_edge_list(), ptr_mesh_->num_of_face_list()));
+	emit(meshInfo(ptr_mesh_.n_vertices(), ptr_mesh_.n_edges(), ptr_mesh_.n_faces()));
 	updateGL();
 }
 
 void RenderingWidget::WriteMesh()
 {
-	if (ptr_mesh_->num_of_vertex_list() == 0)
+	if (ptr_mesh_.n_vertices() == 0)
 	{
 		emit(QString("The Mesh is Empty !"));
 		return;
@@ -276,7 +274,11 @@ void RenderingWidget::WriteMesh()
 	if (filename.isEmpty())
 		return;
 
-	ptr_mesh_->WriteToOBJFile(filename.toLatin1().data());
+	if (!OpenMesh::IO::write_mesh(ptr_mesh_, filename.toLatin1().data()))
+	{
+		std::cerr << "write error\n";
+		exit(1);
+	}
 
 	emit(operatorInfo(QString("Write Mesh to ") + filename + QString(" Done")));
 }
@@ -398,91 +400,113 @@ void RenderingWidget::DrawAxes(bool bV)
 
 void RenderingWidget::DrawPoints(bool bv)
 {
-	if (!bv || ptr_mesh_ == NULL)
+	if (!bv )
 		return;
-	if (ptr_mesh_->num_of_vertex_list() == 0)
+	if (ptr_mesh_.n_vertices() == 0)
 	{
 		return;
 	}
-
-	const std::vector<HE_vert*>& verts = *(ptr_mesh_->get_vertex_list());
 	glBegin(GL_POINTS);
-	for (size_t i = 0; i != ptr_mesh_->num_of_vertex_list(); ++i)
+	for (TriMesh::VertexIter v_it = ptr_mesh_.vertices_begin();
+		v_it != ptr_mesh_.vertices_end(); ++v_it)
 	{
-		glNormal3fv(verts[i]->normal().data());
-		glVertex3fv(verts[i]->position().data());
+		// Due to const GL type , we have to write in an ugly form
+		// also ,we cannot use .data() method since this will throw 
+		// out an const array which is only readable.
+		TriMesh::Normal n_pos = ptr_mesh_.normal(*v_it);
+		const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
+		glNormal3dv(normal);
+
+		TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
+		const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
+		glVertex3dv(vertex);
+		
 	}
+		
 	glEnd();
 }
 
 void RenderingWidget::DrawEdge(bool bv)
 {
-	if (!bv || ptr_mesh_ == NULL)
+	if (!bv )
 		return;
 
-	if (ptr_mesh_->num_of_face_list() == 0)
+	if (ptr_mesh_.n_faces() == 0)
 	{
 		return;
 	}
 
-	const std::vector<HE_face *>& faces = *(ptr_mesh_->get_faces_list());
-	for (size_t i = 0; i != faces.size(); ++i)
+	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin(); 
+		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{
 		glBegin(GL_LINE_LOOP);
-		HE_edge *pedge(faces.at(i)->pedge_);
-		do
+		
+		for(TriMesh::FaceEdgeIter e_it = ptr_mesh_.fe_iter(*f_it); e_it.is_valid(); ++e_it)
 		{
-			glNormal3fv(pedge->pvert_->normal().data());
-			glVertex3fv(pedge->pvert_->position().data());
+			TriMesh::VertexHandle v_handle =
+				ptr_mesh_.from_vertex_handle(ptr_mesh_.halfedge_handle(*e_it, 0));
+			
+			TriMesh::Normal n_pos= ptr_mesh_.normal(v_handle);
+			const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
+			glNormal3dv(normal);
 
-			pedge = pedge->pnext_;
+			TriMesh::Point v_pos = ptr_mesh_.point(v_handle);
+			const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
+			glVertex3dv(vertex);
 
-		} while (pedge != faces.at(i)->pedge_);
+		}
 		glEnd();
 	}
 }
 
 void RenderingWidget::DrawFace(bool bv)
 {
-	if (!bv || ptr_mesh_ == NULL)
+	if (!bv)
 		return;
 
-	if (ptr_mesh_->num_of_face_list() == 0)
+	if (ptr_mesh_.n_faces() == 0)
 	{
 		return;
 	}
 
-	const std::vector<HE_face *>& faces = *(ptr_mesh_->get_faces_list());
+	
 
-	glBegin(GL_TRIANGLES);
-
-	for (size_t i = 0; i != faces.size(); ++i)
+	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin();
+		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{
-		HE_edge *pedge(faces.at(i)->pedge_);
-		do
+		glBegin(GL_TRIANGLES);
+		for (TriMesh::FaceEdgeIter e_it = ptr_mesh_.fe_iter(*f_it); e_it.is_valid(); ++e_it)
 		{
-			glNormal3fv(pedge->pvert_->normal().data());
-			glVertex3fv(pedge->pvert_->position().data());
+			//Get vertex handle from halfedge_handle
+			TriMesh::VertexHandle v_handle =
+				ptr_mesh_.from_vertex_handle(ptr_mesh_.halfedge_handle(*e_it, 0));
 
-			pedge = pedge->pnext_;
+			TriMesh::Normal n_pos = ptr_mesh_.normal(v_handle);
+			const GLdouble  normal[3] = { n_pos[0], n_pos[1], n_pos[2] };
+			glNormal3dv(normal);
 
-		} while (pedge != faces.at(i)->pedge_);
+			TriMesh::Point v_pos = ptr_mesh_.point(v_handle);
+			const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
+			glVertex3dv(vertex);
+
+		}
+		glEnd();
 	}
 
-	glEnd();
+	
 }
 
 void RenderingWidget::DrawTexture(bool bv)
 {
 	if (!bv)
 		return;
-	if (ptr_mesh_->num_of_face_list() == 0 || !is_load_texture_)
+	if (ptr_mesh_.n_faces() == 0 || !is_load_texture_)
 		return;
 
-	//默认使用球面纹理映射，效果不好
-	ptr_mesh_->SphereTex();
+	//TODO: get the GUI work with texture
+	//ptr_mesh_.SphereTex();
 
-	const std::vector<HE_face *>& faces = *(ptr_mesh_->get_faces_list());
+	/*const std::vector<HE_face *>& faces = *(ptr_mesh_.get_faces_list());
 
 	glBindTexture(GL_TEXTURE_2D, texture_[0]);
 	glBegin(GL_TRIANGLES);
@@ -491,7 +515,7 @@ void RenderingWidget::DrawTexture(bool bv)
 		HE_edge *pedge(faces.at(i)->pedge_);
 		do
 		{
-			/*请在此处绘制纹理，添加纹理坐标即可*/
+			//Coordinates here
 			glTexCoord2fv(pedge->pvert_->texCoord_.data());
 			glNormal3fv(pedge->pvert_->normal().data());
 			glVertex3fv(pedge->pvert_->position().data());
@@ -501,5 +525,5 @@ void RenderingWidget::DrawTexture(bool bv)
 		} while (pedge != faces.at(i)->pedge_);
 	}
 
-	glEnd();
+	glEnd();*/
 }

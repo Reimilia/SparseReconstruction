@@ -10,13 +10,15 @@ struct MyTraits : public OpenMesh::DefaultTraits
 {
 	// use double valued coordinates
 	typedef OpenMesh::Vec3d Point;
+	typedef OpenMesh::Vec3d Normal;
+
 	// use vertex normals and vertex colors
 	VertexAttributes(OpenMesh::Attributes::Normal | OpenMesh::Attributes::Color);
 
 	// store the previous halfedge
-	HalfedgeAttributes(OpenMesh::Attributes::PrevHalfedge);
+	//HalfedgeAttributes(OpenMesh::Attributes::PrevHalfedge);
 	// use face normals
-	FaceAttributes(OpenMesh::Attributes::Normal);
+	//FaceAttributes(OpenMesh::Attributes::Normal);
 
 	// store a face handle for each vertex
 	template <class Base, class Refs> struct VertexT : public Base
