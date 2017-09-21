@@ -126,6 +126,7 @@
     <ClCompile Include="OptMeshInit.cpp" />
     <ClCompile Include="ProjErrWithEdgeReg.cpp" />
     <ClCompile Include="SparseEncoding.cpp" />
+    <ClCompile Include="Test.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="TriSet.cpp" />
   </ItemGroup>
@@ -143,6 +144,7 @@
     <ClInclude Include="ProjErrWithEdgeReg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SparseEncoding.h" />
+    <ClInclude Include="Test.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="TriangleProjection.h" />
     <ClInclude Include="TriMesh.h" />

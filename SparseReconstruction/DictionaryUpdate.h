@@ -1,28 +1,24 @@
 #pragma once
 #include <iostream>
 
-#include <Eigen/Core>
+#include "TriMesh.h"
 #include <Eigen/Sparse>
-#include <Eigen/Dense>
-#include <OpenMesh/Core/IO/MeshIO.hh>
-#include <OpenMesh/Core/Mesh/TriMesh_ArrayKernelT.hh>
 
 class DictionaryUpdate;
 
-typedef OpenMesh::TriMesh_ArrayKernelT<>  Mesh3D;
 
 class DictionaryUpdate
 {
 public:
-	DictionaryUpdate( Mesh3D &_mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ );
+	DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ );
 	~DictionaryUpdate();
-	bool									solver();	// the final result
+	TriMesh									solver();	// the final result
 	bool									test();		
 	bool									init();
 
 
 private:
-	Mesh3D	 								mesh_;		
+	TriMesh	 								mesh_;		
 	double									gamma_;		// penalty weight 
 	double									energy_;	// total energy
 	int										wid_P_;		// width of P
