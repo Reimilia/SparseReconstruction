@@ -99,6 +99,7 @@ void MainWindow::CreateToolBars()
 	toolbar_basic_->addAction(action_loadmesh_);
 	toolbar_basic_->addAction(action_loadtexture_);
 	toolbar_basic_->addAction(action_background_);
+	toolbar_basic_->addAction(action_test_sth_);
 }
 
 void MainWindow::CreateStatusBar()

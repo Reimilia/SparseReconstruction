@@ -3,9 +3,9 @@
 #include <iostream>
 #include <gl/GLU.h>
 #include <gl/glut.h>
-#include "mainwindow.h"
 #include "ArcBall.h"
 #include "globalFunctions.h"
+#include "SparseReconstruction\DicUpdateTest.h"
 
 RenderingWidget::RenderingWidget(QWidget *parent, MainWindow* mainwindow)
 : QGLWidget(parent), ptr_mainwindow_(mainwindow), eye_distance_(5.0),
@@ -363,11 +363,19 @@ void RenderingWidget::CheckDrawAxes(bool bV)
 	updateGL();
 }
 
-void RenderingWidget::QuickTest(bool bV)
+void RenderingWidget::QuickTest()
 {
-	if (!bV)
-		return;
-
+	DicUpdateTest *test = new DicUpdateTest(ptr_mesh_);
+	try
+	{
+		ptr_mesh_ = test->solver();
+	}
+	catch (const std::exception&)
+	{
+		std::cerr << "Something is wrong with the dictionary update test!\n";
+	}
+	delete test;
+	updateGL();
 }
 
 void RenderingWidget::DrawAxes(bool bV)
@@ -458,8 +466,6 @@ void RenderingWidget::DrawEdge(bool bv)
 		
 		for (TriMesh::FaceVertexIter v_it = ptr_mesh_.fv_iter(*f_it); v_it.is_valid(); ++v_it)
 		{
-			std::cout << v_it->idx() << std::endl;
-			system("pause");
 			//Get vertex handle from halfedge_handle
 			TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
 			TriMesh::Normal n_pos = ptr_mesh_.normal(*f_it);

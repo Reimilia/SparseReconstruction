@@ -2,15 +2,14 @@
 // Add library support for OpenMesh
 #include	"TriMesh.h"
 #include	"DictionaryUpdate.h"
-#include	<Eigen/Sparse>
 
-class TestDicUpdate;
 
-class TestDicUpdate
+
+class DicUpdateTest
 {
 public:
-	TestDicUpdate(TriMesh _mesh_);
-	~TestDicUpdate();
+	DicUpdateTest(TriMesh _mesh_);
+	~DicUpdateTest();
 	TriMesh							solver();  // Return the Mesh after Dictionary Update
 
 private:

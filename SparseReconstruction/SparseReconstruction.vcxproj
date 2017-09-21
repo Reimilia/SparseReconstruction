@@ -38,7 +38,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -89,6 +89,7 @@
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>ANNd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>NotSet</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,7 +127,7 @@
     <ClCompile Include="OptMeshInit.cpp" />
     <ClCompile Include="ProjErrWithEdgeReg.cpp" />
     <ClCompile Include="SparseEncoding.cpp" />
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="DicUpdateTest.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="TriSet.cpp" />
   </ItemGroup>
@@ -144,7 +145,7 @@
     <ClInclude Include="ProjErrWithEdgeReg.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SparseEncoding.h" />
-    <ClInclude Include="Test.h" />
+    <ClInclude Include="DicUpdateTest.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="TriangleProjection.h" />
     <ClInclude Include="TriMesh.h" />

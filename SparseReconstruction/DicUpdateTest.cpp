@@ -1,24 +1,24 @@
-#include "Test.h"
-#include <vector>
+#include "DicUpdateTest.h"
 
-TestDicUpdate::TestDicUpdate(TriMesh _mesh_)
+
+DicUpdateTest::DicUpdateTest(TriMesh _mesh_)
 {
 	mesh_ = _mesh_;
 }
 
-TestDicUpdate::~TestDicUpdate()
+DicUpdateTest::~DicUpdateTest()
 {
 
 }
 
-TriMesh	TestDicUpdate::solver()
+TriMesh	DicUpdateTest::solver()
 {
 	compute();
 	DictionaryUpdate DicUp(mesh_, V_, B_, P_);
 	return DicUp.solver();
 }
 
-void TestDicUpdate::compute()
+void DicUpdateTest::compute()
 {
 	// set up V_
 	int wid_V = mesh_.n_vertices();

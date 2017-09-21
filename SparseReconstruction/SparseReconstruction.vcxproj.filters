@@ -63,6 +63,9 @@
     <ClCompile Include="TriProjEnergy.cpp">
       <Filter>源文件\Energy</Filter>
     </ClCompile>
+    <ClCompile Include="DicUpdateTest.cpp">
+      <Filter>源文件\Test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="TriProjEnergy.h">
       <Filter>头文件\Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="DicUpdateTest.h">
+      <Filter>头文件\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

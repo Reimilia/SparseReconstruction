@@ -16,6 +16,7 @@
 
 #include "SparseReconstruction\TriMesh.h"
 #include "HE_mesh\Vec.h"
+
 using trimesh::vec;
 using trimesh::point;
 
@@ -61,6 +62,7 @@ private:
 	void ReadMesh();
 	void WriteMesh();
 	void LoadTexture();
+	void QuickTest();
 
 	void CheckDrawPoint(bool bv);
 	void CheckDrawEdge(bool bv);
@@ -68,8 +70,7 @@ private:
 	void CheckLight(bool bv);
 	void CheckDrawTexture(bool bv);
 	void CheckDrawAxes(bool bv);
-
-	void QuickTest(bool);
+	
 
 private:
 	void DrawAxes(bool bv);
