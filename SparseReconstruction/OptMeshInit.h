@@ -16,6 +16,7 @@ class OptMeshInit
 protected:
 	// resampling size
 	int			mesh_size_;
+	int			input_size_;
 	
 	// kNN parameter
 	int			triset_control_number_;
@@ -34,9 +35,11 @@ protected:
 
 public:
 	OptMeshInit();
+	OptMeshInit();
 	~OptMeshInit();
 
-	
+	// Pick initial dict for that problem
+	bool GenerateInitialDict()
 	
 	
 	
