@@ -96,13 +96,7 @@ namespace TriProj
 	{
 		if (!GenerateTriangleSet(query_point, triangle_set))
 			return false;
-
-		for (int i = 0; i < triangle_set.size(); i++)
-		{
-
-		}
 		return false;
-		//Triangle *tri=  new Triangle(query_point,
 	}
 
 

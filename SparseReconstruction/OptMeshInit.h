@@ -27,7 +27,8 @@ protected:
 
 	//Only pass triplet, since sparse matrix will only need for V-subproblem
 	//We don't necessarily need it in B-subproblem since we will instead maintain 
-	//the prioirty queue, which exactly follows the mesh topology.
+	//the prioirty queue, which exactly maintains the mesh topology. And after 
+	//that , the B mesh can be rebuild from the pair (point,face).
 	std::vector<Eigen::Triplet<double>> GetInitSparseEncoding();
 
 

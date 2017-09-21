@@ -259,6 +259,8 @@
     <ResourceCompile Include="MiniMeshFrame.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="..\lib\x64\ann.lib" />
+    <Library Include="..\lib\x64\annd.lib" />
     <Library Include="..\lib\x64\glut32.lib" />
   </ItemGroup>
   <ItemGroup>
