@@ -25,6 +25,12 @@
     <Filter Include="源文件\Test">
       <UniqueIdentifier>{7b1f1b30-12c5-4f7a-ad88-ba5d0507ea39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="头文件\Energy">
+      <UniqueIdentifier>{ccecd1e5-5e87-40de-b3bf-9f24d11cc016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Energy">
+      <UniqueIdentifier>{d1442c11-5215-401f-ae16-a1f1a488fc7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,17 +51,17 @@
     <ClCompile Include="TriSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="EnergyFunc.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ProjErrWithEdgeReg.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ANNtest.cpp">
       <Filter>源文件\Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjErrWithEdgeReg.cpp">
+      <Filter>源文件\Energy</Filter>
+    </ClCompile>
+    <ClCompile Include="TriProjEnergy.cpp">
+      <Filter>源文件\Energy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -91,12 +97,6 @@
     <ClInclude Include="TriSet.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="EnergyFunc.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ProjErrWithEdgeReg.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -105,6 +105,12 @@
     </ClInclude>
     <ClInclude Include="ANNtest.h">
       <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjErrWithEdgeReg.h">
+      <Filter>头文件\Energy</Filter>
+    </ClInclude>
+    <ClInclude Include="TriProjEnergy.h">
+      <Filter>头文件\Energy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

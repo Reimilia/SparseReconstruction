@@ -32,4 +32,3 @@ struct MyTraits : public OpenMesh::DefaultTraits
 
 //Define the mesh we use in this program
 typedef OpenMesh::TriMesh_ArrayKernelT<MyTraits>  TriMesh;
-

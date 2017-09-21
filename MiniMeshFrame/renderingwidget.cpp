@@ -363,6 +363,13 @@ void RenderingWidget::CheckDrawAxes(bool bV)
 	updateGL();
 }
 
+void RenderingWidget::QuickTest(bool bV)
+{
+	if (!bV)
+		return;
+
+}
+
 void RenderingWidget::DrawAxes(bool bV)
 {
 	if (!bV)
@@ -451,6 +458,8 @@ void RenderingWidget::DrawEdge(bool bv)
 		
 		for (TriMesh::FaceVertexIter v_it = ptr_mesh_.fv_iter(*f_it); v_it.is_valid(); ++v_it)
 		{
+			std::cout << v_it->idx() << std::endl;
+			system("pause");
 			//Get vertex handle from halfedge_handle
 			TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
 			TriMesh::Normal n_pos = ptr_mesh_.normal(*f_it);

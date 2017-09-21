@@ -16,7 +16,7 @@ void ProjErrWithEdgeReg::SetEdgeTermWeight(double weight)
 	edge_term_weight_ = weight;
 }
 
-double ProjErrWithEdgeReg::CalcEnergy(Eigen::Vector3d Proj_err, Eigen::Vector3d X, Eigen::Vector3d Y, Eigen::Vector3d Z)
+double ProjErrWithEdgeReg::CalcEnergy(TriProj::Triangle)
 {
 	return 0.0;
 }

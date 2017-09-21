@@ -69,6 +69,8 @@ private:
 	void CheckDrawTexture(bool bv);
 	void CheckDrawAxes(bool bv);
 
+	void QuickTest(bool);
+
 private:
 	void DrawAxes(bool bv);
 	void DrawPoints(bool);

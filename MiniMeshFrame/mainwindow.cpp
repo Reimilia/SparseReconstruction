@@ -66,6 +66,9 @@ void MainWindow::CreateActions()
 	action_saveas_->setStatusTip(tr("Save the document under a new name"));
 //	connect(action_saveas_, SIGNAL(triggered()), imagewidget_, SLOT(SaveAs()));
 
+	action_test_sth_ = new QAction(tr("RunTest"), this);
+	connect(action_test_sth_, SIGNAL(triggered()), renderingwidget_, SLOT(QuickTest()));
+	
 	action_loadmesh_ = new QAction(tr("readOBJ"), this);
 	action_loadtexture_ = new QAction(tr("LoadTexture"), this);
 	action_background_ = new QAction(tr("ChangeBackground"), this);

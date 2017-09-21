@@ -57,6 +57,9 @@ private:
 	QAction							*action_loadtexture_;
 	QAction							*action_background_;
 
+	// Additional Button
+	QAction							*action_test_sth_;
+
 	// Render RadioButtons
 	QCheckBox						*checkbox_point_;
 	QCheckBox						*checkbox_edge_;

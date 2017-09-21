@@ -1,5 +1,5 @@
 #pragma once
-#include "EnergyFunc.h"
+#include "TriProjEnergy.h"
 
 
 /*
@@ -14,7 +14,7 @@ This is implemented via polymorphism
 */
 
 class ProjErrWithEdgeReg :
-	public EnergyFunc
+	public TriProjEnergy
 {
 protected:
 	double	edge_term_weight_ = 1.0;
@@ -25,8 +25,7 @@ public:
 	ProjErrWithEdgeReg(double weight);
 
 	void SetEdgeTermWeight(double weight);
-	double CalcEnergy(Eigen::Vector3d Proj_err, Eigen::Vector3d X,
-		Eigen::Vector3d Y, Eigen::Vector3d Z);
+	double CalcEnergy(TriProj::Triangle);
 
 	~ProjErrWithEdgeReg();
 };

@@ -121,7 +121,7 @@
     <ClCompile Include="ANNtest.cpp" />
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
-    <ClCompile Include="EnergyFunc.cpp" />
+    <ClCompile Include="TriProjEnergy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
     <ClCompile Include="ProjErrWithEdgeReg.cpp" />
@@ -137,7 +137,7 @@
     <ClInclude Include="ANNtest.h" />
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
-    <ClInclude Include="EnergyFunc.h" />
+    <ClInclude Include="TriProjEnergy.h" />
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />
     <ClInclude Include="ProjErrWithEdgeReg.h" />

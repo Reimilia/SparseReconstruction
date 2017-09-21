@@ -60,12 +60,14 @@ namespace TriProj
 			ANN_dist,
 			eps
 		);
-
+		for (int i = 0; i < kNN_size_; i++)
+			point_indexes.push_back(ANN_index[i]);
 		return true;
 	}
 
 
-	bool TriSet::GenerateTriangleSet(Vec3d query_point, std::vector<int [3]>& trianlge_set)
+	bool TriSet::GenerateTriangleSet(Vec3d query_point, 
+		std::vector<Eigen::Vector3i> & trianlge_set)
 	{
 		std::vector <int> point_indexes;
 		
@@ -80,8 +82,8 @@ namespace TriProj
 			for (int j = i+1; j < kNN_size_; j++)
 				for (int k = j + 1; k < kNN_size_; k++)
 				{
-					trianlge_set.push_back(
-					{ point_indexes[i], point_indexes[j], point_indexes[k] }
+					trianlge_set.push_back(Eigen::Vector3i(
+						point_indexes[i],point_indexes[j],point_indexes[k])
 					);
 				}
 		
@@ -89,7 +91,7 @@ namespace TriProj
 	}
 
 	bool TriSet::GenerateSparseEncoding(Vec3d query_point, 
-		std::vector<int [3]>& triangle_set, 
+		std::vector<Eigen::Vector3i>& triangle_set, 
 		std::vector<Eigen::Triplet<double>>& B_encoding)
 	{
 		if (!GenerateTriangleSet(query_point, triangle_set))
@@ -99,8 +101,8 @@ namespace TriProj
 		{
 
 		}
-
-		Triangle *tri=  new Triangle(query_point,)
+		return false;
+		//Triangle *tri=  new Triangle(query_point,
 	}
 
 
