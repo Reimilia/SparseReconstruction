@@ -34,7 +34,7 @@ void DicUpdateTest::compute()
 	// set up B_ and P_, sample 5 points for every face
 	int wid_P = 5 * mesh_.n_faces();
 	P_.resize(3, wid_P);
-	B_.resize(wid_V, wid_P);
+	
 	int P_idx = 0;
 
 	for (auto f_it = mesh_.faces_begin(); f_it != mesh_.faces_begin(); f_it++)
@@ -68,4 +68,5 @@ void DicUpdateTest::compute()
 			P_idx++;
 		}
 	}
+	B_.resize(wid_V, wid_P);
 }
