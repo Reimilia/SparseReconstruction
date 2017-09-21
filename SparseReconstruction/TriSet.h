@@ -11,6 +11,7 @@
 //TODO : Connect to ANN 
 #include <vector>
 #include <ANN\ANN.h>
+#include <Eigen\Core>
 #include <Eigen\Sparse>
 #include "Triangle.h"
 
@@ -30,11 +31,16 @@ namespace TriProj
 		TriSet(int kNN_size, std::vector<Vec3d> input_points);
 		~TriSet();
 
+		bool GenerateTriangleSet(
+			Eigen::Vector3d	query_point,
+			std::vector<Eigen::Vector3i> &trianlge_set
+		);
+
 		bool GenerateSparseEncoding(Eigen::Vector3d query_point,
 			Eigen::Vector3i &triangle_set,
 			Eigen::Triplet<double> &B_encoding
 		);
-
+		
 		bool SetQuerySize(int k);
 
 	};

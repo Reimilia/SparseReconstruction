@@ -88,7 +88,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ANNd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ANNtest.cpp" />
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
     <ClCompile Include="EnergyFunc.cpp" />
@@ -133,6 +134,7 @@
     <None Include="..\.gitignore" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ANNtest.h" />
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
     <ClInclude Include="EnergyFunc.h" />
