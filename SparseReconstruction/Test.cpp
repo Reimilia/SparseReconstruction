@@ -43,8 +43,9 @@ void TestDicUpdate::compute()
 		for (int k = 0; k < 5; k++) // sample 5 points of every face
 		{
 			std::vector<TriMesh::FaceVertexIter> fv_list = {};
-			for (auto fv_it = mesh_.fv_begin(*f_it); fv_it != mesh_.fv_end(*f_it); fv_it++)
+			for (TriMesh::FaceVertexIter fv_it = mesh_.fv_begin(*f_it); fv_it != mesh_.fv_end(*f_it); fv_it++)
 			{
+				
 				fv_list.push_back(fv_it);
 			}
 

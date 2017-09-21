@@ -20,10 +20,10 @@
       <UniqueIdentifier>{40f230d4-03f1-4f26-9165-e63dc1f89ce7}</UniqueIdentifier>
     </Filter>
     <Filter Include="头文件\Test">
-      <UniqueIdentifier>{7daa2c56-5248-447c-918c-c6223020c249}</UniqueIdentifier>
+      <UniqueIdentifier>{0140d4ea-b508-401f-ae74-3b7054934f10}</UniqueIdentifier>
     </Filter>
     <Filter Include="源文件\Test">
-      <UniqueIdentifier>{24f3a855-912d-4e72-ad51-2aec67edc9f0}</UniqueIdentifier>
+      <UniqueIdentifier>{7b1f1b30-12c5-4f7a-ad88-ba5d0507ea39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +54,7 @@
     <ClCompile Include="Triangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Test.cpp">
+    <ClCompile Include="ANNtest.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
   </ItemGroup>
@@ -103,8 +103,16 @@
     <ClInclude Include="Triangle.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Test.h">
+    <ClInclude Include="ANNtest.h">
       <Filter>头文件\Test</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\lib\x64\ann.lib">
+      <Filter>资源文件</Filter>
+    </Library>
+    <Library Include="..\lib\x64\annd.lib">
+      <Filter>资源文件</Filter>
+    </Library>
   </ItemGroup>
 </Project>

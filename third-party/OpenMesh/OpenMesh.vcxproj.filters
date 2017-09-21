@@ -99,455 +99,455 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="OpenMesh\Core\Geometry\Config.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\Config.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\LoopSchemeMaskT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\LoopSchemeMaskT.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\MathDefs.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\MathDefs.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\NormalConeT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\NormalConeT.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\Plane3d.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\Plane3d.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\QuadricT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\QuadricT.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\Vector11T.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\Vector11T.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\VectorT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\VectorT.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Geometry\VectorT_inc.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Geometry\VectorT_inc.hh">
       <Filter>头文件\Core\Geometry</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\BinaryHelper.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\BinaryHelper.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\IOInstances.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\IOInstances.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\IOManager.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\IOManager.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\MeshIO.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\MeshIO.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\OFFFormat.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\OFFFormat.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\OMFormat.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\OMFormat.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\Options.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\Options.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\SR_binary.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\SR_binary.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\SR_binary_spec.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\SR_binary_spec.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\SR_rbo.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\SR_rbo.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\SR_store.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\SR_store.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\SR_types.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\SR_types.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\StoreRestore.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\StoreRestore.hh">
       <Filter>头文件\Core\IO</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\importer\BaseImporter.hh">
-      <Filter>头文件\Core\IO\importer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\importer\ImporterT.hh">
-      <Filter>头文件\Core\IO\importer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\exporter\BaseExporter.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\exporter\BaseExporter.hh">
       <Filter>头文件\Core\IO\exporter</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\exporter\ExporterT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\exporter\ExporterT.hh">
       <Filter>头文件\Core\IO\exporter</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\BaseWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\importer\BaseImporter.hh">
+      <Filter>头文件\Core\IO\importer</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\OBJWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\importer\ImporterT.hh">
+      <Filter>头文件\Core\IO\importer</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\OFFWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\OMWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\PLYWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\STLWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\writer\VTKWriter.hh">
-      <Filter>头文件\Core\IO\writer</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\BaseReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\BaseReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\OBJReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\OBJReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\OFFReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\OFFReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\OMReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\OMReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\PLYReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\PLYReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\IO\reader\STLReader.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\reader\STLReader.hh">
       <Filter>头文件\Core\IO\reader</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\gen\circulators_header.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\BaseWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\OBJWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\OFFWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\OMWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\PLYWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\STLWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\IO\writer\VTKWriter.hh">
+      <Filter>头文件\Core\IO\writer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\ArrayItems.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\gen\circulators_template.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\ArrayKernel.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\gen\footer.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\AttribKernelT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\gen\iterators_header.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\Attributes.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\gen\iterators_template.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\BaseKernel.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\ArrayItems.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\BaseMesh.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\ArrayKernel.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\Casts.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\AttribKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\CirculatorsT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\Attributes.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\FinalMeshItemsT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\BaseKernel.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\Handles.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\BaseMesh.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\IteratorsT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\Casts.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\PolyConnectivity.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\CirculatorsT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\PolyMesh_ArrayKernelT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\FinalMeshItemsT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\PolyMeshT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\Handles.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\Status.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\IteratorsT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\Traits.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\PolyConnectivity.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\TriConnectivity.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\PolyMesh_ArrayKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\PolyMeshT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\TriMeshT.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\Status.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\gen\circulators_header.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\Traits.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\gen\circulators_template.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\TriConnectivity.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\gen\footer.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\TriMesh_ArrayKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\gen\iterators_header.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Mesh\TriMeshT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Mesh\gen\iterators_template.hh">
       <Filter>头文件\Core\Mesh</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\compiler.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\compiler.hh">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\config.h">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\config.h">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\config.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\config.hh">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\mostream.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\mostream.hh">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\omstream.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\omstream.hh">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\System\OpenMeshDLLMacros.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\System\OpenMeshDLLMacros.hh">
       <Filter>头文件\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\AutoPropertyHandleT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\AutoPropertyHandleT.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\BaseProperty.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\BaseProperty.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\color_cast.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\color_cast.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\Endian.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\Endian.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\GenProg.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\GenProg.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\Noncopyable.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\Noncopyable.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\Property.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\Property.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\PropertyContainer.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\PropertyContainer.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\PropertyManager.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\PropertyManager.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\RandomNumberGenerator.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\RandomNumberGenerator.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\SingletonT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\SingletonT.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\vector_cast.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\vector_cast.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Core\Utils\vector_traits.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Core\Utils\vector_traits.hh">
       <Filter>头文件\Core\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Dualizer\meshDualT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Dualizer\meshDualT.hh">
       <Filter>头文件\Tools\Dualizer</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\ArrayKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\ArrayKernelT.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\AttribKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\AttribKernelT.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\bindT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\bindT.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\color_cast.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\color_cast.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\PropertyKernel.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\PropertyKernel.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\PropertyT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\PropertyT.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\Traits.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\Traits.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\TriMesh_OSGArrayKernelT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\TriMesh_OSGArrayKernelT.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Kernel_OSG\VectorAdapter.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Kernel_OSG\VectorAdapter.hh">
       <Filter>头文件\Tools\Kernel_OSG</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\Config.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\conio.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\getopt.h">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\GLConstAsString.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\Gnuplot.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\HeapT.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\MeshCheckerT.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\NumLimitsT.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\StripifierT.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\TestingFramework.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Utils\Timer.hh">
-      <Filter>头文件\Tools\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.hh">
       <Filter>头文件\Tools\Smoother</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Smoother\LaplaceSmootherT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Smoother\LaplaceSmootherT.hh">
       <Filter>头文件\Tools\Smoother</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Smoother\smooth_mesh.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Smoother\smooth_mesh.hh">
       <Filter>头文件\Tools\Smoother</Filter>
     </ClInclude>
-    <ClInclude Include="OpenMesh\Tools\Smoother\SmootherT.hh">
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Smoother\SmootherT.hh">
       <Filter>头文件\Tools\Smoother</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\Config.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\conio.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\getopt.h">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\GLConstAsString.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\Gnuplot.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\HeapT.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\MeshCheckerT.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\NumLimitsT.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\StripifierT.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\TestingFramework.hh">
+      <Filter>头文件\Tools\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\OpenMesh\Tools\Utils\Timer.hh">
+      <Filter>头文件\Tools\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="OpenMesh\Core\Geometry\NormalConeT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Geometry\NormalConeT.cc">
       <Filter>源文件\Core\Geometry</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\BinaryHelper.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\STLReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\PLYReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\OMReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\OFFReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\OBJReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\reader\BaseReader.cc">
+      <Filter>源文件\Core\IO\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\BaseWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\OBJWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\OFFWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\OMWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\PLYWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\STLWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\writer\VTKWriter.cc">
+      <Filter>源文件\Core\IO\writer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\BinaryHelper.cc">
       <Filter>源文件\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\IOManager.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\IOManager.cc">
       <Filter>源文件\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\OMFormat.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\OMFormat.cc">
       <Filter>源文件\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\OMFormatT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\IO\OMFormatT.cc">
       <Filter>源文件\Core\IO</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\BaseReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\OBJReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\OFFReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\OMReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\PLYReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\reader\STLReader.cc">
-      <Filter>源文件\Core\IO\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\BaseWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\OBJWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\OFFWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\OMWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\PLYWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\STLWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\IO\writer\VTKWriter.cc">
-      <Filter>源文件\Core\IO\writer</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\ArrayKernel.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\TriMeshT.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\ArrayKernelT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\TriConnectivity.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\BaseKernel.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\PolyMeshT.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\PolyConnectivity.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\PolyConnectivity.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\PolyMeshT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\BaseKernel.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\TriConnectivity.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\ArrayKernelT.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Mesh\TriMeshT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Mesh\ArrayKernel.cc">
       <Filter>源文件\Core\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\System\omstream.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\System\omstream.cc">
       <Filter>源文件\Core\System</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Utils\BaseProperty.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Utils\SingletonT.cc">
       <Filter>源文件\Core\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Utils\Endian.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Utils\RandomNumberGenerator.cc">
       <Filter>源文件\Core\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Utils\RandomNumberGenerator.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Utils\Endian.cc">
       <Filter>源文件\Core\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Core\Utils\SingletonT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Core\Utils\BaseProperty.cc">
       <Filter>源文件\Core\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\conio.cc">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\getopt.c">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\Gnuplot.cc">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\MeshCheckerT.cc">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\StripifierT.cc">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Utils\Timer.cc">
-      <Filter>源文件\Tools\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Smoother\SmootherT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.cc">
       <Filter>源文件\Tools\Smoother</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Smoother\JacobiLaplaceSmootherT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Smoother\LaplaceSmootherT.cc">
       <Filter>源文件\Tools\Smoother</Filter>
     </ClCompile>
-    <ClCompile Include="OpenMesh\Tools\Smoother\LaplaceSmootherT.cc">
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Smoother\SmootherT.cc">
       <Filter>源文件\Tools\Smoother</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\getopt.c">
+      <Filter>源文件\Tools\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\conio.cc">
+      <Filter>源文件\Tools\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\Gnuplot.cc">
+      <Filter>源文件\Tools\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\MeshCheckerT.cc">
+      <Filter>源文件\Tools\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\StripifierT.cc">
+      <Filter>源文件\Tools\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\include\OpenMesh\Tools\Utils\Timer.cc">
+      <Filter>源文件\Tools\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_bool.inl">
+    <None Include="..\..\include\OpenMesh\Core\IO\SR_binary_vector_of_bool.inl">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_fundamentals.inl">
+    <None Include="..\..\include\OpenMesh\Core\IO\SR_binary_vector_of_fundamentals.inl">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="OpenMesh\Core\IO\SR_binary_vector_of_string.inl">
+    <None Include="..\..\include\OpenMesh\Core\IO\SR_binary_vector_of_string.inl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
