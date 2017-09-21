@@ -30,7 +30,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140</PlatformToolset>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
@@ -255,7 +255,7 @@
       <ImportLibrary>.\Release\ANN.lib</ImportLibrary>
     </Link>
     <Lib>
-      <OutputFile>$(SolutionDir)\lib\ANN.lib</OutputFile>
+      <OutputFile>$(SolutionDir)\bin\ANN.dll</OutputFile>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
