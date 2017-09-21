@@ -5,10 +5,12 @@ namespace TriProj
 	TriSet::TriSet(int kNN_size, std::vector<Eigen::Vector3d> input_points)
 	{
 		int dim = 3; 
-		
+		point_set_size_ = (int)input_points.size();
+
 		ANNpointArray ANN_input_points;
-		ANN_input_points = annAllocPts((int)input_points.size(), dim);
-		for (int i = 0; i < input_points.size(); ++i)
+	
+		ANN_input_points = annAllocPts(point_set_size_, dim);
+		for (int i = 0; i < point_set_size_; ++i)
 		{
 			for (int j = 0; j < dim; j++)
 			{
@@ -19,7 +21,7 @@ namespace TriProj
 		//build up kdTree
 		kdtree_ = new ANNkd_tree(
 			ANN_input_points,
-			input_points.size(),
+			point_set_size_,
 			dim
 		);
 	}
@@ -29,11 +31,11 @@ namespace TriProj
 		delete kdtree_;
 	}
 
-	bool TriSet::GenerateTriangleSet(Eigen::Vector3d query_point, std::vector<Eigen::Vector3i>& trianlge_set)
+	bool TriSet::GenerateNearestPointSet(Vec3d query_point, std::vector<int>& point_indexes)
 	{
-		if (kNN_size_ < 3)
+		if (kNN_size_ < 3 || point_set_size_ < kNN_size_)
 		{
-			std::cerr << "This kNN search size is too small(<3)!\n";
+			std::cerr << "This kNN search size is incorrect!\n";
 			return false;
 		}
 		ANNidxArray ANN_index;
@@ -59,23 +61,48 @@ namespace TriProj
 			eps
 		);
 
+		return true;
+	}
+
+
+	bool TriSet::GenerateTriangleSet(Vec3d query_point, std::vector<int [3]>& trianlge_set)
+	{
+		std::vector <int> point_indexes;
+		
+		if (!GenerateNearestPointSet(query_point, point_indexes))
+			return false;
+
+		if (trianlge_set.size() > 0)
+			trianlge_set.clear();
+
 		//Generate Triangle Sets
 		for (int i = 0; i < kNN_size_; i++)
 			for (int j = i+1; j < kNN_size_; j++)
 				for (int k = j + 1; k < kNN_size_; k++)
 				{
 					trianlge_set.push_back(
-						Eigen::Vector3i(ANN_index[i], ANN_index[j], ANN_index[k])
+					{ point_indexes[i], point_indexes[j], point_indexes[k] }
 					);
 				}
 		
 		return true;
 	}
 
-	bool TriSet::GenerateSparseEncoding(Eigen::Vector3d query_point, Eigen::Vector3i & triangle_set, Eigen::Triplet<double>& B_encoding)
+	bool TriSet::GenerateSparseEncoding(Vec3d query_point, 
+		std::vector<int [3]>& triangle_set, 
+		std::vector<Eigen::Triplet<double>>& B_encoding)
 	{
-		return false;
+		if (!GenerateTriangleSet(query_point, triangle_set))
+			return false;
+
+		for (int i = 0; i < triangle_set.size(); i++)
+		{
+
+		}
+
+		Triangle *tri=  new Triangle(query_point,)
 	}
+
 
 
 	bool TriSet::SetQuerySize(int k)

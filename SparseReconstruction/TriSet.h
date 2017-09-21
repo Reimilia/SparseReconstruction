@@ -3,15 +3,13 @@
 /*
 	For initialization process, we need a triangle set for each given point.
 
-	This set will sort the triangle with designate energy function with respect
-	to the point and triangle.
+	This set can run kNN search and do
 
 */
 
 //TODO : Connect to ANN 
 #include <vector>
 #include <ANN\ANN.h>
-#include <Eigen\Core>
 #include <Eigen\Sparse>
 #include "Triangle.h"
 
@@ -23,22 +21,31 @@ namespace TriProj
 
 		int kNN_size_;
 
+		int point_set_size_;
+
 		bool is_initialized_ = false;
 
 		ANNkd_tree	*kdtree_;
+
 
 	public:
 		TriSet(int kNN_size, std::vector<Vec3d> input_points);
 		~TriSet();
 
-		bool GenerateTriangleSet(
-			Eigen::Vector3d	query_point,
-			std::vector<Eigen::Vector3i> &trianlge_set
+		//Run KNN to get point indexes
+		bool GenerateNearestPointSet(
+			Vec3d	query_point,
+			std::vector<int>	&point_indexes
 		);
 
-		bool GenerateSparseEncoding(Eigen::Vector3d query_point,
-			Eigen::Vector3i &triangle_set,
-			Eigen::Triplet<double> &B_encoding
+		bool GenerateTriangleSet(
+			Vec3d	query_point,
+			std::vector<int [3]> &trianlge_set
+		);
+
+		bool GenerateSparseEncoding(Vec3d query_point,
+			std::vector<int [3]> &triangle_set,
+			std::vector<Eigen::Triplet<double>> &B_encoding
 		);
 		
 		bool SetQuerySize(int k);
