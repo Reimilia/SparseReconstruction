@@ -42,7 +42,7 @@ double normF( const MatrixXd M )
 }
 
 
-DictionaryUpdate::DictionaryUpdate( Mesh3D &_mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ )
+DictionaryUpdate::DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ )
 {
 	mesh_ = _mesh_;
 	V_ = _V_;
@@ -73,7 +73,7 @@ bool DictionaryUpdate::test()
 	return true;
 }
 
-bool DictionaryUpdate::solver()
+TriMesh DictionaryUpdate::solver()
 {
 	for (int i = 0; i < 100; i++)
 	{
@@ -81,7 +81,7 @@ bool DictionaryUpdate::solver()
 		DualUpdate();
 		PenaltyUpdate();
 	}
-	return true;
+	return mesh_;
 }
 
 
@@ -166,7 +166,7 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
-		mesh_.set_point(*it, Mesh3D::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
+		mesh_.set_point(*it, TriMesh::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
 	}
 }
 
