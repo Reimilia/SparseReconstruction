@@ -7,7 +7,8 @@
 Receive input of a triangle, a point 
 and you get the energy form (without normal vector term).
 
-Triangle will basically three points.
+Triangle will basically have three points.
+Further this can be replaced by the Polygon class
 
 This is implemented via polymorphism 
 
@@ -17,14 +18,18 @@ class ProjErrWithEdgeReg :
 	public TriProjEnergy
 {
 protected:
-	double	edge_term_weight_ = 1.0;
+	// the trade off coef for the energy (linear coef)
+	double	edge_term_weight_ ;
 	
+	// q-power for the projection norm
+	double  q_;
 
 public:
 	ProjErrWithEdgeReg();
-	ProjErrWithEdgeReg(double weight);
+	ProjErrWithEdgeReg(double weight,double qpow);
 
 	void SetEdgeTermWeight(double weight);
+	void SetQNormWeight(double qpow);
 	double CalcEnergy(TriProj::Triangle);
 
 	~ProjErrWithEdgeReg();

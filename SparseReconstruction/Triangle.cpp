@@ -41,7 +41,6 @@ namespace TriProj
 
 	Triangle::Triangle(Vec3d X, Vec3d Y, Vec3d Z)
 	{
-		is_p_set_ = false;
 		is_calculated_ = false;
 		X_ = X;
 		Y_ = Y;
@@ -161,6 +160,11 @@ namespace TriProj
 	double Triangle::EdgeRegNorm()
 	{
 		return (X_ - Y_).norm() + (Y_ - Z_).norm() + (Z_ - X_).norm();
+	}
+
+	double Triangle::EdgeRegSquaredNorm()
+	{
+		return (X_ - Y_).squaredNorm() + (Y_ - Z_).squaredNorm() + (Z_ - X_).squaredNorm();
 	}
 
 	double Triangle::NormalRegNorm(Vec3d PNormal)
