@@ -1,17 +1,20 @@
 #include "TriProjEnergy.h"
 
 
+namespace EnergyFunc {
+	TriProjEnergy::TriProjEnergy()
+	{
+	}
 
-TriProjEnergy::TriProjEnergy()
-{
-}
-
-double TriProjEnergy::CalcEnergy(TriProj::Triangle tri)
-{
-	return tri.ProjectedErrorNorm();
-}
+	double TriProjEnergy::CalcEnergy(TriProj::Triangle tri)
+	{
+		return tri.ProjectedErrorNorm();
+	}
 
 
-TriProjEnergy::~TriProjEnergy()
-{
+	TriProjEnergy::~TriProjEnergy()
+	{
+	}
+
+
 }

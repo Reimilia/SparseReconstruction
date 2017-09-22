@@ -29,6 +29,7 @@ namespace TriProj
 
 
 	public:
+		TriSet();
 		TriSet(int kNN_size, std::vector<Vec3d> input_points);
 		~TriSet();
 

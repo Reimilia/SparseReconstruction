@@ -1,6 +1,6 @@
 #pragma once
-
-
+#include "stdafx.h"
+#include "Triangle.h"
 /*
 Super utility struct for the optimization problem.
 
@@ -33,6 +33,8 @@ struct OptSolverParaSet
 
 	//TODO: add Dictionary Update Coefficient here
 
+	std::function<double(TriProj::Triangle)> energy_func_;
+
 
 	void SetDefaultPara()
 	{
@@ -42,6 +44,8 @@ struct OptSolverParaSet
 		normal_reg_weight_ = 0;
 		is_normal_reg_on_ = false;
 
+		q_norm_ = 0.5;
+
 		initial_dict_ratio_ = 0.4;
 		
 		triangle_set_control_num_ = 10;
@@ -49,6 +53,10 @@ struct OptSolverParaSet
 		epsilion_ = 0.001;
 
 		max_iter_step_ = 10;
+
+		//C++ 11 Dirty way to do that
+		energy_func_ = std::bind(EnergyFunc::EnergyWithEdgeNorm,
+			std::placeholders::_1, q_norm_, edge_reg_weight_);
 	};
 };
 

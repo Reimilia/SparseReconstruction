@@ -2,6 +2,9 @@
 
 namespace TriProj
 {
+	TriSet::TriSet()
+	{
+	}
 	TriSet::TriSet(int kNN_size, std::vector<Eigen::Vector3d> input_points)
 	{
 		int dim = 3; 
@@ -28,7 +31,8 @@ namespace TriProj
 
 	TriSet::~TriSet()
 	{
-		delete kdtree_;
+		if(kdtree_)
+			delete kdtree_;
 	}
 
 	bool TriSet::GenerateNearestPointSet(Vec3d query_point, std::vector<int>& point_indexes)
@@ -89,6 +93,7 @@ namespace TriProj
 		
 		return true;
 	}
+
 
 	bool TriSet::GenerateSparseEncoding(Vec3d query_point, 
 		std::vector<Eigen::Vector3i>& triangle_set, 

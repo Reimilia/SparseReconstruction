@@ -85,6 +85,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_SCL_SECURE_NO_WARNINGS;_USE_MATH_DEFINES;_CRT_SECURE_NO_WARNINGS;WIN32;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -122,6 +123,8 @@
     <ClCompile Include="ANNtest.cpp" />
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
+    <ClCompile Include="OrderedTriSet.cpp" />
+    <ClCompile Include="PoissonSampling.cpp" />
     <ClCompile Include="TriProjEnergy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
@@ -139,6 +142,9 @@
     <ClInclude Include="ANNtest.h" />
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
+    <ClInclude Include="OrderedTriSet.h" />
+    <ClInclude Include="PoissonSampling.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="TriProjEnergy.h" />
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />

@@ -66,6 +66,12 @@
     <ClCompile Include="DicUpdateTest.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
+    <ClCompile Include="PoissonSampling.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OrderedTriSet.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -117,6 +123,15 @@
     </ClInclude>
     <ClInclude Include="DicUpdateTest.h">
       <Filter>头文件\Test</Filter>
+    </ClInclude>
+    <ClInclude Include="PoissonSampling.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderedTriSet.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
