@@ -39,10 +39,13 @@ namespace TriProj
 		Triangle(Vec3d P, Vec3d X, Vec3d Y, Vec3d Z);
 		~Triangle();
 
-		inline Vec3d X() { return X_; };
-		inline Vec3d Y() { return Y_; };
-		inline Vec3d Z() { return Z_; };
-
+		void GetTriangle(Vec3d &X, Vec3d &Y, Vec3d &Z)
+		{
+			X = X_;
+			Y = Y_;
+			Z = Z_;
+		}
+		
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
 		bool SetProjPoint(Vec3d P);
 
@@ -54,10 +57,32 @@ namespace TriProj
 		double EdgeRegSquaredNorm();
 		double NormalRegNorm(Vec3d PNormal);
 		bool IsBarycentricValid();
-
-		void Test();
+		
 	};
 
+
+	class Triangle_Cmp : public std::binary_function
+		<Triangle, Triangle,bool> 
+	{
+	protected:
+		double q_norm = 0.5;
+		double edge_term_ = 1.6;
+		double normal_term_ = 0.0;
+		double energy_func_(Triangle t)
+		{
+			return pow(t.ProjectedErrorNorm(), q_norm) +
+				edge_term_*t.EdgeRegSquaredNorm() / 3.0;
+		}
+	public:
+		bool operator()(const Triangle &t1, const Triangle &t2)
+		{
+			if (energy_func_(t1) < energy_func_(t2))
+				return true;
+			else
+				return false;
+		}
+
+	};
 
 }
 

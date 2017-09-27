@@ -1,5 +1,5 @@
 #pragma once
-#include "stdafx.h"
+#include "TriProjEnergy.h"
 #include "Triangle.h"
 /*
 Super utility struct for the optimization problem.

@@ -1,4 +1,5 @@
 #include "ANNtest.h"
+#include "TriProjEnergy.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -36,7 +37,12 @@ bool Test::ANNtest::TestTriSetANN()
 	TriProj::TriSet  *triset = new TriProj::TriSet(kNN_size_, q);
 	triset->SetQuerySize(5);
 
-	std::vector<Eigen::Vector3i> tri_index;
+	std::function<double(TriProj::Triangle)> f = 
+		std::bind(EnergyFunc::EnergyWithEdgeNorm,
+		std::placeholders::_1, 0.5, 1.6);
+
+
+	std::vector<TriProj::Triangle> tri_index;
 
 	triset->GenerateTriangleSet(Eigen::Vector3d(0.5, 0.5, 0.5), tri_index);
 
@@ -44,9 +50,12 @@ bool Test::ANNtest::TestTriSetANN()
 
 	for (int i = 0; i < tri_index.size(); i++)
 	{
-		std::cout << q[tri_index[i][0]].transpose() << std::endl
-			<< q[tri_index[i][1]].transpose() << std::endl
-			<< q[tri_index[i][2]].transpose() << std::endl << std::endl;
+		Eigen::Vector3d X, Y, Z;
+		tri_index[i].GetTriangle(X, Y, Z);
+		std::cout << X.transpose() << std::endl
+			<< Y.transpose() << std::endl
+			<< Z.transpose() << std::endl ;
+		std::cout << "With energy " << f(tri_index[i]) << std::endl << std::endl;
 	}
 	
 	std::cout << "Test is over";

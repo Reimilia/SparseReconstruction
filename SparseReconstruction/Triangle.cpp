@@ -28,7 +28,7 @@ namespace TriProj
 		B.row(0) = Eigen::RowVector3d::Ones();
 		B.block(1, 0, 3, 3) = A;
 
-		BaryCoord_ = B.colPivHouseholderQr().solve(P_prime_);
+		BaryCoord_ = B.colPivHouseholderQr().solve(P_prime_ext);
 
 		is_calculated_ = true;
 		BarycentricValidity();
@@ -55,6 +55,7 @@ namespace TriProj
 		Y_ = Y;
 		Z_ = Z;
 		P_ = P;
+		CalcResult();
 	}
 
 
@@ -194,5 +195,7 @@ namespace TriProj
 	{
 		return is_barycentric_valid_;
 	}
+
+
 
 }

@@ -2,31 +2,15 @@
 
 namespace TriProj
 {
+
 	TriSet::TriSet()
 	{
 	}
 	TriSet::TriSet(int kNN_size, std::vector<Eigen::Vector3d> input_points)
 	{
-		int dim = 3; 
-		point_set_size_ = (int)input_points.size();
-
-		ANNpointArray ANN_input_points;
-	
-		ANN_input_points = annAllocPts(point_set_size_, dim);
-		for (int i = 0; i < point_set_size_; ++i)
-		{
-			for (int j = 0; j < dim; j++)
-			{
-				ANN_input_points[i][j] = input_points[i][j];
-			}
-		}
-
-		//build up kdTree
-		kdtree_ = new ANNkd_tree(
-			ANN_input_points,
-			point_set_size_,
-			dim
-		);
+		SetQuerySize(kNN_size);
+		SetInputPoints(input_points);
+		SetupKdTree();
 	}
 
 	TriSet::~TriSet()
@@ -64,46 +48,44 @@ namespace TriProj
 			ANN_dist,
 			eps
 		);
+		
 		for (int i = 0; i < kNN_size_; i++)
 			point_indexes.push_back(ANN_index[i]);
 		return true;
+		if (ANN_index)
+			delete ANN_index;
+		if (ANN_dist)
+			delete ANN_dist;
 	}
 
 
 	bool TriSet::GenerateTriangleSet(Vec3d query_point, 
-		std::vector<Eigen::Vector3i> & trianlge_set)
+		std::vector<TriProj::Triangle> & triangle_set)
 	{
 		std::vector <int> point_indexes;
 		
 		if (!GenerateNearestPointSet(query_point, point_indexes))
 			return false;
 
-		if (trianlge_set.size() > 0)
-			trianlge_set.clear();
+		if (triangle_set.size() > 0)
+			triangle_set.clear();
 
 		//Generate Triangle Sets
+
 		for (int i = 0; i < kNN_size_; i++)
 			for (int j = i+1; j < kNN_size_; j++)
 				for (int k = j + 1; k < kNN_size_; k++)
 				{
-					trianlge_set.push_back(Eigen::Vector3i(
-						point_indexes[i],point_indexes[j],point_indexes[k])
-					);
+					triangle_set.push_back(TriProj::Triangle(
+						query_point,
+						points_[point_indexes[i]],
+						points_[point_indexes[j]],
+						points_[point_indexes[k]]
+					));
 				}
-		
+		std::sort(triangle_set.begin(), triangle_set.end(), Triangle_Cmp());
 		return true;
 	}
-
-
-	bool TriSet::GenerateSparseEncoding(Vec3d query_point, 
-		std::vector<Eigen::Vector3i>& triangle_set, 
-		std::vector<Eigen::Triplet<double>>& B_encoding)
-	{
-		if (!GenerateTriangleSet(query_point, triangle_set))
-			return false;
-		return false;
-	}
-
 
 
 	bool TriSet::SetQuerySize(int k)
@@ -117,5 +99,42 @@ namespace TriProj
 		return true;
 	}
 
+	bool TriSet::SetInputPoints(std::vector<Vec3d> input_points)
+	{
+		points_.clear();
+		for (int i = 0; i < input_points.size(); i++)
+		{
+			points_.push_back(input_points[i]);
+		}
+		return true;
+	}
+
+
+	void TriSet::SetupKdTree()
+	{
+		//Set up kdTree here
+		int dim = 3;
+		point_set_size_ = (int)points_.size();
+
+		ANNpointArray ANN_input_points;
+		 
+		ANN_input_points = annAllocPts(point_set_size_, dim);
+
+		for (int i = 0; i < point_set_size_; ++i)
+		{
+			
+			for (int j = 0; j < dim; j++)
+			{
+				ANN_input_points[i][j] = points_[i][j];
+			}
+		}
+
+		//build up kdTree
+		kdtree_ = new ANNkd_tree(
+			ANN_input_points,
+			point_set_size_,
+			dim
+		);
+	}
 }
 

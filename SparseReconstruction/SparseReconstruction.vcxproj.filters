@@ -25,10 +25,16 @@
     <Filter Include="源文件\Test">
       <UniqueIdentifier>{7b1f1b30-12c5-4f7a-ad88-ba5d0507ea39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="头文件\Energy">
+    <Filter Include="头文件\Projection">
+      <UniqueIdentifier>{95330b05-f02d-4cb4-af4d-b6cae8e7a100}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Projection\Energy">
       <UniqueIdentifier>{ccecd1e5-5e87-40de-b3bf-9f24d11cc016}</UniqueIdentifier>
     </Filter>
-    <Filter Include="源文件\Energy">
+    <Filter Include="源文件\Projection">
+      <UniqueIdentifier>{12b4d73b-fe53-4b93-8adf-955816b21527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Projection\Energy">
       <UniqueIdentifier>{d1442c11-5215-401f-ae16-a1f1a488fc7e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -57,19 +63,13 @@
     <ClCompile Include="ANNtest.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
-    <ClCompile Include="ProjErrWithEdgeReg.cpp">
-      <Filter>源文件\Energy</Filter>
-    </ClCompile>
     <ClCompile Include="TriProjEnergy.cpp">
-      <Filter>源文件\Energy</Filter>
+      <Filter>源文件\Projection\Energy</Filter>
     </ClCompile>
     <ClCompile Include="DicUpdateTest.cpp">
       <Filter>源文件\Test</Filter>
     </ClCompile>
     <ClCompile Include="PoissonSampling.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="OrderedTriSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -115,11 +115,8 @@
     <ClInclude Include="ANNtest.h">
       <Filter>头文件\Test</Filter>
     </ClInclude>
-    <ClInclude Include="ProjErrWithEdgeReg.h">
-      <Filter>头文件\Energy</Filter>
-    </ClInclude>
     <ClInclude Include="TriProjEnergy.h">
-      <Filter>头文件\Energy</Filter>
+      <Filter>头文件\Projection\Energy</Filter>
     </ClInclude>
     <ClInclude Include="DicUpdateTest.h">
       <Filter>头文件\Test</Filter>
@@ -128,9 +125,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="OrderedTriSet.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

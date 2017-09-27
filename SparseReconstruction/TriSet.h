@@ -26,7 +26,10 @@ namespace TriProj
 		bool is_initialized_ = false;
 
 		ANNkd_tree	*kdtree_;
+		
+		std::vector<Eigen::Vector3d> points_;
 
+		
 
 	public:
 		TriSet();
@@ -41,15 +44,12 @@ namespace TriProj
 
 		bool GenerateTriangleSet(
 			Vec3d	query_point,
-			std::vector<Eigen::Vector3i> &trianlge_set
+			std::vector<TriProj::Triangle> &trianlge_set
 		);
 
-		bool GenerateSparseEncoding(Vec3d query_point,
-			std::vector<Eigen::Vector3i> &triangle_set,
-			std::vector<Eigen::Triplet<double>> &B_encoding
-		);
-		
 		bool SetQuerySize(int k);
-
+		bool SetInputPoints(std::vector<Vec3d> input_points);
+	protected:
+		void SetupKdTree();
 	};
 }
