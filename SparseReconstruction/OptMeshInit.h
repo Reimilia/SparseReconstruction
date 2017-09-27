@@ -29,30 +29,22 @@ protected:
 	// approximated points
 	std::vector<Eigen::Vector3d>	query_points_;
 
-	std::function<double(TriProj::Triangle)> energy_func_;
-
-	bool energy_cmp_func_(TriProj::Triangle A, TriProj::Triangle B)
-	{
-		if (energy_func_(A) < energy_func_(B))
-			return true;
-		else
-			return false;
-	}
-
 	void CallDownSampling();
 
-	void FindProjectionRelation();
-
-	bool ManifoldCheck();
 
 
 private:
-	// Pick initial dict for that problem
-	bool GenerateInitialDict();
-	// Generate sparse encoding
-	bool GetInitSparseEncoding(std::vector<TriProj::Triangle> &encoding);
-	
+	bool ManifoldCheck(TriMesh mesh);
+	bool HasEdge(int idx, int idy);
+	bool IsTriangleIn(int idx, int idy, int idz);
 
+
+	// Pick initial dict for that problem
+	bool GenerateInitialDict(std::vector<Eigen::Vector3d> input_points);
+	// Generate sparse encoding
+	bool GetInitSparseEncoding(TriProj::Triangle &encoding);
+	
+	
 public:
 	OptMeshInit();
 	~OptMeshInit();
@@ -64,6 +56,7 @@ public:
 	*/
 	bool BuildInitialSolution(
 		OptSolverParaSet para,
+		std::vector<Eigen::Vector3d> input_points,
 		TriMesh	&initial_mesh,
 		std::vector<TriProj::Triangle> &sparse_encoding
 		);

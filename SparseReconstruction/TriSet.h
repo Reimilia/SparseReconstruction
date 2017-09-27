@@ -47,6 +47,7 @@ namespace TriProj
 			std::vector<TriProj::Triangle> &trianlge_set
 		);
 
+
 		bool SetQuerySize(int k);
 		bool SetInputPoints(std::vector<Vec3d> input_points);
 	protected:

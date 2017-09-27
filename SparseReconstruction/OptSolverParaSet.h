@@ -22,6 +22,8 @@ struct OptSolverParaSet
 	double	q_norm_;
 
 	// resampling size for initialization
+	// It's a ratio and we will approximately
+	// pick those many.
 	double	initial_dict_ratio_;
 
 	// the k value for kNN search
@@ -33,7 +35,6 @@ struct OptSolverParaSet
 
 	//TODO: add Dictionary Update Coefficient here
 
-	std::function<double(TriProj::Triangle)> energy_func_;
 
 
 	void SetDefaultPara()
@@ -54,9 +55,6 @@ struct OptSolverParaSet
 
 		max_iter_step_ = 10;
 
-		//C++ 11 Dirty way to do that
-		energy_func_ = std::bind(EnergyFunc::EnergyWithEdgeNorm,
-			std::placeholders::_1, q_norm_, edge_reg_weight_);
 	};
 };
 

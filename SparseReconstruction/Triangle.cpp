@@ -58,6 +58,20 @@ namespace TriProj
 		CalcResult();
 	}
 
+	Triangle::Triangle(Vec3d P, Vec3d X, int X_id, Vec3d Y, int Y_id, Vec3d Z, int Z_id)
+	{
+		is_p_set_ = true;
+		is_calculated_ = false;
+		X_ = X;
+		Y_ = Y;
+		Z_ = Z;
+		P_ = P;
+		index_[0] = X_id;
+		index_[1] = Y_id;
+		index_[2] = Z_id;
+		CalcResult();
+	}
+
 
 	Triangle::~Triangle()
 	{

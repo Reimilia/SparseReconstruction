@@ -31,12 +31,16 @@ namespace TriProj
 		bool	is_barycentric_valid_ = false;
 		Vec3d	BaryCoord_;
 
+		int		index_[3];
+
 		void	CalcResult();
 		void	BarycentricValidity();
 
 	public:
 		Triangle(Vec3d X, Vec3d Y, Vec3d Z);
 		Triangle(Vec3d P, Vec3d X, Vec3d Y, Vec3d Z);
+		Triangle(Vec3d P, Vec3d X, int X_id,
+			Vec3d Y, int Y_id, Vec3d Z, int Z_id);
 		~Triangle();
 
 		void GetTriangle(Vec3d &X, Vec3d &Y, Vec3d &Z)
@@ -44,6 +48,13 @@ namespace TriProj
 			X = X_;
 			Y = Y_;
 			Z = Z_;
+		}
+
+		void GetTrianglePointIndex(int &X_id, int &Y_id, int &Z_id)
+		{
+			X_id = index_[0];
+			Y_id = index_[1];
+			Z_id = index_[2];
 		}
 		
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
@@ -61,7 +72,7 @@ namespace TriProj
 	};
 
 
-	class Triangle_Cmp : public std::binary_function
+	class Cmp_Triangle : public std::binary_function
 		<Triangle, Triangle,bool> 
 	{
 	protected:

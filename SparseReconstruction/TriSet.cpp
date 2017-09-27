@@ -78,12 +78,12 @@ namespace TriProj
 				{
 					triangle_set.push_back(TriProj::Triangle(
 						query_point,
-						points_[point_indexes[i]],
-						points_[point_indexes[j]],
-						points_[point_indexes[k]]
+						points_[point_indexes[i]], point_indexes[i],
+						points_[point_indexes[j]], point_indexes[j],
+						points_[point_indexes[k]], point_indexes[k]
 					));
 				}
-		std::sort(triangle_set.begin(), triangle_set.end(), Triangle_Cmp());
+		std::sort(triangle_set.begin(), triangle_set.end(), Cmp_Triangle());
 		return true;
 	}
 

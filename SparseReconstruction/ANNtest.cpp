@@ -51,10 +51,12 @@ bool Test::ANNtest::TestTriSetANN()
 	for (int i = 0; i < tri_index.size(); i++)
 	{
 		Eigen::Vector3d X, Y, Z;
+		int idx, idy, idz;
 		tri_index[i].GetTriangle(X, Y, Z);
-		std::cout << X.transpose() << std::endl
-			<< Y.transpose() << std::endl
-			<< Z.transpose() << std::endl ;
+		tri_index[i].GetTrianglePointIndex(idx, idy, idz);
+		std::cout << idx << ':' << X.transpose() << std::endl
+			<< idy << ":" << Y.transpose() << std::endl
+			<< idz << ":" << Z.transpose() << std::endl ;
 		std::cout << "With energy " << f(tri_index[i]) << std::endl << std::endl;
 	}
 	
