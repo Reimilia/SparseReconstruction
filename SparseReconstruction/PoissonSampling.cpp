@@ -82,11 +82,13 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 		
 		if (hash[random_sample_index])
 		{
+			std::cout << random_sample_index << std::endl;
 			continue;
 		}
 
 		sample_index.push_back(random_sample_index);
 		hash[random_sample_index] = true;
+		pool_remain_size_--;
 
 		//Remove Samples
 		ANNidxArray ANN_index = new ANNidx[1];
@@ -121,11 +123,13 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 		for (int i = 0; i < k_num; i++)
 		{
 			hash[ANN_index[i]] = true;
+			pool_remain_size_--;
 		}
 
 		if (ANN_index)	delete ANN_index;
 		if (ANN_point)	delete ANN_point;
 		if (ANN_dist)	delete ANN_dist;
+
 	}
 
 	bool flag = true;

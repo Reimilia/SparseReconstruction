@@ -65,7 +65,7 @@ bool OptMeshInit::GenerateInitialDict(
 	std::vector<Eigen::Vector3d> points)
 {
 	std::vector<double *> point_pool;
-	for (int i = 0; i < point_pool.size(); i++)
+	for (int i = 0; i < points.size(); i++)
 	{
 		point_pool.push_back(points[i].data());
 	}

@@ -128,12 +128,4 @@
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\lib\x64\ann.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-    <Library Include="..\lib\x64\annd.lib">
-      <Filter>资源文件</Filter>
-    </Library>
-  </ItemGroup>
 </Project>
