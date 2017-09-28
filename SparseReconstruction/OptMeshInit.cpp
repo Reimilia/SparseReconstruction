@@ -6,8 +6,43 @@ void OptMeshInit::CallDownSampling()
 {
 }
 
-bool OptMeshInit::ManifoldCheck(TriMesh mesh)
+bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 {
+	/*
+		1. Check if each point is ok
+		2. Check if each edge is ok
+	*/
+	int idx, idy, idz;
+
+	triangle.GetTrianglePointIndex(idx, idy, idz);
+	TriMesh::VertexHandle X, Y, Z;
+	X = mesh.vertex_handle(idx);
+	Y = mesh.vertex_handle(idy);
+	Z = mesh.vertex_handle(idz);
+	
+	TriMesh::FaceHandle added_face= mesh.add_face(
+		X,Y,Z
+	);
+
+	bool flag = mesh.is_manifold(X)
+		&&mesh.is_manifold(Y)
+		&&mesh.is_manifold(Z)
+		&&((	
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(X,Y)))&&
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(Y, Z)))&&
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(Z, X)))
+
+		)||(
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(Y, X))) &&
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(Z, Y))) &&
+			mesh.is_simple_link(mesh.edge_handle(mesh.find_halfedge(X, Z)))
+
+		));
+
+
+	mesh.delete_face(added_face);
+	mesh.garbage_collection();
+
 	return false;
 }
 
@@ -16,10 +51,6 @@ bool OptMeshInit::GenerateInitialDict(std::vector<Eigen::Vector3d> points)
 	return false;
 }
 
-bool OptMeshInit::GetInitSparseEncoding(TriProj::Triangle & encoding)
-{
-	return false;
-}
 
 OptMeshInit::OptMeshInit()
 {
@@ -66,6 +97,13 @@ bool OptMeshInit::BuildInitialSolution(
 			mesh_points_
 		);
 
+	//Add points in order
+	for (int i = 0; i < mesh_points_.size(); i++)
+	{
+		TriMesh::Point vertex(mesh_points_[i].data());
+		mesh.add_vertex(vertex);
+	}
+	
 	std::vector <TriProj::Triangle> triangles;
 	for (int i = 0; i < query_points_.size(); i++)
 	{
@@ -73,8 +111,23 @@ bool OptMeshInit::BuildInitialSolution(
 			query_points_[i],
 			triangles
 		);
-		int j = 0;
+		for (int j = 0; j < triangles.size(); j++)
+		{
+			// Add triangle into mesh and test if this is the manifold
+			if (ManifoldCheck(mesh, triangles[j]))
+			{
+				int idx, idy, idz;
+				triangles[j].GetTrianglePointIndex(idx, idy, idz);
+				mesh.add_face(
+					mesh.vertex_handle(idx),
+					mesh.vertex_handle(idy),
+					mesh.vertex_handle(idz)
+				);
+				sparse_encoding.push_back(triangles[j]);
+				break;
+			}
 
+		}
 	}
 
 	return true;

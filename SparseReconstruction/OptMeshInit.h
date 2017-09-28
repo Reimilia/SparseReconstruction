@@ -34,15 +34,12 @@ protected:
 
 
 private:
-	bool ManifoldCheck(TriMesh mesh);
-	bool HasEdge(int idx, int idy);
-	bool IsTriangleIn(int idx, int idy, int idz);
+	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
 
 
 	// Pick initial dict for that problem
 	bool GenerateInitialDict(std::vector<Eigen::Vector3d> input_points);
 	// Generate sparse encoding
-	bool GetInitSparseEncoding(TriProj::Triangle &encoding);
 	
 	
 public:
