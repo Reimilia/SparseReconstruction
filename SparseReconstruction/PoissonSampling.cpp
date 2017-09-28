@@ -75,14 +75,16 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 
 	//Random seeds
 	srand((int)time(0));
-		
+	for (int i = 0; i < pool_size_; i++)
+		hash[i] = false;
+
 	while (pool_remain_size_ > 0 && sample_index.size()<=sample_size)
 	{
 		int random_sample_index = rand() % pool_size_;
 		
 		if (hash[random_sample_index])
 		{
-			std::cout << random_sample_index << std::endl;
+			std::cout << pool_remain_size_ << std::endl;
 			continue;
 		}
 
@@ -108,10 +110,10 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 			0.0
 		);
 		if (ANN_index)	delete ANN_index;
-		if (ANN_dist)	delete ANN_point;
+		if (ANN_dist)	delete ANN_dist;
 		ANN_index = new ANNidx[k_num];
 		ANN_dist = new ANNdist[k_num];
-		
+
 		kdtree->annkFRSearch(
 			ANN_point,
 			radius_,

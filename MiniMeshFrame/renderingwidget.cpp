@@ -376,14 +376,12 @@ void RenderingWidget::QuickTest()
 			points.push_back(Eigen::Vector3d(p.data()));
 		}
 		std::vector<TriProj::Triangle> ans;
-		TriMesh mesh_;
 		test->BuildInitialSolution(
 			para,
 			points,
-			mesh_,
+			ptr_mesh_,
 			ans
 		);
-		ptr_mesh_ = mesh_;
 	}
 	catch (const std::exception&)
 	{

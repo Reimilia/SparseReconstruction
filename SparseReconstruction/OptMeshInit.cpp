@@ -116,11 +116,11 @@ bool OptMeshInit::BuildInitialSolution(
 	TriMesh & mesh,
 	std::vector<TriProj::Triangle> & sparse_encoding)
 {
-	if (!mesh.vertices_empty())
+	/*if (!mesh.vertices_empty())
 	{
 		std::cerr << "This is not an initial empty mesh!" << std::endl;
 		return false;
-	}
+	}*/
 
 	mesh.clean();
 	mesh.garbage_collection();
