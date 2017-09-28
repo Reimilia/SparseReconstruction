@@ -2,10 +2,6 @@
 
 
 
-void OptMeshInit::CallDownSampling()
-{
-}
-
 bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 {
 	/*
@@ -20,10 +16,29 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	Y = mesh.vertex_handle(idy);
 	Z = mesh.vertex_handle(idz);
 	
+	//Check if this triangle already exists
+	bool is_triangle_exists = false;
+	for (TriMesh::VertexFaceIter vf_iter = mesh.vf_iter(X);
+		vf_iter.is_valid(); vf_iter++)
+	{
+		TriMesh::FaceVertexIter fv_iter = mesh.fv_iter(*vf_iter);
+		int aidx, aidy=-1, aidz=-1;
+		aidx = fv_iter->idx();
+		if ((++fv_iter).is_valid()) aidy = fv_iter->idx();
+		if ((++fv_iter).is_valid()) aidz = fv_iter->idx();
+		if ((aidy == idy&&aidz == idz) || (aidz == idy&&aidy == idz))
+		{
+			is_triangle_exists = true;
+			break;
+		}
+	}
+
+	if (is_triangle_exists)
+		return true;
 	TriMesh::FaceHandle added_face= mesh.add_face(
 		X,Y,Z
 	);
-
+	
 	bool flag = mesh.is_manifold(X)
 		&&mesh.is_manifold(Y)
 		&&mesh.is_manifold(Z)
@@ -43,12 +58,45 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	mesh.delete_face(added_face);
 	mesh.garbage_collection();
 
-	return false;
+	return flag;
 }
 
-bool OptMeshInit::GenerateInitialDict(std::vector<Eigen::Vector3d> points)
+bool OptMeshInit::GenerateInitialDict(
+	std::vector<Eigen::Vector3d> points)
 {
-	return false;
+	std::vector<double *> point_pool;
+	for (int i = 0; i < point_pool.size(); i++)
+	{
+		point_pool.push_back(points[i].data());
+	}
+	PoissonSampling sampler(point_pool);
+	sampler.SetRaduis(0.05);
+
+	std::vector<int> indexes;
+	if (!sampler.GenerateSamples(mesh_size_, indexes))
+	{
+		std::cerr << "Insufficient points!"
+			"The sampling paramter is not setting properly.\n";
+	}
+
+	bool *is_mesh_dict = new bool[input_size_];
+	mesh_size_ = indexes.size();
+	for (int i = 0; i < mesh_size_; i++)
+	{
+		mesh_points_.push_back(points[indexes[i]]);
+		is_mesh_dict[indexes[i]] = true;
+	}
+	for (int i = 0; i < points.size(); i++)
+	{
+		if (!is_mesh_dict[i])
+			query_points_.push_back(points[i]);
+	}
+
+	//Don't forget to delete variables.
+	if(is_mesh_dict)
+		delete[] is_mesh_dict;
+
+	return true;
 }
 
 
@@ -63,9 +111,9 @@ OptMeshInit::~OptMeshInit()
 }
 
 bool OptMeshInit::BuildInitialSolution(
-	OptSolverParaSet para, 
+	OptSolverParaSet para,
 	std::vector<Eigen::Vector3d> input_points,
-	TriMesh & mesh, 
+	TriMesh & mesh,
 	std::vector<TriProj::Triangle> & sparse_encoding)
 {
 	if (!mesh.vertices_empty())
@@ -76,6 +124,8 @@ bool OptMeshInit::BuildInitialSolution(
 
 	mesh.clean();
 	mesh.garbage_collection();
+	input_size_ = input_points.size();
+	mesh_size_ = round(para.initial_dict_ratio_*input_size_);
 
 	//Step 1: Resampling
 	if (!GenerateInitialDict(input_points))

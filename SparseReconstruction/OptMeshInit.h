@@ -1,9 +1,13 @@
 #pragma once
+
+#include "Eigen\Core"
+#include "Eigen\Sparse"
+
+
 #include "TriMesh.h"
 #include "TriSet.h"
 #include "OptSolverParaSet.h"
-#include "Eigen\Core"
-#include "Eigen\Sparse"
+#include "PoissonSampling.h"
 
 // Generate the mesh we need
 /*
@@ -19,9 +23,6 @@ protected:
 	// resampling size
 	int			mesh_size_;
 	int			input_size_;
-	
-	// kNN parameter
-	int			triset_control_number_;
 
 	// dictionary points
 	std::vector<Eigen::Vector3d>	mesh_points_;
@@ -29,7 +30,6 @@ protected:
 	// approximated points
 	std::vector<Eigen::Vector3d>	query_points_;
 
-	void CallDownSampling();
 
 
 

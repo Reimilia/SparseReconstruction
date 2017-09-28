@@ -259,17 +259,15 @@
     <ResourceCompile Include="MiniMeshFrame.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\lib\x64\ann.lib" />
-    <Library Include="..\lib\x64\annd.lib" />
-    <Library Include="..\lib\x64\glut32.lib" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SparseReconstruction\SparseReconstruction.vcxproj">
       <Project>{aed484bc-745d-40f3-8374-d89441ef753e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\third-party\OpenMesh\OpenMesh.vcxproj">
       <Project>{c3e38f02-d009-4e3d-8dd8-6e2b062010bd}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\lib\x64\glut32.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

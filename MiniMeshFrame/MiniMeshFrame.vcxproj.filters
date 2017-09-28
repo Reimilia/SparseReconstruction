@@ -101,11 +101,5 @@
     <Library Include="..\lib\x64\glut32.lib">
       <Filter>Resource Files</Filter>
     </Library>
-    <Library Include="..\lib\x64\ann.lib">
-      <Filter>Resource Files</Filter>
-    </Library>
-    <Library Include="..\lib\x64\annd.lib">
-      <Filter>Resource Files</Filter>
-    </Library>
   </ItemGroup>
 </Project>

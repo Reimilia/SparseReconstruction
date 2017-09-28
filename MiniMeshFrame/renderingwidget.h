@@ -11,6 +11,7 @@
 #include <QtWidgets/QAction>
 #include <QTextCodec>
 
+#include "SparseReconstruction\OptMeshInit.h"
 
 
 

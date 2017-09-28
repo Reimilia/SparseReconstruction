@@ -5,7 +5,6 @@
 #include <gl/glut.h>
 #include "ArcBall.h"
 #include "globalFunctions.h"
-#include "SparseReconstruction\DicUpdateTest.h"
 
 RenderingWidget::RenderingWidget(QWidget *parent, MainWindow* mainwindow)
 : QGLWidget(parent), ptr_mainwindow_(mainwindow), eye_distance_(5.0),
@@ -365,10 +364,26 @@ void RenderingWidget::CheckDrawAxes(bool bV)
 
 void RenderingWidget::QuickTest()
 {
-	DicUpdateTest *test = new DicUpdateTest(ptr_mesh_);
+	OptSolverParaSet para;
+	para.SetDefaultPara();
+	OptMeshInit *test = new OptMeshInit();
 	try
 	{
-		ptr_mesh_ = test->solver();
+		std::vector<Eigen::Vector3d> points;
+		for (int i = 0; i < ptr_mesh_.n_vertices(); i++)
+		{
+			TriMesh::Point p=ptr_mesh_.point(ptr_mesh_.vertex_handle(i));
+			points.push_back(Eigen::Vector3d(p.data()));
+		}
+		std::vector<TriProj::Triangle> ans;
+		TriMesh mesh_;
+		test->BuildInitialSolution(
+			para,
+			points,
+			mesh_,
+			ans
+		);
+		ptr_mesh_ = mesh_;
 	}
 	catch (const std::exception&)
 	{
