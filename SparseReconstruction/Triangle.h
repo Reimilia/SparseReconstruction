@@ -77,7 +77,7 @@ namespace TriProj
 	{
 	protected:
 		double q_norm = 0.5;
-		double edge_term_ = 1.6;
+		double edge_term_ = 2.5;
 		double normal_term_ = 0.0;
 		double energy_func_(Triangle t)
 		{

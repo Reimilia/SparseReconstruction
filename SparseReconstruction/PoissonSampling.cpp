@@ -78,13 +78,13 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 	for (int i = 0; i < pool_size_; i++)
 		hash[i] = false;
 
-	while (pool_remain_size_ > 0 && sample_index.size()<=sample_size)
+	while (pool_remain_size_ > 0 && sample_index.size()<sample_size)
 	{
 		int random_sample_index = rand() % pool_size_;
 		
 		if (hash[random_sample_index])
 		{
-			std::cout << pool_remain_size_ << std::endl;
+			//std::cout << pool_remain_size_ << std::endl;
 			continue;
 		}
 

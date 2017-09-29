@@ -49,7 +49,7 @@ struct OptSolverParaSet
 
 		initial_dict_ratio_ = 0.4;
 		
-		triangle_set_control_num_ = 10;
+		triangle_set_control_num_ = 5;
 
 		epsilion_ = 0.001;
 

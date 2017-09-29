@@ -34,9 +34,10 @@ protected:
 
 
 private:
+	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle);
+	bool IsEdgeFillUp(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y);
 	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
-
-
+	
 	// Pick initial dict for that problem
 	bool GenerateInitialDict(std::vector<Eigen::Vector3d> input_points);
 	// Generate sparse encoding
