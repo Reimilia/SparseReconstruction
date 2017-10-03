@@ -44,7 +44,7 @@ bool OptMeshInit::IsEdgeFillUp(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::V
 {
 	//Check halfedge status
 	return (mesh.find_halfedge(X, Y) != TriMesh::InvalidHalfedgeHandle
-		&&mesh.find_halfedge(X, Y) != TriMesh::InvalidHalfedgeHandle);
+		&&mesh.find_halfedge(Y, X) != TriMesh::InvalidHalfedgeHandle);
 }
 
 bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
@@ -71,7 +71,7 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	
 	/*TriMesh::FaceHandle f = mesh.add_face(X, Y, Z);
 	bool flag = true;
-	if (!(mesh.is_manifold(X) && mesh.is_manifold(Y) && mesh.is_manifold(Z)))
+	if (!(mesh.is_simply_connected(f)))
 		flag = false;
 	mesh.request_face_status();
 	mesh.delete_face(f,false);

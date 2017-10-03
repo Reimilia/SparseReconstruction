@@ -67,7 +67,7 @@ void MainWindow::CreateActions()
 //	connect(action_saveas_, SIGNAL(triggered()), imagewidget_, SLOT(SaveAs()));
 
 	action_test_sth_ = new QAction(tr("RunTest"), this);
-	connect(action_test_sth_, SIGNAL(triggered()), renderingwidget_, SLOT(QuickTest()));
+	connect(action_test_sth_, SIGNAL(triggered()), renderingwidget_, SLOT(DictUpdateTest()));
 	
 	action_loadmesh_ = new QAction(tr("readOBJ"), this);
 	action_loadtexture_ = new QAction(tr("LoadTexture"), this);

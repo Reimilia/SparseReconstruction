@@ -12,8 +12,7 @@
 #include <QTextCodec>
 
 #include "SparseReconstruction\OptMeshInit.h"
-
-
+#include "SparseReconstruction\DicUpdateTest.h"
 
 #include "SparseReconstruction\TriMesh.h"
 #include "HE_mesh\Vec.h"
@@ -64,6 +63,7 @@ private:
 	void WriteMesh();
 	void LoadTexture();
 	void QuickTest();
+	void DictUpdateTest();
 
 	void CheckDrawPoint(bool bv);
 	void CheckDrawEdge(bool bv);

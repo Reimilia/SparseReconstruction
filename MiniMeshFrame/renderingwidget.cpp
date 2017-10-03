@@ -391,6 +391,16 @@ void RenderingWidget::QuickTest()
 	updateGL();
 }
 
+void RenderingWidget::DictUpdateTest()
+{
+	OptSolverParaSet para;
+	para.SetDefaultPara();
+	DicUpdateTest *test = new DicUpdateTest(ptr_mesh_);
+	ptr_mesh_= test->solver();
+	delete test;
+	updateGL();
+}
+
 void RenderingWidget::DrawAxes(bool bV)
 {
 	if (!bV)

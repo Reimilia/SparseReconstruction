@@ -62,7 +62,7 @@ void DicUpdateTest::compute()
 			B_.insert(fv_list[1]->idx(), P_idx) = beta;
 			B_.insert(fv_list[2]->idx(), P_idx) = gamma;
 
-			TriMesh::Point point_P = alpha * mesh_.point(*fv_list[0]) + beta * mesh_.point(*fv_list[1]) + gamma * mesh_.point(*fv_list[2]) + double(rand()) / double(RAND_MAX) * f_normal;
+			TriMesh::Point point_P = alpha * mesh_.point(*fv_list[0]) + beta * mesh_.point(*fv_list[1]) + gamma * mesh_.point(*fv_list[2]) + rand()%10000/100000.0 * f_normal;
 			P_.col(P_idx) << point_P[0], point_P[1], point_P[2];
 
 			P_idx++;

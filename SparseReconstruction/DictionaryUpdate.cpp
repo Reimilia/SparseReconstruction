@@ -135,20 +135,22 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
+
 		L.insert(it->idx(), it->idx()) = mesh_.valence(*it);
 		for (auto vit = mesh_.vv_begin(*it); vit != mesh_.vv_end(*it); vit++)
 		{
-			L.insert(it->idx(), vit->idx()) = -1;
-			L.insert(vit->idx(), it->idx()) = -1;
+			std::cout << it->idx() << ' ' << vit->idx() << std::endl;
+			L.coeffRef(it->idx(), vit->idx()) = -1;
+			L.coeffRef(vit->idx(), it->idx()) = -1;
 		}
 	}
 
 	MatrixXd b_;
 	b_ = gamma_ * (Z_ - P_ + D_ / gamma_).transpose();
 	VectorXd V_x, V_y, V_z, b_x, b_y, b_z;
-	b_x = b_.col(1);
-	b_y = b_.col(2);
-	b_z = b_.col(3);
+	b_x = b_.col(0);
+	b_y = b_.col(1);
+	b_z = b_.col(2);
 
 	SparseMatrix<double> coef_mat;
 	coef_mat = 2 * omega_e / l * L + gamma_ * B_ * B_.transpose();
@@ -156,13 +158,14 @@ void DictionaryUpdate::SolveSubV()
 	SparseLU<SparseMatrix<double>> decomposition;
 	coef_mat.makeCompressed();
 	decomposition.compute(coef_mat);
+	//This line crashed down
 	V_x = decomposition.solve(b_x).transpose();
 	V_y = decomposition.solve(b_y).transpose();
 	V_z = decomposition.solve(b_z).transpose();
 
-	V_.row(1) = V_x;
-	V_.row(2) = V_y;
-	V_.row(3) = V_z;
+	V_.row(0) = V_x;
+	V_.row(1) = V_y;
+	V_.row(2) = V_z;
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
