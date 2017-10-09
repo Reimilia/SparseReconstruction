@@ -17,7 +17,7 @@ private:
 
 	TriMesh							mesh_;
 	Eigen::MatrixXd					P_;
-	Eigen::SparseMatrix<double>		B_;
+	Eigen::SparseMatrix<double,Eigen::RowMajor>		B_;
 	Eigen::MatrixXd					V_;
 
 

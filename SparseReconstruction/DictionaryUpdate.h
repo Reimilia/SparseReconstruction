@@ -3,6 +3,7 @@
 
 #include "TriMesh.h"
 #include <Eigen/Sparse>
+#include <Eigen/Cholesky>
 
 class DictionaryUpdate;
 

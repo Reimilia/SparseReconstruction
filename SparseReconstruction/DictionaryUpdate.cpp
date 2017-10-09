@@ -30,6 +30,7 @@ double normpq( const MatrixXd M )	// return the Lpq norm of matrix M
 
 double normF( const MatrixXd M )
 {
+	// This is equivalent to M.norm()
 	double norm = 0;
 	for ( int i = 0; i < M.cols(); i++ )
 	{
@@ -75,7 +76,7 @@ bool DictionaryUpdate::test()
 
 TriMesh DictionaryUpdate::solver()
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		PrimalUpdate();
 		DualUpdate();
@@ -118,8 +119,14 @@ void DictionaryUpdate::SolveSubZ()
 		else
 		{
 			beta_ = (z_ + beta_a) / 2;
-			for (int k = 0; k < 100; k++)
+			std::cout << "Do some iteration:\n";
+			std::cout << beta_ << std::endl;
+			for (int k = 0; k < 10; k++)
+			{
 				beta_ = z_ - lambda_ * q * pow(beta_, q - 1);
+				std::cout << beta_ << std::endl;
+			}
+			std::cout << "End some iteration!\n\n";
 			Z_.col(i) = beta_ / z_ * X_.col(i);
 		}
 	}
@@ -139,14 +146,15 @@ void DictionaryUpdate::SolveSubV()
 		L.insert(it->idx(), it->idx()) = mesh_.valence(*it);
 		for (auto vit = mesh_.vv_begin(*it); vit != mesh_.vv_end(*it); vit++)
 		{
-			std::cout << it->idx() << ' ' << vit->idx() << std::endl;
+			//std::cout << it->idx() << ' ' << vit->idx() << std::endl;
 			L.coeffRef(it->idx(), vit->idx()) = -1;
 			L.coeffRef(vit->idx(), it->idx()) = -1;
 		}
 	}
 
 	MatrixXd b_;
-	b_ = gamma_ * (Z_ - P_ + D_ / gamma_).transpose();
+	b_ = gamma_ * (Z_ - P_ + D_ / gamma_)* B_.transpose();
+	b_.transposeInPlace();
 	VectorXd V_x, V_y, V_z, b_x, b_y, b_z;
 	b_x = b_.col(0);
 	b_y = b_.col(1);
@@ -154,10 +162,11 @@ void DictionaryUpdate::SolveSubV()
 
 	SparseMatrix<double> coef_mat;
 	coef_mat = 2 * omega_e / l * L + gamma_ * B_ * B_.transpose();
+	//std::cout << b_x.rows() << ' ' << b_x.cols() << std::endl;
+	//std::cout << coef_mat.rows() << ' ' << coef_mat.cols() << std::endl;
 
-	SparseLU<SparseMatrix<double>> decomposition;
 	coef_mat.makeCompressed();
-	decomposition.compute(coef_mat);
+	SimplicialLLT<SparseMatrix<double>> decomposition(coef_mat);
 	//This line crashed down
 	V_x = decomposition.solve(b_x).transpose();
 	V_y = decomposition.solve(b_y).transpose();
@@ -171,11 +180,13 @@ void DictionaryUpdate::SolveSubV()
 	{
 		mesh_.set_point(*it, TriMesh::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
 	}
+	mesh_.update_normals();
+	std::cout << V_ << std::endl;
 }
 
 void DictionaryUpdate::PrimalUpdate()
 {
-	for (int i = 0; i < 100; i++)								
+	for (int i = 0; i < 1; i++)								
 	{
 		SolveSubZ();
 		SolveSubV();
