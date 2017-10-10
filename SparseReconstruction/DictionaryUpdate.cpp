@@ -52,9 +52,8 @@ DictionaryUpdate::DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const 
 	gamma_ = 0.3;
 	wid_P_ = P_.cols();
 	wid_V_ = V_.cols();
-
 	Z_ = P_ - V_ * B_;
-
+	//std::cout << Z_.norm() << std::endl;
 	D_.resize(3, wid_P_);
 	D_.setZero();
 }
@@ -107,38 +106,44 @@ void DictionaryUpdate::SolveSubZ()
 	double z_ = 0.;
 	double beta_a = pow((2. * lambda_ * (1. - q)), (1. / (2. - q)));
 	double h_a = beta_a + lambda_ * q * pow(beta_a, q - 1); 
+	std::cout << "lambda:" << lambda_ << std::endl;
+	std::cout << "beta_a:" << beta_a << std::endl;
+	std::cout << "h_a:" << h_a << std::endl;
 	MatrixXd X_;
 	X_= P_ - V_ * B_ - D_ / gamma_;
-
+	std::cout << "norm_Z:" << Z_.norm() << std::endl;
 	double beta_;
-	for (int i = 0; i < wid_V_; i++)
+	for (int i = 0; i < wid_P_; i++)
 	{
 		z_ = (X_.col(i)).norm();
+		//std::cout << X_.col(i) << std::endl;
 		if (z_ <= h_a)
 			Z_.col(i) = Vector3d(0, 0, 0);
 		else
 		{
 			beta_ = (z_ + beta_a) / 2;
-			std::cout << "Do some iteration:\n";
-			std::cout << beta_ << std::endl;
-			for (int k = 0; k < 10; k++)
+			//std::cout << "Do some iteration:\n";
+			//std::cout << beta_ << std::endl;
+			for (int k = 0; k < 5; k++)
 			{
 				beta_ = z_ - lambda_ * q * pow(beta_, q - 1);
-				std::cout << beta_ << std::endl;
+				
 			}
-			std::cout << "End some iteration!\n\n";
+			//std::cout << beta_ << std::endl;
+			//std::cout << "End some iteration!\n\n";
 			Z_.col(i) = beta_ / z_ * X_.col(i);
 		}
 	}
+	std::cout << "norm_Z:" << Z_.norm() << std::endl;
+
 }
 
 void DictionaryUpdate::SolveSubV()
 {
-	SparseMatrix<double> L; // Laplace matrix of the mesh
-	L.resize(wid_V_, wid_V_);
+	SparseMatrix<double> L(wid_V_, wid_V_); // Laplace matrix of the mesh
 	L.setZero();
 
-	int l = 0;		// number of edges of the mesh
+	int l = mesh_.n_edges();		// number of edges of the mesh
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
@@ -162,12 +167,14 @@ void DictionaryUpdate::SolveSubV()
 
 	SparseMatrix<double> coef_mat;
 	coef_mat = 2 * omega_e / l * L + gamma_ * B_ * B_.transpose();
-	//std::cout << b_x.rows() << ' ' << b_x.cols() << std::endl;
-	//std::cout << coef_mat.rows() << ' ' << coef_mat.cols() << std::endl;
+	std::cout << "norm_B: " << B_.norm() << std::endl;
+	std::cout << "norm_L: " << L.norm() << std::endl;
+	std::cout << "norm_b: " << b_.norm() << std::endl;
+	std::cout << "norm_coef: " << coef_mat.norm() << std::endl;
 
 	coef_mat.makeCompressed();
+	
 	SimplicialLLT<SparseMatrix<double>> decomposition(coef_mat);
-	//This line crashed down
 	V_x = decomposition.solve(b_x).transpose();
 	V_y = decomposition.solve(b_y).transpose();
 	V_z = decomposition.solve(b_z).transpose();
@@ -178,10 +185,12 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
+		//std::cout << V_x[it->idx()] << ' ' << V_y[it->idx()]
+		//	<< ' ' << V_z[it->idx()] << std::endl;
 		mesh_.set_point(*it, TriMesh::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
 	}
 	mesh_.update_normals();
-	std::cout << V_ << std::endl;
+	
 }
 
 void DictionaryUpdate::PrimalUpdate()

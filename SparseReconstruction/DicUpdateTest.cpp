@@ -13,34 +13,39 @@ DicUpdateTest::~DicUpdateTest()
 
 TriMesh	DicUpdateTest::solver()
 {
-	compute();
+	int v = mesh_.n_vertices();
+	int f = mesh_.n_faces();
+	Eigen::SparseMatrix<double> B_(v, v + 5 * f);
+	compute(B_);
 	DictionaryUpdate DicUp(mesh_, V_, B_, P_);
 	return DicUp.solver();
 }
 
-void DicUpdateTest::compute()
+void DicUpdateTest::compute(Eigen::SparseMatrix<double> &B_)
 {
-	
-	// set up V_
+
 	int wid_V = mesh_.n_vertices();
-	
 	int wid_P = 5 * mesh_.n_faces();
+	// set up V_
+	
 	V_.resize(3, wid_V);
 	V_.setZero();
 
 	std::vector<Eigen::Triplet<double> > coef_list;
     mesh_.update_face_normals();
 	
+	// set up B_ and P_, sample 5 points for every face
+	P_.resize(3, wid_V + wid_P);
 	for (auto v_it = mesh_.vertices_begin(); v_it != mesh_.vertices_end(); v_it++)
 	{
 		TriMesh::Point v_pos = mesh_.point(*v_it);
 		V_.col(v_it->idx()) << v_pos[0], v_pos[1], v_pos[2];
+		P_.col(v_it->idx()) << v_pos[0], v_pos[1], v_pos[2];
 		coef_list.push_back(Eigen::Triplet<double>(
 			v_it->idx(), v_it->idx(), 1));
 	}
 
-	// set up B_ and P_, sample 5 points for every face
-	P_.resize(3, wid_P);
+	
 	
 	int P_idx = wid_V;
 
@@ -74,13 +79,13 @@ void DicUpdateTest::compute()
 				fv_list[2]->idx(), P_idx, gamma));
 
 			TriMesh::Point point_P = alpha * mesh_.point(*fv_list[0]) + beta * mesh_.point(*fv_list[1]) + gamma * mesh_.point(*fv_list[2]) + rand()%10000/100000.0 * f_normal;
-			P_.col(P_idx-wid_V) << point_P[0], point_P[1], point_P[2];
-			//std::cout << P_.col(P_idx-wid_V) << std::endl;
+			P_.col(P_idx) << point_P[0], point_P[1], point_P[2];
+			//std::cout << fv_list[0]->idx() <<' ' << fv_list[1]->idx()<<' '
+			//	<< fv_list[2]->idx() << std::endl;
 			P_idx++;
 		}
 		//std::cout << "\n\n";
 	}
-	Eigen::SparseMatrix<double,Eigen::ColMajor> B_(wid_V, wid_V + wid_P);
 	B_.setFromTriplets(coef_list.begin(), coef_list.end());
-	this->B_ = B_;
+	std::cout << "Pass!\n";
 }

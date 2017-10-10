@@ -13,11 +13,11 @@ public:
 	TriMesh							solver();  // Return the Mesh after Dictionary Update
 
 private:
-	void							compute();	// Compute P, B, V for Dictionary Update 
+	void							compute(Eigen::SparseMatrix<double> &);	// Compute P, B, V for Dictionary Update 
 
 	TriMesh							mesh_;
 	Eigen::MatrixXd					P_;
-	Eigen::SparseMatrix<double,Eigen::RowMajor>		B_;
+	//Eigen::SparseMatrix<double>		B_;
 	Eigen::MatrixXd					V_;
 
 
