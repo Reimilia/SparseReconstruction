@@ -75,7 +75,7 @@ bool DictionaryUpdate::test()
 
 TriMesh DictionaryUpdate::solver()
 {
-	for (int i = 0; i < 1; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		PrimalUpdate();
 		DualUpdate();
@@ -103,7 +103,7 @@ double DictionaryUpdate::ComputeEnergy()
 void DictionaryUpdate::SolveSubZ()
 {
 	double lambda_ = 1 / (wid_P_ * gamma_);
-	double z_ = 0.;
+	double z_ = 1.;
 	double beta_a = pow((2. * lambda_ * (1. - q)), (1. / (2. - q)));
 	double h_a = beta_a + lambda_ * q * pow(beta_a, q - 1); 
 	std::cout << "lambda:" << lambda_ << std::endl;
@@ -115,7 +115,16 @@ void DictionaryUpdate::SolveSubZ()
 	double beta_;
 	for (int i = 0; i < wid_P_; i++)
 	{
-		z_ = (X_.col(i)).norm();
+		double x_norm_ = (X_.col(i)).norm();
+		//x close to zero, no need to solve
+		if (x_norm_ < 1e-5)
+		{
+			Z_.col(i) = Vector3d(0, 0, 0);
+			continue;
+		}
+		double lambda_ = pow(x_norm_,q-2) / (wid_P_ * gamma_);
+		double beta_a = pow((2. * lambda_ * (1. - q)), (1. / (2. - q)));
+		double h_a = beta_a + lambda_ * q * pow(beta_a, q - 1);
 		//std::cout << X_.col(i) << std::endl;
 		if (z_ <= h_a)
 			Z_.col(i) = Vector3d(0, 0, 0);
@@ -158,7 +167,7 @@ void DictionaryUpdate::SolveSubV()
 	}
 
 	MatrixXd b_;
-	b_ = gamma_ * (Z_ - P_ + D_ / gamma_)* B_.transpose();
+	b_ = - gamma_ * (Z_ - P_ + D_ / gamma_)* B_.transpose();
 	b_.transposeInPlace();
 	VectorXd V_x, V_y, V_z, b_x, b_y, b_z;
 	b_x = b_.col(0);
@@ -166,7 +175,7 @@ void DictionaryUpdate::SolveSubV()
 	b_z = b_.col(2);
 
 	SparseMatrix<double> coef_mat;
-	coef_mat = 2 * omega_e / l * L + gamma_ * B_ * B_.transpose();
+	coef_mat = omega_e / l * L + gamma_ * B_ * B_.transpose();
 	std::cout << "norm_B: " << B_.norm() << std::endl;
 	std::cout << "norm_L: " << L.norm() << std::endl;
 	std::cout << "norm_b: " << b_.norm() << std::endl;
@@ -179,9 +188,11 @@ void DictionaryUpdate::SolveSubV()
 	V_y = decomposition.solve(b_y).transpose();
 	V_z = decomposition.solve(b_z).transpose();
 
+	std::cout << V_.col(0) << std::endl;
 	V_.row(0) = V_x;
 	V_.row(1) = V_y;
 	V_.row(2) = V_z;
+	std::cout << V_.col(0) << std::endl;
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{

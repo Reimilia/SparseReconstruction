@@ -78,7 +78,10 @@ void DicUpdateTest::compute(Eigen::SparseMatrix<double> &B_)
 			coef_list.push_back(Eigen::Triplet<double>(
 				fv_list[2]->idx(), P_idx, gamma));
 
-			TriMesh::Point point_P = alpha * mesh_.point(*fv_list[0]) + beta * mesh_.point(*fv_list[1]) + gamma * mesh_.point(*fv_list[2]) + rand()%10000/100000.0 * f_normal;
+			TriMesh::Point point_P = alpha * mesh_.point(*fv_list[0]) + 
+				beta * mesh_.point(*fv_list[1]) + 
+				gamma * mesh_.point(*fv_list[2]) + 
+				rand()%10000/5000.0 * f_normal;
 			P_.col(P_idx) << point_P[0], point_P[1], point_P[2];
 			//std::cout << fv_list[0]->idx() <<' ' << fv_list[1]->idx()<<' '
 			//	<< fv_list[2]->idx() << std::endl;
