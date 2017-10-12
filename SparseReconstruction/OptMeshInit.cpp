@@ -26,17 +26,24 @@ bool OptMeshInit::IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle)
 		//std::cout << aidx << ' ' << aidy << ' ' << aidz << std::endl;
 		if ((aidx == idx && aidy == idy &&aidz == idz)
 			|| (aidx == idx && aidz == idy &&aidy == idz)
-			|| (aidx == idy && aidy == idx &&aidz == idz)
-			|| (aidx == idy && aidy == idz &&aidz == idx)
-			|| (aidx == idz && aidy == idx &&aidz == idy)
-			|| (aidx == idz && aidy == idy &&aidz == idx)
+			//|| (aidx == idy && aidy == idx &&aidz == idz)
+			//|| (aidx == idy && aidy == idz &&aidz == idx)
+			//|| (aidx == idz && aidy == idx &&aidz == idy)
+			//|| (aidx == idz && aidy == idy &&aidz == idx)
 			)
 		{
 			is_triangle_exists = true;
 			break;
 		}
 	}
-
+	/*is_triangle_exists = (mesh.find_halfedge(X, Y) != TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Y, Z) != TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Z, X) != TriMesh::InvalidHalfedgeHandle)
+		||
+		(mesh.find_halfedge(X, Z) != TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Z, Y) != TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Y, X) != TriMesh::InvalidHalfedgeHandle);
+		*/
 	return is_triangle_exists;
 }
 
@@ -60,23 +67,42 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	X = mesh.vertex_handle(idx);
 	Y = mesh.vertex_handle(idy);
 	Z = mesh.vertex_handle(idz);
-	// Now we need to judge the manifoldity without letting 
-	// the face be inserted.
-
-	if (IsEdgeFillUp(mesh, X, Y) || IsEdgeFillUp(mesh, Y, Z) || IsEdgeFillUp(mesh, Z, X))
+	
+	// Check if we have space to insert the triangle
+	bool is_edge_fill_up = (mesh.find_halfedge(X, Y) == TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Y, Z) == TriMesh::InvalidHalfedgeHandle
+		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle)
+		||
+		(mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle
+			&& mesh.find_halfedge(Z, Y) == TriMesh::InvalidHalfedgeHandle
+			&& mesh.find_halfedge(Y, X) == TriMesh::InvalidHalfedgeHandle);
+	if(!is_edge_fill_up)
 		return false;
 
-	if (!(mesh.is_boundary(X) && mesh.is_boundary(Y)&& mesh.is_boundary(Z)))
-		return false;
+	//if (!(mesh.is_boundary(X) && mesh.is_boundary(Y)&& mesh.is_boundary(Z)))
+	//	return false;
 	
 	/*TriMesh::FaceHandle f = mesh.add_face(X, Y, Z);
 	bool flag = true;
-	if (!(mesh.is_simply_connected(f)))
-		flag = false;
+	mesh.request_vertex_status();
+	mesh.request_edge_status();
 	mesh.request_face_status();
+	mesh.request_halfedge_status();
+	for (TriMesh::FaceHalfedgeIter fh_it = mesh.fh_iter(f);
+		fh_it.is_valid(); fh_it++)
+	{
+		if (!mesh.is_boundary(*fh_it))
+		{
+			if (!mesh.is_flip_ok(mesh.edge_handle(*fh_it)))
+			{
+				flag = false;
+				break;
+			}
+		}
+	}
+	
 	mesh.delete_face(f,false);
-	mesh.garbage_collection();
-	return flag;*/
+	mesh.garbage_collection();*/
 	return true;
 }
 
@@ -195,6 +221,7 @@ bool OptMeshInit::BuildInitialSolution(
 			// Add triangle into mesh and test if this is the manifold
 			if (IsTriangleInMesh(mesh, triangles[j]))
 			{
+				std::cout << "Here!" << std::endl;
 				sparse_encoding.push_back(triangles[j]);
 				break;
 			}
@@ -214,6 +241,14 @@ bool OptMeshInit::BuildInitialSolution(
 		}
 	}
 
+	bool is_manifold = true;
+	for (TriMesh::VertexIter v_it = mesh.vertices_begin();
+		v_it != mesh.vertices_end(); v_it++)
+	{
+		is_manifold &= mesh.is_manifold(*v_it);
+	}
+	if (!is_manifold)
+		std::cout << "Opps!\n";
 	return true;
 
 }

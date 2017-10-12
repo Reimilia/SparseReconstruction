@@ -131,6 +131,7 @@
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
     <ClCompile Include="PoissonSampling.cpp" />
+    <ClCompile Include="SparseEncodingSolver.cpp" />
     <ClCompile Include="TriProjEnergy.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OptMeshInit.cpp" />
@@ -148,7 +149,9 @@
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
     <ClInclude Include="PoissonSampling.h" />
+    <ClInclude Include="SparseEncodingSolver.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="TriIntersection.h" />
     <ClInclude Include="TriProjEnergy.h" />
     <ClInclude Include="OptMeshInit.h" />
     <ClInclude Include="OptSolverParaSet.h" />

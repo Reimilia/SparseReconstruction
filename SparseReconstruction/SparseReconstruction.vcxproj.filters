@@ -72,6 +72,9 @@
     <ClCompile Include="PoissonSampling.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SparseEncodingSolver.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -126,6 +129,12 @@
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TriIntersection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SparseEncodingSolver.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

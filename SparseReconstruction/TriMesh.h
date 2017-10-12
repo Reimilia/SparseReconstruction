@@ -19,9 +19,10 @@ struct MyTraits : public OpenMesh::DefaultTraits
 	VertexAttributes(OpenMesh::Attributes::Normal | OpenMesh::Attributes::Color);
 
 	// store the previous halfedge
-	HalfedgeAttributes(OpenMesh::Attributes::PrevHalfedge);
+	HalfedgeAttributes(OpenMesh::Attributes::PrevHalfedge
+						| OpenMesh::Attributes::Status);
 	// use face normals
-	FaceAttributes(OpenMesh::Attributes::Normal);
+	//FaceAttributes(OpenMesh::Attributes::Normal);
 
 	// store a face handle for each vertex
 	/*template <class Base, class Refs> struct VertexT : public Base
