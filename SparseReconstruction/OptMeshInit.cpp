@@ -76,7 +76,8 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 		(mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle
 			&& mesh.find_halfedge(Z, Y) == TriMesh::InvalidHalfedgeHandle
 			&& mesh.find_halfedge(Y, X) == TriMesh::InvalidHalfedgeHandle);
-	if(!is_edge_fill_up)
+	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
+	if(!is_edge_fill_up || !is_boundary)
 		return false;
 
 	//if (!(mesh.is_boundary(X) && mesh.is_boundary(Y)&& mesh.is_boundary(Z)))
@@ -212,17 +213,19 @@ bool OptMeshInit::BuildInitialSolution(
 	std::vector <TriProj::Triangle> triangles;
 	for (int i = 0; i < query_points_.size(); i++)
 	{
+		int j;
 		triset.GenerateTriangleSet(
 			query_points_[i],
 			triangles
 		);
-		for (int j = 0; j < triangles.size(); j++)
+		for (j = 0; j < triangles.size(); j++)
 		{
 			// Add triangle into mesh and test if this is the manifold
 			if (IsTriangleInMesh(mesh, triangles[j]))
 			{
 				std::cout << "Here!" << std::endl;
 				sparse_encoding.push_back(triangles[j]);
+
 				break;
 			}
 			if (ManifoldCheck(mesh, triangles[j]))
@@ -238,6 +241,11 @@ bool OptMeshInit::BuildInitialSolution(
 				break;
 			}
 
+		}
+		if (j >= triangles.size())
+		{
+			std::cout << "Error at" << i <<", No triangle will be paired "
+			"with this point!"<< std::endl;
 		}
 	}
 

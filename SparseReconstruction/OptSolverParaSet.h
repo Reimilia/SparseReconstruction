@@ -47,7 +47,7 @@ struct OptSolverParaSet
 
 		q_norm_ = 0.5;
 
-		initial_dict_ratio_ = 0.4;
+		initial_dict_ratio_ = 0.95;
 		
 		triangle_set_control_num_ = 7;
 
