@@ -87,7 +87,7 @@ namespace TriProj
 	public:
 		bool operator()(const Triangle &t1, const Triangle &t2)
 		{
-			if (energy_func_(t1) < energy_func_(t2))
+			if (energy_func_(t1) > energy_func_(t2))
 				return true;
 			else
 				return false;

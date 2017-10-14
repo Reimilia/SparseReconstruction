@@ -213,7 +213,7 @@ bool OptMeshInit::BuildInitialSolution(
 	std::vector <TriProj::Triangle> triangles;
 	for (int i = 0; i < query_points_.size(); i++)
 	{
-		int j;
+		int j=0;
 		triset.GenerateTriangleSet(
 			query_points_[i],
 			triangles

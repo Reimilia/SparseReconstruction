@@ -51,9 +51,6 @@
     <ClCompile Include="OptMeshInit.cpp">
       <Filter>源文件\SparseReconstruction</Filter>
     </ClCompile>
-    <ClCompile Include="SparseEncoding.cpp">
-      <Filter>源文件\SparseReconstruction</Filter>
-    </ClCompile>
     <ClCompile Include="TriSet.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -75,6 +72,9 @@
     <ClCompile Include="SparseEncodingSolver.cpp">
       <Filter>源文件\SparseReconstruction</Filter>
     </ClCompile>
+    <ClCompile Include="TestSBT.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -92,9 +92,6 @@
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
     <ClInclude Include="OptSolverParaSet.h">
-      <Filter>头文件\SparseReconstrucion</Filter>
-    </ClInclude>
-    <ClInclude Include="SparseEncoding.h">
       <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
     <ClInclude Include="TriMesh.h">
@@ -135,6 +132,12 @@
     </ClInclude>
     <ClInclude Include="SparseEncodingSolver.h">
       <Filter>头文件\SparseReconstrucion</Filter>
+    </ClInclude>
+    <ClInclude Include="SizeBalancedTree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TestSBT.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
