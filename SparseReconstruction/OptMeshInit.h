@@ -33,7 +33,7 @@ protected:
 
 
 private:
-	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle);
+	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle, TriMesh::FaceHandle &F );
 	bool IsEdgeFillUp(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y);
 	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
 	

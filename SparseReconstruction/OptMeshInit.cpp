@@ -2,7 +2,10 @@
 
 
 
-bool OptMeshInit::IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle)
+bool OptMeshInit::IsTriangleInMesh(
+	TriMesh mesh, 
+	TriProj::Triangle triangle,
+	TriMesh::FaceHandle &fh_)
 {
 	int idx, idy, idz;
 
@@ -32,6 +35,7 @@ bool OptMeshInit::IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle)
 			//|| (aidx == idz && aidy == idy &&aidz == idx)
 			)
 		{
+			fh_ = mesh.face_handle(vf_iter->idx());
 			is_triangle_exists = true;
 			break;
 		}
@@ -221,22 +225,23 @@ bool OptMeshInit::BuildInitialSolution(
 		for (j = 0; j < triangles.size(); j++)
 		{
 			// Add triangle into mesh and test if this is the manifold
-			if (IsTriangleInMesh(mesh, triangles[j]))
+			TriMesh::FaceHandle fh_;
+			if (IsTriangleInMesh(mesh, triangles[j], fh_))
 			{
-				std::cout << "Here!" << std::endl;
 				sparse_encoding.push_back(triangles[j]);
-
+				mesh.data(fh_).add_point_index(i);
 				break;
 			}
 			if (ManifoldCheck(mesh, triangles[j]))
 			{
 				int idx, idy, idz;
 				triangles[j].GetTrianglePointIndex(idx, idy, idz);
-				mesh.add_face(
+				TriMesh::FaceHandle fh_ = mesh.add_face(
 					mesh.vertex_handle(idx),
 					mesh.vertex_handle(idy),
 					mesh.vertex_handle(idz)
 				);
+				mesh.data(fh_).add_point_index(i);
 				sparse_encoding.push_back(triangles[j]);
 				break;
 			}
@@ -248,7 +253,7 @@ bool OptMeshInit::BuildInitialSolution(
 			"with this point!"<< std::endl;
 		}
 	}
-
+	/*
 	bool is_manifold = true;
 	for (TriMesh::VertexIter v_it = mesh.vertices_begin();
 		v_it != mesh.vertices_end(); v_it++)
@@ -257,6 +262,7 @@ bool OptMeshInit::BuildInitialSolution(
 	}
 	if (!is_manifold)
 		std::cout << "Opps!\n";
+	*/
 	return true;
 
 }

@@ -82,6 +82,8 @@ namespace TriProj
 		X_ = X;
 		Y_ = Y;
 		Z_ = Z;
+		is_calculated_ = false;
+
 		if (is_p_set_)
 			CalcResult();
 		else
@@ -95,7 +97,11 @@ namespace TriProj
 
 	bool Triangle::SetProjPoint(Vec3d P)
 	{
-		return false;
+		P_ = P;
+		is_p_set_ = true;
+		is_calculated_ = false;
+		CalcResult();
+		return true;
 	}
 
 	Vec3d Triangle::ProjectedPoint()
