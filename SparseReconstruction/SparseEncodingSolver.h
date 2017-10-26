@@ -12,16 +12,16 @@ class SparseEncodingSolver
 protected:
 	//We will receive triangle list to replace B
 	std::vector <TriProj::Triangle> encoded_B_;
+	//We will also need to know the query point queue
+	std::vector <Eigen::Vector3d> query_point_;
 	TriMesh mesh_;
 	OptSolverParaSet para_;
 
 	//This is alternative solution for prioirty queue
 	//Since the item in the queue need to be adjusted
-	int queue_size_;
+	int tree_size_;
 	SizeBalancedTree <double> sorted_tree_;
 	int *rank_;
-
-	std::vector<std::vector<int> > point_triangle_;
 
 	//We will return a mesh as a result
 	//Also we need some method to construct 
@@ -57,6 +57,8 @@ public:
 	~SparseEncodingSolver();
 
 	bool SetUpTopology(std::vector <TriProj::Triangle> encode_list);
+
+	bool SetUpQueryPoints(std::vector <Eigen::Vector3d> query_point);
 	
 	bool GetSparseEncodingResult(std::vector <TriProj::Triangle> &B);
 

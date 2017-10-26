@@ -144,12 +144,7 @@ bool OptMeshInit::GenerateInitialDict(
 	}
 	for (int i = 0; i < points.size(); i++)
 	{
-		if (!is_mesh_dict[i])
-		{
-			std::cout << i << std::endl;
-			query_points_.push_back(points[i]);
-		}
-			
+		query_points_.push_back(points[i]);	
 	}
 
 	//Don't forget to delete variables.
