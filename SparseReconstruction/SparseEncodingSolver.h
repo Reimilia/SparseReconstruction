@@ -20,8 +20,7 @@ protected:
 	//This is alternative solution for prioirty queue
 	//Since the item in the queue need to be adjusted
 	int tree_size_;
-	SizeBalancedTree <double> sorted_tree_;
-	int *rank_;
+	SizeBalancedTree <__Element> sorted_tree_;
 
 	//We will return a mesh as a result
 	//Also we need some method to construct 
@@ -35,11 +34,11 @@ protected:
 	//Pick one edge from priority queue
 	void CheckOneEdge();
 
-	void EdgeFlipUpdate(int edge_handle_index);
+	void EdgeFlipUpdate(TriMesh::EdgeHandle eh_);
 	
-	void BoundaryEdgeUpdate(int edge_handle_index);
+	void BoundaryEdgeUpdate(TriMesh::EdgeHandle eh_);
 	
-	void UpdateEdgeStatus(int edge_handle_index);
+	void UpdateEdgeStatus(TriMesh::EdgeHandle eh_);
 
 
 	//Overwrite this function if the energy is changed
@@ -50,6 +49,7 @@ protected:
 	}
 
 	double edge_tri_energy(int edge_handle_index);
+	double edge_tri_energy(TriMesh::EdgeHandle eh_);
 
 public:
 	SparseEncodingSolver();

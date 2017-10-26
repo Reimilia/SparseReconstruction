@@ -7,6 +7,38 @@
 using std::cout;
 using std::endl;
 
+class __Element {
+private:
+	double key_;
+	int index_;
+public:
+	__Element() { key_ = 0; index_ = 0; };
+	__Element(double x, int y)
+	{
+		key_ = x;
+		index_ = y;
+	}
+	__Element(const __Element &X)
+	{
+		key_ = X.key_;
+		index_ = X.index_;
+	}
+	double key() {
+		return key_;
+	}
+	int index() {
+		return index_;
+	}
+
+	bool operator < (const __Element & X) const {
+		return (key_ < X.key_
+			|| (key_==X.key_&&index_< X.index_));
+	}
+	bool operator == (const __Element & X) const {
+		return key_ == X.key_ && index_ == X.index_;
+	}
+};
+
 template <typename T>
 class SizeBalancedTree
 {
@@ -69,7 +101,7 @@ public:
     {
         if (empty())
         {
-            throw UnderflowException();
+			throw UNDERFLOW;
         }
         return findMin(root)->element;
     }
@@ -93,11 +125,11 @@ public:
     {
         if (_rank < 0)
         {
-            throw UnderflowException();
+            throw UNDERFLOW;
         }
         if (_rank >= size())
         {
-            throw OverflowException();
+            throw OVERFLOW;
         }
         return select(_rank, root)->element;
     }
@@ -163,18 +195,18 @@ private:
     {
         while (t != NULL)
         {
-            if (x < t->element)
-            {
-                t = t->left;
-            }
-            else if (t->element < x)
-            {
-                t = t->right;
-            }
-            else
-            {
-                return true;
-            }
+			if (x < t->element)
+			{
+				t = t->left;
+			}
+			else if (t->element < x)
+			{
+				t = t->right;
+			}
+			else
+			{
+				return true;
+			}
         }
         return false;
     }
@@ -434,9 +466,8 @@ private:
 
 };
 /*
-*template <typename T>
-*const typename SizeBalancedTree<T>::SizeBalancedNode *  SizeBalancedTree<T>::nil
-*     = new SizeBalancedTree<T>::SizeBalancedNode(T(), NULL, NULL, 0);
+template <typename T>
+const typename SizeBalancedTree<T>::SizeBalancedNode *  SizeBalancedTree<T>::nil
+= new SizeBalancedTree<T>::SizeBalancedNode(T(), NULL, NULL, 0);
 */
-
 #endif  

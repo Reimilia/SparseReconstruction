@@ -33,24 +33,35 @@ struct MyTraits : public OpenMesh::DefaultTraits
 		int some_additional_index;
 	};*/
 
+	EdgeTraits{
+	public:
+		double energy;
+	};
+
 	//This is the key for topological encoding update
 	FaceTraits{
-		private:
-			//Correspondence point index
-			std::vector<int> proj_point_index_;
-			double face_energy_;
-		public:
+	private:
+		//Correspondence point index
+		std::vector<int> proj_point_index_;
+		
+	public:
+		double face_energy;
 
-			void add_point_index(const int index)
-			{
-				std::cout << "Now we are pushing " << index
-					<< "to the face.\n";
-				proj_point_index_.push_back(index);
-			}
-			const std::vector<int>& index() const
-			{
-				return proj_point_index_
-			}
+		void add_point_index(const int index)
+		{
+			std::cout << "Now we are pushing " << index
+				<< "to the face.\n";
+			proj_point_index_.push_back(index);
+		}
+		void clear_point_index()
+		{
+			proj_point_index_.clear();
+		}
+
+		const std::vector<int>& index() const
+		{
+			return proj_point_index_;
+		}
 	};
 };
 
