@@ -26,7 +26,7 @@ void SparseEncodingSolver::UpdateEdgeStatus(int edge_handle_index)
 
 double SparseEncodingSolver::edge_tri_energy(int edge_handle_index)
 {
-	
+	return 0.0;
 }
 
 SparseEncodingSolver::SparseEncodingSolver()
@@ -47,6 +47,7 @@ bool SparseEncodingSolver::SetUpTopology(std::vector<TriProj::Triangle> encode_l
 	encoded_B_.clear();
 	for (size_t i = 0; i < encode_list.size(); i++)
 		encoded_B_.push_back(encode_list[i]);
+	return true;
 }
 
 bool SparseEncodingSolver::SetUpQueryPoints(std::vector<Eigen::Vector3d> query_point)
@@ -54,6 +55,7 @@ bool SparseEncodingSolver::SetUpQueryPoints(std::vector<Eigen::Vector3d> query_p
 	query_point_.clear();
 	for (size_t i = 0; i < query_point.size(); i++)
 		query_point_.push_back(query_point[i]);
+	return true;
 }
 
 bool SparseEncodingSolver::GetSparseEncodingResult(std::vector<TriProj::Triangle>& B)
