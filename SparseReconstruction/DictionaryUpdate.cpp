@@ -43,6 +43,7 @@ double normF( const MatrixXd M )
 }
 
 
+/* 
 DictionaryUpdate::DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ )
 {
 	mesh_ = _mesh_;
@@ -56,6 +57,14 @@ DictionaryUpdate::DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const 
 	//std::cout << Z_.norm() << std::endl;
 	D_.resize(3, wid_P_);
 	D_.setZero();
+}
+*/
+
+DictionaryUpdate::DictionaryUpdate(TriMesh _mesh_)
+{
+	mesh_ = _mesh_;
+	gamma_ = 0.3;
+	SetMatrixFromMesh();
 }
 
 DictionaryUpdate::~DictionaryUpdate()
@@ -84,6 +93,25 @@ TriMesh DictionaryUpdate::solver()
 	return mesh_;
 }
 
+
+void DictionaryUpdate::SetMatrixFromMesh()
+{
+	//Get V,B,P,Z
+	wid_V_ = 0;
+	wid_P_ = 0;
+	for (TriMesh::VertexIter v_it = mesh_.vertices_begin();
+		v_it != mesh_.vertices_end(); v_it++)
+	{
+		if (mesh_.data(*v_it).is_mesh_point_)
+		{
+			wid_V_++;
+			wid_P_++;
+		}
+	}
+	for (TriMesh::FaceIter f_it = mesh_.vertices_begin();
+		f_it != mesh_.vertices_end(); f_it++)
+
+}
 
 double DictionaryUpdate::ComputeEnergy()
 {
@@ -220,5 +248,5 @@ void DictionaryUpdate::DualUpdate()
 
 void DictionaryUpdate::PenaltyUpdate()
 {
-
+	
 }

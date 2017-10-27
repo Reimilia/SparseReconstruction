@@ -71,6 +71,7 @@ namespace TriProj
 		bool IsBarycentricValid();
 		double RegEnergy();
 		
+		bool operator < (const Triangle &X) const;
 	};
 
 
@@ -78,7 +79,7 @@ namespace TriProj
 		<Triangle, Triangle,bool> 
 	{
 	protected:
-		double q_norm = 0.5;
+		double q_norm = 0.3;
 		double edge_term_ = 2.5;
 		double normal_term_ = 0.0;
 		double energy_func_(Triangle t)

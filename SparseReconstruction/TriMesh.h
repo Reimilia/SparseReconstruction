@@ -32,6 +32,9 @@ struct MyTraits : public OpenMesh::DefaultTraits
 	{
 		int some_additional_index;
 	};*/
+	VertexTraits{
+		bool is_mesh_point_;
+	};
 
 	EdgeTraits{
 		double energy;
@@ -69,7 +72,6 @@ struct MyTraits : public OpenMesh::DefaultTraits
 			return proj_point_index_;
 		}
 	};
-
 };
 
 //Define the mesh we use in this program

@@ -17,7 +17,7 @@ TriMesh	DicUpdateTest::solver()
 	int f = mesh_.n_faces();
 	Eigen::SparseMatrix<double> B_(v, v + 5 * f);
 	compute(B_);
-	DictionaryUpdate DicUp(mesh_, V_, B_, P_);
+	DictionaryUpdate DicUp(mesh_);
 	return DicUp.solver();
 }
 

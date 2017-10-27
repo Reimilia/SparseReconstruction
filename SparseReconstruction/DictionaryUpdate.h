@@ -11,7 +11,8 @@ class DictionaryUpdate;
 class DictionaryUpdate
 {
 public:
-	DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ );
+	//DictionaryUpdate( TriMesh _mesh_, Eigen::MatrixXd &_V_, const Eigen::SparseMatrix<double> _B_, const Eigen::MatrixXd _P_ );
+	DictionaryUpdate(TriMesh mesh_);
 	~DictionaryUpdate();
 	TriMesh									solver();	// the final result
 	bool									test();		
@@ -30,6 +31,7 @@ private:
 	Eigen::MatrixXd							Z_;		// error
 	Eigen::MatrixXd							D_;		// Lagrangian function
 
+	void									SetMatrixFromMesh();
 	double									ComputeEnergy();
 	void									SolveSubV();
 	void									SolveSubZ();

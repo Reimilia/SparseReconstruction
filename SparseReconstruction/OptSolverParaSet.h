@@ -45,11 +45,11 @@ struct OptSolverParaSet
 		normal_reg_weight_ = 0;
 		is_normal_reg_on_ = false;
 
-		q_norm_ = 0.5;
+		q_norm_ = 0.3;
 
 		initial_dict_ratio_ = 0.4;
 		
-		triangle_set_control_num_ = 7;
+		triangle_set_control_num_ = 10;
 
 		epsilion_ = 0.001;
 
