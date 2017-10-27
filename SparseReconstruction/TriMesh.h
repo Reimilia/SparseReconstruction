@@ -34,7 +34,6 @@ struct MyTraits : public OpenMesh::DefaultTraits
 	};*/
 
 	EdgeTraits{
-	public:
 		double energy;
 	};
 
@@ -42,23 +41,30 @@ struct MyTraits : public OpenMesh::DefaultTraits
 	FaceTraits{
 	private:
 		//Correspondence point index
-		std::vector<int> proj_point_index_;
+		std::vector<Point> proj_point_index_;
 		
 	public:
 		double face_energy;
+		bool is_calculated;
 
-		void add_point_index(const int index)
+		void add_point_index(const Point index)
 		{
-			std::cout << "Now we are pushing " << index
-				<< " to the face.\n";
 			proj_point_index_.push_back(index);
+		}
+		void set_point_index(std::vector<Point> index_list)
+		{
+			clear_point_index();
+			for (size_t i = 0; i < index_list.size(); i++)
+			{
+				add_point_index(index_list[i]);
+			}
 		}
 		void clear_point_index()
 		{
 			proj_point_index_.clear();
 		}
 
-		const std::vector<int>& index() const
+		const std::vector<Point>& index() const
 		{
 			return proj_point_index_;
 		}

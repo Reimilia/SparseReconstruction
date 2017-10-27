@@ -59,6 +59,7 @@ private:
 
 	// Additional Button
 	QAction							*action_test_sth_;
+	QAction							*action_test_Bsub_;
 
 	// Render RadioButtons
 	QCheckBox						*checkbox_point_;

@@ -12,6 +12,7 @@
 #include <QTextCodec>
 
 #include "SparseReconstruction\OptMeshInit.h"
+#include "SparseReconstruction\SparseEncodingSolver.h"
 #include "SparseReconstruction\DicUpdateTest.h"
 
 #include "SparseReconstruction\TriMesh.h"
@@ -63,6 +64,7 @@ private:
 	void WriteMesh();
 	void LoadTexture();
 	void QuickTest();
+	void TopoUpdateTest();
 	void DictUpdateTest();
 
 	void CheckDrawPoint(bool bv);
@@ -85,7 +87,7 @@ public:
 	MainWindow					*ptr_mainwindow_;
 	CArcBall					*ptr_arcball_;
 	TriMesh						ptr_mesh_;
-
+	std::vector<TriProj::Triangle> temp_;
 	// Texture
 	GLuint						texture_[1];
 	bool						is_load_texture_;

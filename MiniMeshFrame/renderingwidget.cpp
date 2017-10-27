@@ -373,13 +373,31 @@ void RenderingWidget::QuickTest()
 			TriMesh::Point p=ptr_mesh_.point(ptr_mesh_.vertex_handle(i));
 			points.push_back(Eigen::Vector3d(p.data()));
 		}
-		std::vector<TriProj::Triangle> ans;
+		temp_.clear();
 		test->BuildInitialSolution(
 			para,
 			points,
 			ptr_mesh_,
-			ans
+			temp_
 		);
+	}
+	catch (const std::exception&)
+	{
+		std::cerr << "Something is wrong with the dictionary update test!\n";
+	}
+	delete test;
+	updateGL();
+}
+
+void RenderingWidget::TopoUpdateTest()
+{
+	OptSolverParaSet para;
+	para.SetDefaultPara();
+	SparseEncodingSolver *test = new SparseEncodingSolver(ptr_mesh_);
+	try
+	{
+		test->GetSparseEncodingResult(temp_);
+		ptr_mesh_ = test->GetMesh();
 	}
 	catch (const std::exception&)
 	{

@@ -25,11 +25,16 @@ protected:
 	//We will return a mesh as a result
 	//Also we need some method to construct 
 	//matrix from mesh!
+public:
+	SparseEncodingSolver();
+	SparseEncodingSolver(TriMesh mesh);
+	~SparseEncodingSolver();
 
 
 protected:
 	//Set up priority queue
-	void SetUpSBT();
+	//clear mesh status
+	void Init();
 
 	//Pick one edge from priority queue
 	void CheckOneEdge();
@@ -38,6 +43,7 @@ protected:
 	
 	void BoundaryEdgeUpdate(TriMesh::EdgeHandle eh_);
 	
+	void UpdatePrioirtyQueue(TriMesh::EdgeHandle eh_);
 	void UpdateEdgeStatus(TriMesh::EdgeHandle eh_);
 
 
@@ -54,15 +60,12 @@ protected:
 	double face_tri_energy(int face_handle_index);
 	double face_tri_energy(TriMesh::HalfedgeHandle heh_);
 	double face_tri_energy(TriMesh::FaceHandle fh_);
-	double face_tri_energy(int index,
+	double face_tri_energy(TriMesh::Point,
 		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
-	double face_tri_energy(std::vector<int> correspondent_index,
+	double face_tri_energy(std::vector<TriMesh::Point> correspondent_index,
 		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
 
 public:
-	SparseEncodingSolver();
-	SparseEncodingSolver(TriMesh mesh);
-	~SparseEncodingSolver();
 
 	bool SetUpTopology(std::vector <TriProj::Triangle> encode_list);
 
@@ -70,5 +73,8 @@ public:
 	
 	bool GetSparseEncodingResult(std::vector <TriProj::Triangle> &B);
 
+	TriMesh GetMesh() {
+		return mesh_;
+	}
 };
 

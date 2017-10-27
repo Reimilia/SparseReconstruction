@@ -56,6 +56,7 @@ namespace TriProj
 			Y_id = index_[1];
 			Z_id = index_[2];
 		}
+		Vec3d P() { return P_; }
 		
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
 		bool SetProjPoint(Vec3d P);

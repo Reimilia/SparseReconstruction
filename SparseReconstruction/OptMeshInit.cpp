@@ -75,11 +75,7 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	// Check if we have space to insert the triangle
 	bool is_edge_fill_up = (mesh.find_halfedge(X, Y) == TriMesh::InvalidHalfedgeHandle
 		&& mesh.find_halfedge(Y, Z) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle)
-		||
-		(mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle
-			&& mesh.find_halfedge(Z, Y) == TriMesh::InvalidHalfedgeHandle
-			&& mesh.find_halfedge(Y, X) == TriMesh::InvalidHalfedgeHandle);
+		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle);
 	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
 	if(!is_edge_fill_up || !is_boundary)
 		return false;
@@ -224,11 +220,13 @@ bool OptMeshInit::BuildInitialSolution(
 			if (IsTriangleInMesh(mesh, triangles[j], fh_))
 			{
 				sparse_encoding.push_back(triangles[j]);
-				mesh.data(fh_).add_point_index(i);
+				mesh.data(fh_).add_point_index(
+					TriMesh::Point(query_points_[i].data())
+				);
 				break;
 			}
 
-			std::cout << triangles[j].RegEnergy() << std::endl;
+			//std::cout << triangles[j].RegEnergy() << std::endl;
 			if (ManifoldCheck(mesh, triangles[j]))
 			{
 				int idx, idy, idz;
@@ -238,7 +236,10 @@ bool OptMeshInit::BuildInitialSolution(
 					mesh.vertex_handle(idy),
 					mesh.vertex_handle(idz)
 				);
-				mesh.data(fh_).add_point_index(i);
+				mesh.data(fh_).clear_point_index();
+				mesh.data(fh_).add_point_index(
+					TriMesh::Point(query_points_[i].data())
+				);
 				sparse_encoding.push_back(triangles[j]);
 				break;
 			}

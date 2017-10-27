@@ -69,6 +69,10 @@ void MainWindow::CreateActions()
 	action_test_sth_ = new QAction(tr("RunTest"), this);
 	connect(action_test_sth_, SIGNAL(triggered()), renderingwidget_, SLOT(QuickTest()));
 	
+	action_test_Bsub_ = new QAction(tr("Bupdate"), this);
+	connect(action_test_Bsub_, SIGNAL(triggered()), renderingwidget_, SLOT(TopoUpdateTest()));
+
+
 	action_loadmesh_ = new QAction(tr("readOBJ"), this);
 	action_loadtexture_ = new QAction(tr("LoadTexture"), this);
 	action_background_ = new QAction(tr("ChangeBackground"), this);
@@ -100,6 +104,7 @@ void MainWindow::CreateToolBars()
 	toolbar_basic_->addAction(action_loadtexture_);
 	toolbar_basic_->addAction(action_background_);
 	toolbar_basic_->addAction(action_test_sth_);
+	toolbar_basic_->addAction(action_test_Bsub_);
 }
 
 void MainWindow::CreateStatusBar()

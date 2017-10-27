@@ -218,7 +218,7 @@ namespace TriProj
 
 	double Triangle::RegEnergy()
 	{
-		return pow(ProjectedErrorNorm(), 0.5) +
+		return pow(ProjectedErrorNorm(), 0.3) +
 			2.5*EdgeRegSquaredNorm() / 3.0;
 	}
 

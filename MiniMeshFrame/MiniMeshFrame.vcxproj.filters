@@ -103,9 +103,4 @@
   <ItemGroup>
     <ResourceCompile Include="MiniMeshFrame.rc" />
   </ItemGroup>
-  <ItemGroup>
-    <Library Include="..\lib\x64\glut32.lib">
-      <Filter>Resource Files</Filter>
-    </Library>
-  </ItemGroup>
 </Project>
