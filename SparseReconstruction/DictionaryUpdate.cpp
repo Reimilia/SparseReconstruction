@@ -108,9 +108,7 @@ void DictionaryUpdate::SetMatrixFromMesh()
 			wid_P_++;
 		}
 	}
-	for (TriMesh::FaceIter f_it = mesh_.vertices_begin();
-		f_it != mesh_.vertices_end(); f_it++)
-
+	
 }
 
 double DictionaryUpdate::ComputeEnergy()
