@@ -257,9 +257,7 @@ void RenderingWidget::ReadMesh()
 		exit(1);
 	}
 
-	ptr_mesh_.request_halfedge_normals();
-	ptr_mesh_.request_face_normals();
-	ptr_mesh_.update_normals();
+	normalize(ptr_mesh_);
 
 	//	m_pMesh->LoadFromOBJFile(filename.toLatin1().data());
 	emit(operatorInfo(QString("Read Mesh from") + filename + QString(" Done")));
@@ -563,4 +561,41 @@ void RenderingWidget::DrawTexture(bool bv)
 	}
 
 	glEnd();*/
+}
+
+
+//Define a function that normailize the input mesh.
+void RenderingWidget::normalize(TriMesh &mesh)
+{
+	double min_x, min_y, min_z, max_x, max_y, max_z;
+	min_x = min_y = min_z = 10000;
+	max_x = max_y = max_z = -10000;
+	for (TriMesh::VertexIter v_it_ = mesh.vertices_begin(); v_it_ != mesh.vertices_end(); v_it_++)
+	{
+		TriMesh::Point p = mesh.point(*v_it_);
+		min_x = (min_x < p[0] ? min_x : p[0]);
+		max_x = (max_x > p[0] ? max_x : p[0]);
+
+		min_y = (min_y < p[1] ? min_y : p[1]);
+		max_y = (max_y > p[1] ? max_y : p[1]);
+
+		min_z = (min_z < p[2] ? min_z : p[2]);
+		max_z = (max_z > p[2] ? max_z : p[2]);
+	}
+	double max_diff = ((max_x - min_x) > (max_y - min_y) ? (max_x - min_x) : (max_y - min_y));
+	max_diff = ((max_z - min_z) > max_diff ? (max_z - min_z) : max_diff);
+
+	//shift the longest edge of the box to [-1,1]
+	for (TriMesh::VertexIter v_it_ = mesh.vertices_begin(); v_it_ != mesh.vertices_end(); v_it_++)
+	{
+		TriMesh::Point p = mesh.point(*v_it_);
+		p[0] = (2 * p[0] - min_x - max_x) / max_diff;
+		p[1] = (2 * p[1] - min_y - max_y) / max_diff;
+		p[2] = (2 * p[2] - min_z - max_z) / max_diff;
+		mesh.set_point(*v_it_, p);
+	}
+	mesh.request_face_normals();
+	mesh.request_halfedge_normals();
+	mesh.request_vertex_normals();
+	mesh.update_normals();
 }

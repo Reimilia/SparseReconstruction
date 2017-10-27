@@ -216,6 +216,12 @@ namespace TriProj
 		return is_barycentric_valid_;
 	}
 
+	double Triangle::RegEnergy()
+	{
+		return pow(ProjectedErrorNorm(), 0.5) +
+			2.5*EdgeRegSquaredNorm() / 3.0;
+	}
+
 
 
 }

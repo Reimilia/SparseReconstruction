@@ -51,9 +51,17 @@ protected:
 	double edge_tri_energy(int edge_handle_index);
 	double edge_tri_energy(TriMesh::EdgeHandle eh_);
 
+	double face_tri_energy(int face_handle_index);
+	double face_tri_energy(TriMesh::HalfedgeHandle heh_);
+	double face_tri_energy(TriMesh::FaceHandle fh_);
+	double face_tri_energy(int index,
+		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
+	double face_tri_energy(std::vector<int> correspondent_index,
+		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
+
 public:
 	SparseEncodingSolver();
-	SparseEncodingSolver(std::vector <TriProj::Triangle> encode_list);
+	SparseEncodingSolver(TriMesh mesh);
 	~SparseEncodingSolver();
 
 	bool SetUpTopology(std::vector <TriProj::Triangle> encode_list);

@@ -79,6 +79,7 @@ private:
 	void DrawEdge(bool);
 	void DrawFace(bool);
 	void DrawTexture(bool);
+	void normalize(TriMesh &);
 
 public:
 	MainWindow					*ptr_mainwindow_;

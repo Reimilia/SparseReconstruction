@@ -227,6 +227,8 @@ bool OptMeshInit::BuildInitialSolution(
 				mesh.data(fh_).add_point_index(i);
 				break;
 			}
+
+			std::cout << triangles[j].RegEnergy() << std::endl;
 			if (ManifoldCheck(mesh, triangles[j]))
 			{
 				int idx, idy, idz;
