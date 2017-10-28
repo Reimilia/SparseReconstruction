@@ -108,7 +108,7 @@ void DictionaryUpdate::SetMatrixFromMesh()
 		v_it != mesh_.vertices_end(); v_it++)
 	{
 		if (mesh_.data(*v_it).is_mesh_point_)
-		{
+	                                                                           	{
 			mesh_point_index_.push_back(v_it->idx());
 			mesh_.data(*v_it).matrix_column_index = wid_V_;
 			wid_V_++;

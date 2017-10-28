@@ -51,7 +51,7 @@ bool OptMeshInit::IsTriangleInMesh(
 		{
 			fh_ = mesh.face_handle(vf_iter->idx());
 			is_triangle_exists = true;
-			break;
+			break;1
 		}
 	}*/
 	
@@ -73,16 +73,46 @@ bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::Ver
 	//one isolated points
 	
 	//no isolated points
-	return
-		(
-			(!mesh.find_halfedge(X, Y).is_valid()
+	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
+	if (!is_boundary)
+		return false;
+	if (
+		!(!mesh.find_halfedge(X, Y).is_valid()
 			&& !mesh.find_halfedge(Y, Z).is_valid()
 			&& !mesh.find_halfedge(Z, X).is_valid())
-		||
+		&&
+		!(!mesh.find_halfedge(Y, X).is_valid()
+			&& !mesh.find_halfedge(Z, Y).is_valid()
+			&& !mesh.find_halfedge(X, Z).is_valid()
+		)
+		)
+		return false;
+	mesh.request_halfedge_status();
+	mesh.request_vertex_status();
+	mesh.request_face_status();
+	TriMesh::FaceHandle f = mesh.add_face(X, Y, Z);
+	bool flag = mesh.is_manifold(X)&&mesh.is_manifold(Y)&&mesh.is_manifold(Z);
+
+	mesh.delete_face(f, false);
+	mesh.garbage_collection(); 
+	if (flag)
+		return true;
+	f = mesh.add_face(X, Z, Y);
+	flag = mesh.is_manifold(X) && mesh.is_manifold(Y) && mesh.is_manifold(Z);
+
+	mesh.delete_face(f, false);
+	mesh.garbage_collection();
+	return flag;
+	/*return
+		(
+			!(!mesh.find_halfedge(X, Y).is_valid()
+			&& !mesh.find_halfedge(Y, Z).is_valid()
+			&& !mesh.find_halfedge(Z, X).is_valid())
+		==
 			(!mesh.find_halfedge(Y, X).is_valid()
 			&& !mesh.find_halfedge(Z, Y).is_valid()
 			&& !mesh.find_halfedge(X, Z).is_valid())
-		);
+		);*/
 }
 
 
@@ -104,41 +134,9 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	Z = mesh.vertex_handle(idz);
 	
 	// Check if we have space to insert the triangle
-	/*bool is_edge_fill_up = (mesh.find_halfedge(X, Y) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Y, Z) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle);
-		(mesh.find_halfedge(Y, X) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, Y) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle);*/
 	bool is_edge_fill_up = IsFeasible(mesh, X, Y, Z);
-	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
-	if(!is_edge_fill_up || !is_boundary)
+	if(!is_edge_fill_up)
 		return false;
-
-	//if (!(mesh.is_boundary(X) && mesh.is_boundary(Y)&& mesh.is_boundary(Z)))
-	//	return false;
-	
-	/*TriMesh::FaceHandle f = mesh.add_face(X, Y, Z);
-	bool flag = true;
-	mesh.request_vertex_status();
-	mesh.request_edge_status();
-	mesh.request_face_status();
-	mesh.request_halfedge_status();
-	for (TriMesh::FaceHalfedgeIter fh_it = mesh.fh_iter(f);
-		fh_it.is_valid(); fh_it++)
-	{
-		if (!mesh.is_boundary(*fh_it))
-		{
-			if (!mesh.is_flip_ok(mesh.edge_handle(*fh_it)))
-			{
-				flag = false;
-				break;
-			}
-		}
-	}
-	
-	mesh.delete_face(f,false);
-	mesh.garbage_collection();*/
 	return true;
 }
 
@@ -151,7 +149,7 @@ bool OptMeshInit::GenerateInitialDict(
 		point_pool.push_back(points[i].data());
 	}
 	PoissonSampling sampler(point_pool);
-	sampler.SetRaduis(0.001);
+	sampler.SetRaduis(0.01);
 
 	
 	if (!sampler.GenerateSamples(mesh_size_, sample_index))
@@ -178,6 +176,29 @@ bool OptMeshInit::GenerateInitialDict(
 		query_points_.push_back(points[i]);	
 	}
 
+	//Generate ANN kdtree
+	int dim = 3;
+	int point_set_size_ = (int)query_points_.size();
+
+	ANNpointArray ANN_input_points;
+
+	ANN_input_points = annAllocPts(point_set_size_, dim);
+
+	for (int i = 0; i < point_set_size_; ++i)
+	{
+
+		for (int j = 0; j < dim; j++)
+		{
+			ANN_input_points[i][j] = query_points_[i][j];
+		}
+	}
+
+	//build up kdTree
+	kdtree_ = new ANNkd_tree(
+		ANN_input_points,
+		point_set_size_,
+		dim
+	);
 	
 	return true;
 }
@@ -194,7 +215,8 @@ OptMeshInit::~OptMeshInit()
 	//Don't forget to delete variables.
 	if (is_mesh_dict)
 		delete[] is_mesh_dict;
-
+	if (kdtree_)
+		delete kdtree_;
 }
 
 bool OptMeshInit::BuildInitialSolution(
@@ -236,15 +258,22 @@ bool OptMeshInit::BuildInitialSolution(
 
 	//Add points in order
 	std::queue <int> queue_points_;
+	bool *hash = new bool[query_points_.size()];
 	for (int i = 0; i < query_points_.size(); i++)
 	{
-		queue_points_.push(i);
+		//queue_points_.push(i);
+		hash[i] = false;
 		TriMesh::Point vertex(query_points_[i].data());
 		TriMesh::VertexHandle vh_ = mesh.add_vertex(vertex);
 		mesh.data(vh_).is_mesh_point_ = is_mesh_dict[i];
 	}
+
+	queue_points_.push(0);
+	hash[0] = true;
+	double search_radius = 0.1;
 	
 	std::vector <TriProj::Triangle> triangles;
+
 	while (!queue_points_.empty())
 	{
 		int i = queue_points_.front();
@@ -296,6 +325,41 @@ bool OptMeshInit::BuildInitialSolution(
 			}
 
 		}
+
+		ANNidxArray		ANN_index;
+		ANNdistArray	ANN_dist;
+		ANNpoint		ANN_point;
+		ANN_index = new ANNidx[10];
+		ANN_dist = new ANNdist[10];
+		ANN_point = annAllocPt(3);
+
+		for (int k = 0; k < 3; k++)
+			ANN_point[k] = query_points_[i][k];
+
+		kdtree_->annkFRSearch(
+			ANN_point,
+			search_radius,
+			10,
+			ANN_index,
+			ANN_dist,
+			0.0
+		);
+
+		for (int k = 0; k < 10; k++)
+		{
+			if (!hash[ANN_index[k]])
+			{
+				hash[ANN_index[k]] = true;
+				queue_points_.push(ANN_index[k]);
+			}
+		}
+		if (ANN_index)
+			delete ANN_index;
+		if (ANN_dist)
+			delete ANN_dist;
+		if (ANN_point)
+			delete ANN_point;
+
 		if (j >= triangles.size())
 		{
 			std::cout << "Error at" << i << ", No triangle will be paired "
@@ -304,59 +368,8 @@ bool OptMeshInit::BuildInitialSolution(
 		}
 		
 	}
-	/*
-	for (int i = 0; i < query_points_.size(); i++)
-	{
-		if (is_mesh_dict[i])
-			continue;
-		std::cout << "point " << i << std::endl;
-		int j = 0;
-		triset.GenerateTriangleSet(
-			query_points_[i],
-			triangles
-		);
-		for (j = 0; j < triangles.size(); j++)
-		{
-			// Add triangle into mesh and test if this is the manifold
-			TriMesh::FaceHandle fh_;
-			if (IsTriangleInMesh(mesh, triangles[j], fh_))
-			{
-				TriMesh::VertexHandle vh_ = mesh.add_vertex(TriMesh::Point(query_points_[i].data()));
-				sparse_encoding.push_back(triangles[j]);
-				mesh.data(fh_).add_point_index(i);
-				break;
-			}
 
-			//std::cout << triangles[j].RegEnergy() << std::endl;
-			if (ManifoldCheck(mesh, triangles[j]))
-			{
-				int idx, idy, idz;
-
-				triangles[j].GetTrianglePointIndex(idx, idy, idz);
-				TriMesh::VertexHandle vh_ = mesh.add_vertex(TriMesh::Point(query_points_[i].data()));
-				idx = sample_index[idx];
-				idy = sample_index[idy];
-				idz = sample_index[idz];
-				TriMesh::FaceHandle fh_ = mesh.add_face(
-					mesh.vertex_handle(idx),
-					mesh.vertex_handle(idy),
-					mesh.vertex_handle(idz)
-				);
-				mesh.data(fh_).clear_point_index();
-				mesh.data(fh_).add_point_index(i);
-
-				sparse_encoding.push_back(triangles[j]);
-				break;
-			}
-
-		}
-		if (j >= triangles.size())
-		{
-			std::cout << "Error at" << i << ", No triangle will be paired "
-				"with this point!" << std::endl;
-		}
-	}*/
-	/*
+	
 	bool is_manifold = true;
 	for (TriMesh::VertexIter v_it = mesh.vertices_begin();
 		v_it != mesh.vertices_end(); v_it++)
@@ -365,7 +378,7 @@ bool OptMeshInit::BuildInitialSolution(
 	}
 	if (!is_manifold)
 		std::cout << "Opps!\n";
-	*/
+	
 	return true;
 
 }

@@ -55,6 +55,8 @@ namespace TriProj
 			delete ANN_index;
 		if (ANN_dist)
 			delete ANN_dist;
+		if (ANN_point)
+			delete ANN_point;
 		return true;
 	}
 

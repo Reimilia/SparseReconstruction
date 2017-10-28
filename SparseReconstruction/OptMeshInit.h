@@ -31,6 +31,7 @@ protected:
 	bool *is_mesh_dict;
 	std::vector<int> sample_index;
 
+	ANNkd_tree  *kdtree_;
 
 
 private:
