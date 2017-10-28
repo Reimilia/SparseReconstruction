@@ -14,6 +14,7 @@
 namespace TriProj
 {
 	typedef Eigen::Vector3d		Vec3d;
+	const double inf = 1e10;
 
 	// customized projection
 	class Triangle
@@ -30,6 +31,7 @@ namespace TriProj
 		Vec3d	P_prime_;
 		bool	is_barycentric_valid_ = false;
 		Vec3d	BaryCoord_;
+		double  energy_;
 
 		int		index_[3];
 
@@ -70,8 +72,8 @@ namespace TriProj
 		double NormalRegNorm(Vec3d PNormal);
 		bool IsBarycentricValid();
 		double RegEnergy();
+		bool operator < (const Triangle &);
 		
-		bool operator < (const Triangle &X) const;
 	};
 
 
@@ -79,7 +81,7 @@ namespace TriProj
 		<Triangle, Triangle,bool> 
 	{
 	protected:
-		double q_norm = 0.3;
+		double q_norm = 2;
 		double edge_term_ = 2.5;
 		double normal_term_ = 0.0;
 		double energy_func_(Triangle t)

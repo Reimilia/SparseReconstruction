@@ -32,6 +32,7 @@ namespace TriProj
 
 		is_calculated_ = true;
 		BarycentricValidity();
+		energy_ = RegEnergy();
 	}
 
 	void Triangle::BarycentricValidity()
@@ -218,8 +219,15 @@ namespace TriProj
 
 	double Triangle::RegEnergy()
 	{
-		return pow(ProjectedErrorNorm(), 0.3) +
-			2.5*EdgeRegSquaredNorm() / 3.0;
+		if (!IsBarycentricValid())
+			return inf;
+		return pow(ProjectedErrorNorm(), 0.5) +
+			5*EdgeRegSquaredNorm() / 3.0;
+	}
+
+	bool Triangle::operator<(const Triangle &X)
+	{
+		return energy_ < X.energy_;
 	}
 
 

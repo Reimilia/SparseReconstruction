@@ -69,8 +69,8 @@ void SparseEncodingSolver::EdgeFlipUpdate(TriMesh::EdgeHandle eh_)
 	TriMesh::FaceHandle f1 = mesh_.face_handle(heh_);
 	TriMesh::FaceHandle f2 = mesh_.opposite_face_handle(heh_);
 
-	std::vector<TriMesh::Point> index_f1 = mesh_.data(f1).index();
-	std::vector<TriMesh::Point> index_f2 = mesh_.data(f2).index();
+	std::vector<int> index_f1 = mesh_.data(f1).index();
+	std::vector<int> index_f2 = mesh_.data(f2).index();
 	double origin_energy = edge_tri_energy(eh_);
 
 	TriMesh::VertexHandle v1h_ = mesh_.from_vertex_handle(heh_);
@@ -84,8 +84,8 @@ void SparseEncodingSolver::EdgeFlipUpdate(TriMesh::EdgeHandle eh_)
 	TriMesh::Point v4 = mesh_.point(v4h_);
 
 	double energy1 = 0.0, energy2 = 0.0;
-	std::vector<TriMesh::Point> new_index_f1;
-	std::vector<TriMesh::Point> new_index_f2;
+	std::vector<int> new_index_f1;
+	std::vector<int> new_index_f2;
 
 	for (size_t i = 0; i < index_f1.size(); i++)
 	{
@@ -177,7 +177,7 @@ void SparseEncodingSolver::BoundaryEdgeUpdate(TriMesh::EdgeHandle eh_)
 
 	double energy1, energy2;
 	bool progress1= false, progress2 = false;
-	std::vector<TriMesh::Point> origin_1,new_1,origin_2,new_2;
+	std::vector<int> origin_1,new_1,origin_2,new_2;
 
 
 	if (prev_heh_.is_valid())
@@ -185,7 +185,7 @@ void SparseEncodingSolver::BoundaryEdgeUpdate(TriMesh::EdgeHandle eh_)
 		energy1 = 0.0;
 		TriMesh::Point v3_prime = mesh_.point(v3_primeh1_);
 
-		std::vector<TriMesh::Point> index = mesh_.data(fh_).index();
+		std::vector<int> index = mesh_.data(fh_).index();
 
 		for (size_t i = 0; i < index.size(); i++)
 		{
@@ -212,7 +212,7 @@ void SparseEncodingSolver::BoundaryEdgeUpdate(TriMesh::EdgeHandle eh_)
 	{
 		energy2 = 0.0;
 		TriMesh::Point v3_prime = mesh_.point(v3_primeh2_);
-		std::vector<TriMesh::Point> index = mesh_.data(fh_).index();
+		std::vector<int> index = mesh_.data(fh_).index();
 		
 		for (size_t i = 0; i < index.size(); i++)
 		{
@@ -373,7 +373,7 @@ double SparseEncodingSolver::face_tri_energy(TriMesh::FaceHandle fh_)
 	if (mesh_.data(fh_).is_calculated) 
 		return mesh_.data(fh_).face_energy;
 	double energy_ = 0;
-	std::vector<TriMesh::Point> s = mesh_.data(fh_).index();
+	std::vector<int> s = mesh_.data(fh_).index();
 	TriMesh::FaceVertexIter fv_= mesh_.fv_iter(fh_);
 	TriMesh::Point v1 = mesh_.point(mesh_.vertex_handle(fv_->idx()));
 	fv_++;
@@ -396,8 +396,17 @@ double SparseEncodingSolver::face_tri_energy(TriMesh::Point P, TriMesh::Point X,
 	return T.RegEnergy();
 }
 
+double SparseEncodingSolver::face_tri_energy(int index, TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z)
+{
+	TriMesh::Point P = mesh_.point(mesh_.vertex_handle(index));
+	TriProj::Triangle T(TriProj::Vec3d(P.data()), TriProj::Vec3d(X.data()),
+		TriProj::Vec3d(Y.data()), TriProj::Vec3d(Z.data()));
+	return T.RegEnergy();
+}
+
+
 double SparseEncodingSolver::face_tri_energy(
-	std::vector<TriMesh::Point> correspondent_points, 
+	std::vector<int> correspondent_points,
 	TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z)
 {
 	// This is for the assuming case to update
@@ -407,8 +416,7 @@ double SparseEncodingSolver::face_tri_energy(
 
 	for (size_t i = 0; i < correspondent_points.size(); i++)
 	{
-		T.SetProjPoint(TriProj::Vec3d(correspondent_points[i].data()));
-		energy_ += T.RegEnergy();
+		energy_ += face_tri_energy(correspondent_points[i], X, Y, Z);
 	}
 
 	return energy_;

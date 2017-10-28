@@ -65,6 +65,11 @@ DictionaryUpdate::DictionaryUpdate(TriMesh _mesh_)
 	mesh_ = _mesh_;
 	gamma_ = 0.3;
 	SetMatrixFromMesh();
+	Z_ = P_ - V_ * B_;
+	std::cout << Z_.col(1) << std::endl;
+	std::cout << Z_.norm() << std::endl;
+	D_.resize(3, wid_P_);
+	D_.setZero();
 }
 
 DictionaryUpdate::~DictionaryUpdate()
@@ -84,7 +89,7 @@ bool DictionaryUpdate::test()
 
 TriMesh DictionaryUpdate::solver()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		PrimalUpdate();
 		DualUpdate();
@@ -98,17 +103,87 @@ void DictionaryUpdate::SetMatrixFromMesh()
 {
 	//Get V,B,P,Z
 	wid_V_ = 0;
-	wid_P_ = 0;
+	wid_P_ = mesh_.n_vertices();
 	for (TriMesh::VertexIter v_it = mesh_.vertices_begin();
 		v_it != mesh_.vertices_end(); v_it++)
 	{
 		if (mesh_.data(*v_it).is_mesh_point_)
 		{
+			mesh_point_index_.push_back(v_it->idx());
+			mesh_.data(*v_it).matrix_column_index = wid_V_;
 			wid_V_++;
-			wid_P_++;
+		}
+	}
+	std::cout << "Here! 1 : "<< wid_V_ << "\n";
+	V_.resize(3, wid_V_);
+	int cnt = 0;
+	for (TriMesh::VertexIter v_it = mesh_.vertices_begin();
+		v_it != mesh_.vertices_end(); v_it++)
+	{
+		if (mesh_.data(*v_it).is_mesh_point_)
+		{
+			V_.col(cnt++) = Eigen::Vector3d(mesh_.point(*v_it).data());
+		}
+	}
+	std::cout << "Here! 2 : " << V_.norm() << "\n";
+
+	cnt = 0;
+	int cnt_for_check = 0;
+	for (TriMesh::FaceIter f_it = mesh_.faces_begin();
+		f_it != mesh_.faces_end(); f_it++)
+	{
+		cnt_for_check += mesh_.data(*f_it).index().size();
+	}
+	wid_P_ = cnt_for_check;
+	P_.resize(3, wid_P_);
+	std::vector <Eigen::Triplet<double> > B_coef_;
+
+	for (TriMesh::FaceIter f_it = mesh_.faces_begin();
+		f_it != mesh_.faces_end(); f_it++)
+	{
+		//Pick the face point
+		TriMesh::FaceVertexIter fv_ = mesh_.fv_iter(*f_it);
+		TriMesh::VertexHandle v1h_ = mesh_.vertex_handle(fv_->idx());
+		TriMesh::Point v1 = mesh_.point(v1h_);
+		fv_++;
+		TriMesh::VertexHandle v2h_ = mesh_.vertex_handle(fv_->idx());
+		TriMesh::Point v2 = mesh_.point(mesh_.vertex_handle(fv_->idx()));
+		fv_++;
+		TriMesh::VertexHandle v3h_ = mesh_.vertex_handle(fv_->idx());
+		TriMesh::Point v3 = mesh_.point(mesh_.vertex_handle(fv_->idx()));
+		
+		std::vector<int> index = mesh_.data(*f_it).index();
+		cnt_for_check += index.size();
+
+		for (size_t i = 0; i < index.size(); i++)
+		{
+			TriMesh::Point pt = mesh_.point(mesh_.vertex_handle(index[i]));
+			P_.col(cnt) = Eigen::Vector3d(pt.data());
+			//std::cout << P_.col(cnt) << std::endl;
+			TriProj::Triangle T(TriProj::Vec3d(pt.data()), TriProj::Vec3d(v1.data()),
+				TriProj::Vec3d(v2.data()), TriProj::Vec3d(v3.data()));
+			TriProj::Vec3d coord_= T.BarycentricCoord();
+			//std::cout << coord_ << std::endl;
+			B_coef_.push_back(Eigen::Triplet<double>(
+				mesh_.data(v1h_).matrix_column_index, cnt, coord_[0]));
+			B_coef_.push_back(Eigen::Triplet<double>(
+				mesh_.data(v2h_).matrix_column_index, cnt, coord_[1]));
+			B_coef_.push_back(Eigen::Triplet<double>(
+				mesh_.data(v3h_).matrix_column_index, cnt, coord_[2]));
+
+			cnt++;
 		}
 	}
 	
+	
+	//assert(cnt_for_check == wid_P_);
+
+	B_.resize(wid_V_, wid_P_);
+	B_.reserve(wid_P_ * 3);
+	std::cout << "Here! 3 :" << P_.norm() << "\n";
+	B_.setZero();
+	B_.setFromTriplets(B_coef_.begin(),B_coef_.end());
+	std::cout << "Here! 4 :" << B_.norm() << "\n";
 }
 
 double DictionaryUpdate::ComputeEnergy()
@@ -180,15 +255,17 @@ void DictionaryUpdate::SolveSubV()
 
 	int l = mesh_.n_edges();		// number of edges of the mesh
 
-	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
+	for (TriMesh::VertexIter it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
-
-		L.insert(it->idx(), it->idx()) = mesh_.valence(*it);
+		if (!mesh_.data(*it).is_mesh_point_)
+			continue;
+		int index = mesh_.data(*it).matrix_column_index;
+		L.insert(index, index) = mesh_.valence(*it);
 		for (auto vit = mesh_.vv_begin(*it); vit != mesh_.vv_end(*it); vit++)
 		{
-			//std::cout << it->idx() << ' ' << vit->idx() << std::endl;
-			L.coeffRef(it->idx(), vit->idx()) = -1;
-			L.coeffRef(vit->idx(), it->idx()) = -1;
+			int vit_index = mesh_.data(*vit).matrix_column_index;
+			L.coeffRef(index, vit_index) = -1;
+			L.coeffRef(vit_index, index) = -1;
 		}
 	}
 
@@ -222,9 +299,12 @@ void DictionaryUpdate::SolveSubV()
 
 	for (auto it = mesh_.vertices_begin(); it != mesh_.vertices_end(); it++)
 	{
+		if (!mesh_.data(*it).is_mesh_point_)
+			continue;
+		int index = mesh_.data(*it).matrix_column_index;
 		//std::cout << V_x[it->idx()] << ' ' << V_y[it->idx()]
 		//	<< ' ' << V_z[it->idx()] << std::endl;
-		mesh_.set_point(*it, TriMesh::Point(V_x[it->idx()], V_y[it->idx()], V_z[it->idx()]));
+		mesh_.set_point(*it, TriMesh::Point(V_x[index], V_y[index], V_z[index]));
 	}
 	mesh_.update_normals();
 	

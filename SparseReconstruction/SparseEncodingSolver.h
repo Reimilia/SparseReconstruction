@@ -62,7 +62,9 @@ protected:
 	double face_tri_energy(TriMesh::FaceHandle fh_);
 	double face_tri_energy(TriMesh::Point,
 		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
-	double face_tri_energy(std::vector<TriMesh::Point> correspondent_index,
+	double face_tri_energy(int,
+		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
+	double face_tri_energy(std::vector<int> correspondent_index,
 		TriMesh::Point X, TriMesh::Point Y, TriMesh::Point Z);
 
 public:

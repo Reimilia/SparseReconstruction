@@ -13,7 +13,7 @@
 
 #include "SparseReconstruction\OptMeshInit.h"
 #include "SparseReconstruction\SparseEncodingSolver.h"
-#include "SparseReconstruction\DicUpdateTest.h"
+#include "SparseReconstruction\DictionaryUpdate.h"
 
 #include "SparseReconstruction\TriMesh.h"
 #include "HE_mesh\Vec.h"

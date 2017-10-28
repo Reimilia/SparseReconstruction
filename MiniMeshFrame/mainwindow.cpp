@@ -71,6 +71,9 @@ void MainWindow::CreateActions()
 	
 	action_test_Bsub_ = new QAction(tr("Bupdate"), this);
 	connect(action_test_Bsub_, SIGNAL(triggered()), renderingwidget_, SLOT(TopoUpdateTest()));
+	
+	action_test_Vsub_ = new QAction(tr("Vupdate"), this);
+	connect(action_test_Vsub_, SIGNAL(triggered()), renderingwidget_, SLOT(DictUpdateTest()));
 
 
 	action_loadmesh_ = new QAction(tr("readOBJ"), this);
@@ -105,6 +108,7 @@ void MainWindow::CreateToolBars()
 	toolbar_basic_->addAction(action_background_);
 	toolbar_basic_->addAction(action_test_sth_);
 	toolbar_basic_->addAction(action_test_Bsub_);
+	toolbar_basic_->addAction(action_test_Vsub_);
 }
 
 void MainWindow::CreateStatusBar()

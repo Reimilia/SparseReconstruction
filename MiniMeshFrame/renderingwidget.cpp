@@ -411,8 +411,8 @@ void RenderingWidget::DictUpdateTest()
 {
 	OptSolverParaSet para;
 	para.SetDefaultPara();
-	DicUpdateTest *test = new DicUpdateTest(ptr_mesh_);
-	ptr_mesh_= test->solver();
+	DictionaryUpdate *test = new DictionaryUpdate(ptr_mesh_);
+	ptr_mesh_ = test->solver();
 	delete test;
 	updateGL();
 }

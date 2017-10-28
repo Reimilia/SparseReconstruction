@@ -18,6 +18,20 @@ bool OptMeshInit::IsTriangleInMesh(
 
 	//Check if this triangle already exists
 	bool is_triangle_exists = false;
+	TriMesh::HalfedgeHandle heh_ = mesh.find_halfedge(X, Y);
+
+	if (heh_.is_valid() && mesh.opposite_vh(heh_) == Z)
+	{
+		fh_ = mesh.face_handle(heh_);
+		return true;
+	}
+	heh_ = mesh.find_halfedge(Y, X);
+	if (heh_.is_valid() && mesh.opposite_vh(heh_) == Z)
+	{
+		fh_ = mesh.face_handle(heh_);
+		return true;
+	}
+	/*
 	for (TriMesh::VertexFaceIter vf_iter = mesh.vf_iter(X);
 		vf_iter.is_valid(); vf_iter++)
 	{
@@ -39,24 +53,38 @@ bool OptMeshInit::IsTriangleInMesh(
 			is_triangle_exists = true;
 			break;
 		}
-	}
-	/*is_triangle_exists = (mesh.find_halfedge(X, Y) != TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Y, Z) != TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, X) != TriMesh::InvalidHalfedgeHandle)
-		||
-		(mesh.find_halfedge(X, Z) != TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, Y) != TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Y, X) != TriMesh::InvalidHalfedgeHandle);
-		*/
+	}*/
+	
+	
 	return is_triangle_exists;
 }
 
-bool OptMeshInit::IsEdgeFillUp(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y)
+bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z)
 {
-	//Check halfedge status
-	return (mesh.find_halfedge(X, Y) != TriMesh::InvalidHalfedgeHandle
-		&&mesh.find_halfedge(Y, X) != TriMesh::InvalidHalfedgeHandle);
+	int isolated_num = 0;
+	if (mesh.is_isolated(X)) isolated_num++;
+	if (mesh.is_isolated(Y)) isolated_num++;
+	if (mesh.is_isolated(Z)) isolated_num++;
+
+	if (isolated_num==3)
+		return true;
+	//two isolated points
+
+	//one isolated points
+	
+	//no isolated points
+	return
+		(
+			(!mesh.find_halfedge(X, Y).is_valid()
+			&& !mesh.find_halfedge(Y, Z).is_valid()
+			&& !mesh.find_halfedge(Z, X).is_valid())
+		||
+			(!mesh.find_halfedge(Y, X).is_valid()
+			&& !mesh.find_halfedge(Z, Y).is_valid()
+			&& !mesh.find_halfedge(X, Z).is_valid())
+		);
 }
+
 
 bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 {
@@ -67,18 +95,22 @@ bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 	int idx, idy, idz;
 
 	triangle.GetTrianglePointIndex(idx, idy, idz);
+	idx = sample_index[idx];
+	idy = sample_index[idy];
+	idz = sample_index[idz];
 	TriMesh::VertexHandle X, Y, Z;
 	X = mesh.vertex_handle(idx);
 	Y = mesh.vertex_handle(idy);
 	Z = mesh.vertex_handle(idz);
 	
 	// Check if we have space to insert the triangle
-	bool is_edge_fill_up = (mesh.find_halfedge(X, Y) == TriMesh::InvalidHalfedgeHandle
+	/*bool is_edge_fill_up = (mesh.find_halfedge(X, Y) == TriMesh::InvalidHalfedgeHandle
 		&& mesh.find_halfedge(Y, Z) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle)||
+		&& mesh.find_halfedge(Z, X) == TriMesh::InvalidHalfedgeHandle);
 		(mesh.find_halfedge(Y, X) == TriMesh::InvalidHalfedgeHandle
 		&& mesh.find_halfedge(Z, Y) == TriMesh::InvalidHalfedgeHandle
-		&& mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle);
+		&& mesh.find_halfedge(X, Z) == TriMesh::InvalidHalfedgeHandle);*/
+	bool is_edge_fill_up = IsFeasible(mesh, X, Y, Z);
 	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
 	if(!is_edge_fill_up || !is_boundary)
 		return false;
@@ -119,37 +151,34 @@ bool OptMeshInit::GenerateInitialDict(
 		point_pool.push_back(points[i].data());
 	}
 	PoissonSampling sampler(point_pool);
-	sampler.SetRaduis(0.05);
+	sampler.SetRaduis(0.001);
 
-	std::vector<int> indexes;
-	if (!sampler.GenerateSamples(mesh_size_, indexes))
+	
+	if (!sampler.GenerateSamples(mesh_size_, sample_index))
 	{
 		std::cerr << "Insufficient points!"
 			"The sampling paramter is not setting properly.\n";
 	}
 
-	bool *is_mesh_dict = new bool[input_size_];
+	is_mesh_dict = new bool[input_size_];
 
 	for (int i = 0; i < points.size(); i++)
 	{
 		is_mesh_dict[i] = false;
 	}
-	mesh_size_ = indexes.size();
+	mesh_size_ = sample_index.size();
 
 	for (int i = 0; i < mesh_size_; i++)
 	{
-		mesh_points_.push_back(points[indexes[i]]);
-		is_mesh_dict[indexes[i]] = true;
+		mesh_points_.push_back(points[sample_index[i]]);
+		is_mesh_dict[sample_index[i]] = true;
 	}
 	for (int i = 0; i < points.size(); i++)
 	{
 		query_points_.push_back(points[i]);	
 	}
 
-	//Don't forget to delete variables.
-	if(is_mesh_dict)
-		delete[] is_mesh_dict;
-
+	
 	return true;
 }
 
@@ -162,6 +191,10 @@ OptMeshInit::OptMeshInit()
 
 OptMeshInit::~OptMeshInit()
 {
+	//Don't forget to delete variables.
+	if (is_mesh_dict)
+		delete[] is_mesh_dict;
+
 }
 
 bool OptMeshInit::BuildInitialSolution(
@@ -202,17 +235,82 @@ bool OptMeshInit::BuildInitialSolution(
 		);
 
 	//Add points in order
-	for (int i = 0; i < mesh_points_.size(); i++)
+	std::queue <int> queue_points_;
+	for (int i = 0; i < query_points_.size(); i++)
 	{
-		TriMesh::Point vertex(mesh_points_[i].data());
-		TriMesh::VertexHandle vh_= mesh.add_vertex(vertex);
-		mesh.data(vh_).is_mesh_point_ = true;
+		queue_points_.push(i);
+		TriMesh::Point vertex(query_points_[i].data());
+		TriMesh::VertexHandle vh_ = mesh.add_vertex(vertex);
+		mesh.data(vh_).is_mesh_point_ = is_mesh_dict[i];
 	}
 	
 	std::vector <TriProj::Triangle> triangles;
+	while (!queue_points_.empty())
+	{
+		int i = queue_points_.front();
+		queue_points_.pop();
+		//if (!is_mesh_dict[i]) continue;
+		std::cout << "point " << i << std::endl;
+		int j = 0;
+		triset.GenerateTriangleSet(
+			query_points_[i],
+			triangles
+		);
+		for (j = 0; j < triangles.size(); j++)
+		{
+			if (triangles[j].RegEnergy() == TriProj::inf)
+			{
+				j = triangles.size();
+				break;
+			}
+			// Add triangle into mesh and test if this is the manifold
+			TriMesh::FaceHandle fh_;
+			if (IsTriangleInMesh(mesh, triangles[j], fh_))
+			{
+				sparse_encoding.push_back(triangles[j]);
+				mesh.data(fh_).add_point_index(i);
+				break;
+			}
+
+			//std::cout << triangles[j].RegEnergy() << std::endl;
+			if (ManifoldCheck(mesh, triangles[j]))
+			{
+				int idx, idy, idz;
+
+				triangles[j].GetTrianglePointIndex(idx, idy, idz);
+				idx = sample_index[idx];
+				idy = sample_index[idy];
+				idz = sample_index[idz];
+				//std::cout << i << ' ' << idx << ' ' << idy << ' ' << idz << std::endl;
+				
+
+				TriMesh::FaceHandle fh_ = mesh.add_face(
+					mesh.vertex_handle(idx),
+					mesh.vertex_handle(idy),
+					mesh.vertex_handle(idz)
+				);
+				mesh.data(fh_).clear_point_index();
+				mesh.data(fh_).add_point_index(i);
+				sparse_encoding.push_back(triangles[j]);
+				break;
+			}
+
+		}
+		if (j >= triangles.size())
+		{
+			std::cout << "Error at" << i << ", No triangle will be paired "
+				"with this point!" << std::endl;
+			//queue_points_.push(i);
+		}
+		
+	}
+	/*
 	for (int i = 0; i < query_points_.size(); i++)
 	{
-		int j=0;
+		if (is_mesh_dict[i])
+			continue;
+		std::cout << "point " << i << std::endl;
+		int j = 0;
 		triset.GenerateTriangleSet(
 			query_points_[i],
 			triangles
@@ -223,12 +321,9 @@ bool OptMeshInit::BuildInitialSolution(
 			TriMesh::FaceHandle fh_;
 			if (IsTriangleInMesh(mesh, triangles[j], fh_))
 			{
-				TriMesh::VertexHandle vh_= mesh.add_vertex(TriMesh::Point(query_points_[i].data()));
-				mesh.data(vh_).is_mesh_point_ = false;
+				TriMesh::VertexHandle vh_ = mesh.add_vertex(TriMesh::Point(query_points_[i].data()));
 				sparse_encoding.push_back(triangles[j]);
-				mesh.data(fh_).add_point_index(
-					TriMesh::Point(query_points_[i].data())
-				);
+				mesh.data(fh_).add_point_index(i);
 				break;
 			}
 
@@ -239,17 +334,16 @@ bool OptMeshInit::BuildInitialSolution(
 
 				triangles[j].GetTrianglePointIndex(idx, idy, idz);
 				TriMesh::VertexHandle vh_ = mesh.add_vertex(TriMesh::Point(query_points_[i].data()));
-				mesh.data(vh_).is_mesh_point_ = false;
-
+				idx = sample_index[idx];
+				idy = sample_index[idy];
+				idz = sample_index[idz];
 				TriMesh::FaceHandle fh_ = mesh.add_face(
 					mesh.vertex_handle(idx),
 					mesh.vertex_handle(idy),
 					mesh.vertex_handle(idz)
 				);
 				mesh.data(fh_).clear_point_index();
-				mesh.data(fh_).add_point_index(
-					TriMesh::Point(query_points_[i].data())
-				);
+				mesh.data(fh_).add_point_index(i);
 
 				sparse_encoding.push_back(triangles[j]);
 				break;
@@ -258,10 +352,10 @@ bool OptMeshInit::BuildInitialSolution(
 		}
 		if (j >= triangles.size())
 		{
-			std::cout << "Error at" << i <<", No triangle will be paired "
-			"with this point!"<< std::endl;
+			std::cout << "Error at" << i << ", No triangle will be paired "
+				"with this point!" << std::endl;
 		}
-	}
+	}*/
 	/*
 	bool is_manifold = true;
 	for (TriMesh::VertexIter v_it = mesh.vertices_begin();

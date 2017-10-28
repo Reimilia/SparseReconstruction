@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "TriMesh.h"
+#include "Triangle.h"
 #include <Eigen/Sparse>
 #include <Eigen/Cholesky>
 
@@ -30,6 +31,7 @@ private:
 	Eigen::MatrixXd							P_;		// input signal
 	Eigen::MatrixXd							Z_;		// error
 	Eigen::MatrixXd							D_;		// Lagrangian function
+	std::vector<int>						mesh_point_index_; // Use to put the computation result back to the mesh
 
 	void									SetMatrixFromMesh();
 	double									ComputeEnergy();

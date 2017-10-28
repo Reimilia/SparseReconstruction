@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Eigen\Core"
-
+#include <queue>
 
 #include "TriMesh.h"
 #include "TriSet.h"
@@ -27,16 +27,16 @@ protected:
 	std::vector<Eigen::Vector3d>	mesh_points_;
 
 	// approximated points
-	std::vector<Eigen::Vector3d>	query_points_;
-
+	std::vector<Eigen::Vector3d>		query_points_;
+	bool *is_mesh_dict;
+	std::vector<int> sample_index;
 
 
 
 private:
 	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle, TriMesh::FaceHandle &F );
-	bool IsEdgeFillUp(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y);
+	bool IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z);
 	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
-	
 	// Pick initial dict for that problem
 	bool GenerateInitialDict(std::vector<Eigen::Vector3d> input_points);
 	// Generate sparse encoding

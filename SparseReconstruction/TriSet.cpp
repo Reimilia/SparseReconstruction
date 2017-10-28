@@ -31,7 +31,7 @@ namespace TriProj
 		ANNpoint	ANN_point;
 
 		int dim = 3;
-		double eps = 1e-4;
+		double eps = 0;
 
 		ANN_index = new ANNidx[kNN_size_];
 		ANN_dist = new ANNdist[kNN_size_];
@@ -39,7 +39,6 @@ namespace TriProj
 
 		for (int i = 0; i < dim; i++)
 			ANN_point[i] = query_point[i];
-
 
 		kdtree_->annkSearch(
 			ANN_point,
@@ -51,11 +50,12 @@ namespace TriProj
 		
 		for (int i = 0; i < kNN_size_; i++)
 			point_indexes.push_back(ANN_index[i]);
-		return true;
+
 		if (ANN_index)
 			delete ANN_index;
 		if (ANN_dist)
 			delete ANN_dist;
+		return true;
 	}
 
 
@@ -83,7 +83,7 @@ namespace TriProj
 						points_[point_indexes[k]], point_indexes[k]
 					));
 				}
-		std::sort(triangle_set.begin(), triangle_set.end(), Cmp_Triangle());
+		std::sort(triangle_set.begin(), triangle_set.end());
 		return true;
 	}
 
