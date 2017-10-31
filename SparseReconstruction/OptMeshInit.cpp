@@ -10,11 +10,15 @@ bool OptMeshInit::IsTriangleInMesh(
 	int idx, idy, idz;
 
 	triangle.GetTrianglePointIndex(idx, idy, idz);
+	idx = sample_index[idx];
+	idy = sample_index[idy];
+	idz = sample_index[idz];
 	TriMesh::VertexHandle X, Y, Z;
 	X = mesh.vertex_handle(idx);
 	Y = mesh.vertex_handle(idy);
 	Z = mesh.vertex_handle(idz);
-	//std::cout << std::endl << idx << ' ' << idy << ' ' << idz << ":\n";
+	//std::cout << triangle.RegEnergy() << ' ' << idx << ' ' << idy
+	//	<< ' ' << idz << std::endl;
 
 	//Check if this triangle already exists
 	bool is_triangle_exists = false;
@@ -158,18 +162,18 @@ bool OptMeshInit::GenerateInitialDict(
 			"The sampling paramter is not setting properly.\n";
 	}
 
-	is_mesh_dict = new bool[input_size_];
+	is_mesh_dict = new int[input_size_];
 
 	for (int i = 0; i < points.size(); i++)
 	{
-		is_mesh_dict[i] = false;
+		is_mesh_dict[i] = -1;
 	}
 	mesh_size_ = sample_index.size();
 
 	for (int i = 0; i < mesh_size_; i++)
 	{
 		mesh_points_.push_back(points[sample_index[i]]);
-		is_mesh_dict[sample_index[i]] = true;
+		is_mesh_dict[sample_index[i]] = i;
 	}
 	for (int i = 0; i < points.size(); i++)
 	{
@@ -270,7 +274,6 @@ bool OptMeshInit::BuildInitialSolution(
 
 	queue_points_.push(0);
 	hash[0] = true;
-	double search_radius = 0.1;
 	
 	std::vector <TriProj::Triangle> triangles;
 
@@ -285,6 +288,10 @@ bool OptMeshInit::BuildInitialSolution(
 			query_points_[i],
 			triangles
 		);
+		if (is_mesh_dict[i]!=-1)
+		{
+			std::cout << "Watch out!\n";
+		}
 		for (j = 0; j < triangles.size(); j++)
 		{
 			if (triangles[j].RegEnergy() == TriProj::inf)
@@ -310,8 +317,8 @@ bool OptMeshInit::BuildInitialSolution(
 				idx = sample_index[idx];
 				idy = sample_index[idy];
 				idz = sample_index[idz];
-				//std::cout << i << ' ' << idx << ' ' << idy << ' ' << idz << std::endl;
-				
+				//std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+				//	<< ' ' << idz << std::endl;
 
 				TriMesh::FaceHandle fh_ = mesh.add_face(
 					mesh.vertex_handle(idx),
@@ -336,9 +343,8 @@ bool OptMeshInit::BuildInitialSolution(
 		for (int k = 0; k < 3; k++)
 			ANN_point[k] = query_points_[i][k];
 
-		kdtree_->annkFRSearch(
+		kdtree_->annkSearch(
 			ANN_point,
-			search_radius,
 			10,
 			ANN_index,
 			ANN_dist,

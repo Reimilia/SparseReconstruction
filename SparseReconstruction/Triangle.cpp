@@ -37,7 +37,7 @@ namespace TriProj
 
 	void Triangle::BarycentricValidity()
 	{
-		is_barycentric_valid_ = !(BaryCoord_[0] < 0 || BaryCoord_[1] < 0 || BaryCoord_[2] < 0);
+		is_barycentric_valid_ = !(BaryCoord_[0] < zero || BaryCoord_[1] < zero || BaryCoord_[2] < zero);
 	}
 
 	Triangle::Triangle(Vec3d X, Vec3d Y, Vec3d Z)
@@ -221,7 +221,7 @@ namespace TriProj
 	{
 		if (!IsBarycentricValid())
 			return inf;
-		return pow(ProjectedErrorNorm(), 0.3) +
+		return pow(ProjectedErrorNorm(), 2) +
 			2.5*EdgeRegSquaredNorm() / 3.0;
 	}
 

@@ -47,6 +47,13 @@ namespace TriProj
 			std::vector<TriProj::Triangle> &trianlge_set
 		);
 
+		bool GenerateTriangleSet(
+			Vec3d	query_point,
+			std::vector<TriProj::Triangle> &trianlge_set,
+			bool	is_include_query_point,
+			int		query_point_index
+		);
+
 
 		bool SetQuerySize(int k);
 		bool SetInputPoints(std::vector<Vec3d> input_points);

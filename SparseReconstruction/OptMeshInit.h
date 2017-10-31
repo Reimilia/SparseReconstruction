@@ -24,11 +24,11 @@ protected:
 	int			input_size_;
 
 	// dictionary points
-	std::vector<Eigen::Vector3d>	mesh_points_;
+	std::vector<Eigen::Vector3d>		mesh_points_;
 
 	// approximated points
 	std::vector<Eigen::Vector3d>		query_points_;
-	bool *is_mesh_dict;
+	int *is_mesh_dict;
 	std::vector<int> sample_index;
 
 	ANNkd_tree  *kdtree_;

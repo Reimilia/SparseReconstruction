@@ -15,6 +15,7 @@ namespace TriProj
 {
 	typedef Eigen::Vector3d		Vec3d;
 	const double inf = 1e10;
+	const double zero = -1e-5;
 
 	// customized projection
 	class Triangle
