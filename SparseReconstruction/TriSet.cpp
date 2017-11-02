@@ -178,5 +178,9 @@ namespace TriProj
 			dim
 		);
 	}
+	bool TriSet::energy_cmp(Triangle A, Triangle B)
+	{
+		return false;
+	}
 }
 

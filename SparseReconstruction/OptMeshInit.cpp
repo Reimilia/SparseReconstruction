@@ -1,5 +1,5 @@
 #include "OptMeshInit.h"
-
+#include <cmath>
 
 
 bool OptMeshInit::IsTriangleInMesh(
@@ -80,43 +80,55 @@ bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::Ver
 	bool is_boundary = (mesh.is_boundary(X) && mesh.is_boundary(Y) && mesh.is_boundary(Z));
 	if (!is_boundary)
 		return false;
-	if (
-		!(!mesh.find_halfedge(X, Y).is_valid()
-			&& !mesh.find_halfedge(Y, Z).is_valid()
-			&& !mesh.find_halfedge(Z, X).is_valid())
-		&&
-		!(!mesh.find_halfedge(Y, X).is_valid()
-			&& !mesh.find_halfedge(Z, Y).is_valid()
-			&& !mesh.find_halfedge(X, Z).is_valid()
-		)
-		)
-		return false;
+	
 	mesh.request_halfedge_status();
 	mesh.request_vertex_status();
 	mesh.request_face_status();
-	TriMesh::FaceHandle f = mesh.add_face(X, Y, Z);
-	bool flag = mesh.is_manifold(X)&&mesh.is_manifold(Y)&&mesh.is_manifold(Z);
+	TriMesh::FaceHandle f;
+	bool flag = false;
+	if (!mesh.find_halfedge(X, Y).is_valid()
+		&& !mesh.find_halfedge(Y, Z).is_valid()
+		&& !mesh.find_halfedge(Z, X).is_valid())
+	{
+		f = mesh.add_face(X, Y, Z);
+		flag = (mesh.is_boundary(X) || mesh.is_manifold(X))
+			&& (mesh.is_boundary(Y) || mesh.is_manifold(Y))
+			&& (mesh.is_boundary(Z) || mesh.is_manifold(Z));
+		mesh.delete_face(f, false);
+		mesh.garbage_collection();
+		if(flag) 
+			return true;
+		flag = mesh.find_halfedge(Y, X).is_valid()
+			|| mesh.find_halfedge(Z, Y).is_valid()
+			|| mesh.find_halfedge(X, Z).is_valid();
+		if (flag)
+			return true;
+	}
+	if (!mesh.find_halfedge(Y, X).is_valid()
+		&& !mesh.find_halfedge(Z, Y).is_valid()
+		&& !mesh.find_halfedge(X, Z).is_valid())
+	{
+		f = mesh.add_face(X, Z, Y);
+		flag = (mesh.is_boundary(X) || mesh.is_manifold(X))
+			&& (mesh.is_boundary(Y) || mesh.is_manifold(Y))
+			&& (mesh.is_boundary(Z) || mesh.is_manifold(Z));
+		mesh.delete_face(f, false);
+		mesh.garbage_collection();
+		if (flag)
+			return true;
+		flag = mesh.find_halfedge(X, Y).is_valid()
+			|| mesh.find_halfedge(Y, Z).is_valid()
+			|| mesh.find_halfedge(Z, X).is_valid();
+		if (flag)
+			return true;
+	}
+	return false;
+}
 
-	mesh.delete_face(f, false);
-	mesh.garbage_collection(); 
-	if (flag)
-		return true;
-	f = mesh.add_face(X, Z, Y);
-	flag = mesh.is_manifold(X) && mesh.is_manifold(Y) && mesh.is_manifold(Z);
-
-	mesh.delete_face(f, false);
-	mesh.garbage_collection();
-	return flag;
-	/*return
-		(
-			!(!mesh.find_halfedge(X, Y).is_valid()
-			&& !mesh.find_halfedge(Y, Z).is_valid()
-			&& !mesh.find_halfedge(Z, X).is_valid())
-		==
-			(!mesh.find_halfedge(Y, X).is_valid()
-			&& !mesh.find_halfedge(Z, Y).is_valid()
-			&& !mesh.find_halfedge(X, Z).is_valid())
-		);*/
+void OptMeshInit::CWOrientation(TriMesh mesh, TriMesh::VertexHandle & X, TriMesh::VertexHandle & Y, TriMesh::VertexHandle & Z)
+{
+	// Change Vertex Handle into clockwise order
+	
 }
 
 
@@ -153,7 +165,7 @@ bool OptMeshInit::GenerateInitialDict(
 		point_pool.push_back(points[i].data());
 	}
 	PoissonSampling sampler(point_pool);
-	sampler.SetRaduis(0.01);
+	sampler.SetRaduis(1/points.size());
 
 	
 	if (!sampler.GenerateSamples(mesh_size_, sample_index))
@@ -317,8 +329,8 @@ bool OptMeshInit::BuildInitialSolution(
 				idx = sample_index[idx];
 				idy = sample_index[idy];
 				idz = sample_index[idz];
-				//std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
-				//	<< ' ' << idz << std::endl;
+				std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+					<< ' ' << idz << std::endl;
 
 				TriMesh::FaceHandle fh_ = mesh.add_face(
 					mesh.vertex_handle(idx),

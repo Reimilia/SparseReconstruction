@@ -12,6 +12,7 @@
 #include <ANN\ANN.h>
 #include <Eigen\Sparse>
 #include "Triangle.h"
+#include "TriMesh.h"
 
 namespace TriProj
 {
@@ -26,6 +27,7 @@ namespace TriProj
 		bool is_initialized_ = false;
 
 		ANNkd_tree	*kdtree_;
+		TriMesh		*aux_mesh_;
 		
 		std::vector<Eigen::Vector3d> points_;
 
@@ -59,5 +61,8 @@ namespace TriProj
 		bool SetInputPoints(std::vector<Vec3d> input_points);
 	protected:
 		void SetupKdTree();
+	private:
+		// I don't know if this works
+		bool energy_cmp(Triangle X, Triangle Y);
 	};
 }

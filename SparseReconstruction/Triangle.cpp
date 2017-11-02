@@ -214,14 +214,20 @@ namespace TriProj
 
 	bool Triangle::IsBarycentricValid()
 	{
-		return is_barycentric_valid_;
+		if(is_calculated_)
+			return is_barycentric_valid_;
+		else
+		{
+			CalcResult();
+			return is_barycentric_valid_;
+		}
 	}
 
 	double Triangle::RegEnergy()
 	{
 		if (!IsBarycentricValid())
 			return inf;
-		return pow(ProjectedErrorNorm(), 2) +
+		return pow(ProjectedErrorNorm(), 0.3) +
 			2.5*EdgeRegSquaredNorm() / 3.0;
 	}
 
