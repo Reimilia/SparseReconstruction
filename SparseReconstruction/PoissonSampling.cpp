@@ -85,10 +85,10 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 		
 		if (hash[random_sample_index])
 		{
-			//std::cout << pool_remain_size_ << std::endl;
+			//std::cout << random_sample_index << std::endl;
 			continue;
 		}
-
+		std::cout << random_sample_index << std::endl;
 		sample_index.push_back(random_sample_index);
 		hash[random_sample_index] = true;
 		pool_remain_size_--;
@@ -125,8 +125,11 @@ bool PoissonSampling::GenerateSamples(int sample_size, std::vector<int>& sample_
 		);
 		for (int i = 0; i < k_num; i++)
 		{
-			hash[ANN_index[i]] = true;
-			pool_remain_size_--;
+			if (!hash[ANN_index[i]])
+			{
+				hash[ANN_index[i]] = true;
+				pool_remain_size_--;
+			}
 		}
 
 		if (ANN_index)	delete ANN_index;

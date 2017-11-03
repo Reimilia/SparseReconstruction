@@ -227,7 +227,7 @@ namespace TriProj
 	{
 		if (!IsBarycentricValid())
 			return inf;
-		return pow(ProjectedErrorNorm(), 0.3) +
+		return pow(ProjectedErrorNorm(), 2) +
 			2.5*EdgeRegSquaredNorm() / 3.0;
 	}
 

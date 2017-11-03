@@ -90,6 +90,11 @@ bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::Ver
 		&& !mesh.find_halfedge(Y, Z).is_valid()
 		&& !mesh.find_halfedge(Z, X).is_valid())
 	{
+		if (mesh.find_halfedge(Y, X).is_valid()
+			&& !mesh.find_halfedge(Z, Y).is_valid()
+			&& !mesh.find_halfedge(X, Z).is_valid())
+			return false;
+		std::cout << "Pass!\n";
 		f = mesh.add_face(X, Y, Z);
 		flag = (mesh.is_boundary(X) || mesh.is_manifold(X))
 			&& (mesh.is_boundary(Y) || mesh.is_manifold(Y))
@@ -98,27 +103,22 @@ bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::Ver
 		mesh.garbage_collection();
 		if(flag) 
 			return true;
-		flag = mesh.find_halfedge(Y, X).is_valid()
-			|| mesh.find_halfedge(Z, Y).is_valid()
-			|| mesh.find_halfedge(X, Z).is_valid();
-		if (flag)
-			return true;
 	}
 	if (!mesh.find_halfedge(Y, X).is_valid()
 		&& !mesh.find_halfedge(Z, Y).is_valid()
 		&& !mesh.find_halfedge(X, Z).is_valid())
 	{
+		if (!mesh.find_halfedge(X, Y).is_valid()
+			&& !mesh.find_halfedge(Y, Z).is_valid()
+			&& !mesh.find_halfedge(Z, X).is_valid())
+			return false;
+		std::cout << "Pass!\n";
 		f = mesh.add_face(X, Z, Y);
 		flag = (mesh.is_boundary(X) || mesh.is_manifold(X))
 			&& (mesh.is_boundary(Y) || mesh.is_manifold(Y))
 			&& (mesh.is_boundary(Z) || mesh.is_manifold(Z));
 		mesh.delete_face(f, false);
 		mesh.garbage_collection();
-		if (flag)
-			return true;
-		flag = mesh.find_halfedge(X, Y).is_valid()
-			|| mesh.find_halfedge(Y, Z).is_valid()
-			|| mesh.find_halfedge(Z, X).is_valid();
 		if (flag)
 			return true;
 	}
@@ -159,7 +159,7 @@ bool OptMeshInit::GenerateInitialDict(
 		point_pool.push_back(points[i].data());
 	}
 	PoissonSampling sampler(point_pool);
-	sampler.SetRaduis(1/points.size());
+	sampler.SetRaduis(1.0/mesh_size_);
 
 	
 	if (!sampler.GenerateSamples(mesh_size_, sample_index))
@@ -300,6 +300,10 @@ bool OptMeshInit::BuildInitialSolution(
 		}
 		for (j = 0; j < triangles.size(); j++)
 		{
+			int idx, idy, idz;
+			triangles[j].GetTrianglePointIndex(idx, idy, idz);
+			//std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+			//	<< ' ' << idz << std::endl;
 			if (triangles[j].RegEnergy() == TriProj::inf)
 			{
 				j = triangles.size();
@@ -317,14 +321,12 @@ bool OptMeshInit::BuildInitialSolution(
 			//std::cout << triangles[j].RegEnergy() << std::endl;
 			if (ManifoldCheck(mesh, triangles[j]))
 			{
-				int idx, idy, idz;
-
-				triangles[j].GetTrianglePointIndex(idx, idy, idz);
+				
 				idx = sample_index[idx];
 				idy = sample_index[idy];
 				idz = sample_index[idz];
-				std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
-					<< ' ' << idz << std::endl;
+				/*std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+					<< ' ' << idz << std::endl;*/
 
 				TriMesh::FaceHandle fh_ = mesh.add_face(
 					mesh.vertex_handle(idx),
@@ -393,4 +395,32 @@ bool OptMeshInit::BuildInitialSolution(
 	
 	return true;
 
+}
+
+bool OptMeshInit::TestPossionDiskSampling(
+	OptSolverParaSet para,
+	std::vector<Eigen::Vector3d> input_points, 
+	TriMesh & initial_mesh
+)
+{
+	initial_mesh.clean();
+	initial_mesh.garbage_collection();
+	input_size_ = input_points.size();
+	mesh_size_ = round(para.initial_dict_ratio_*input_size_);
+
+	if (!GenerateInitialDict(input_points))
+	{
+		std::cerr << "Something goes wrong when"
+			"resampling from point clouds!" << std::endl;
+		return false;
+	}
+
+
+	for (int i = 0; i < mesh_points_.size(); i++)
+	{
+		//queue_points_.push(i);
+		TriMesh::Point vertex(mesh_points_[i].data());
+		TriMesh::VertexHandle vh_ = initial_mesh.add_vertex(vertex);
+	}
+	return true;
 }

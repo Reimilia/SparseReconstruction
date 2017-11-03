@@ -374,6 +374,11 @@ void RenderingWidget::QuickTest()
 			points.push_back(Eigen::Vector3d(p.data()));
 		}
 		temp_.clear();
+		/*test->TestPossionDiskSampling(
+			para,
+			points,
+			ptr_mesh_
+		);*/
 		test->BuildInitialSolution(
 			para,
 			points,

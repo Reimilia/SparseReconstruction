@@ -60,6 +60,10 @@ public:
 		std::vector<TriProj::Triangle> &sparse_encoding
 		);
 
-
+	bool TestPossionDiskSampling(
+		OptSolverParaSet para,
+		std::vector<Eigen::Vector3d> input_points,
+		TriMesh &initial_mesh
+		);
 };
 
