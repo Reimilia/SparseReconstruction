@@ -37,12 +37,6 @@ protected:
 private:
 	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle, TriMesh::FaceHandle &F );
 	bool IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z);
-	void CWOrientation(
-		TriMesh mesh,
-		TriMesh::VertexHandle &X,
-		TriMesh::VertexHandle &Y,
-		TriMesh::VertexHandle &Z
-		);
 
 	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
 	// Pick initial dict for that problem

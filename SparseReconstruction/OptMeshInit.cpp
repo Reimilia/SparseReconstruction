@@ -125,12 +125,6 @@ bool OptMeshInit::IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::Ver
 	return false;
 }
 
-void OptMeshInit::CWOrientation(TriMesh mesh, TriMesh::VertexHandle & X, TriMesh::VertexHandle & Y, TriMesh::VertexHandle & Z)
-{
-	// Change Vertex Handle into clockwise order
-	
-}
-
 
 bool OptMeshInit::ManifoldCheck(TriMesh mesh, TriProj::Triangle triangle)
 {
