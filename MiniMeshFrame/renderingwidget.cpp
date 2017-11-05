@@ -367,12 +367,7 @@ void RenderingWidget::QuickTest()
 	OptMeshInit *test = new OptMeshInit();
 	try
 	{
-		std::vector<Eigen::Vector3d> points;
-		for (int i = 0; i < ptr_mesh_.n_vertices(); i++)
-		{
-			TriMesh::Point p=ptr_mesh_.point(ptr_mesh_.vertex_handle(i));
-			points.push_back(Eigen::Vector3d(p.data()));
-		}
+		
 		temp_.clear();
 		/*test->TestPossionDiskSampling(
 			para,
@@ -381,10 +376,9 @@ void RenderingWidget::QuickTest()
 		);*/
 		test->BuildInitialSolution(
 			para,
-			points,
-			ptr_mesh_,
-			temp_
+			ptr_mesh_
 		);
+		test->GetResultMesh(ptr_mesh_);
 	}
 	catch (const std::exception&)
 	{
@@ -474,6 +468,7 @@ void RenderingWidget::DrawPoints(bool bv)
 		return;
 	}
 	glBegin(GL_POINTS);
+	ptr_mesh_.request_vertex_normals();
 	for (TriMesh::VertexIter v_it = ptr_mesh_.vertices_begin();
 		v_it != ptr_mesh_.vertices_end(); ++v_it)
 	{
@@ -502,7 +497,7 @@ void RenderingWidget::DrawEdge(bool bv)
 		return;
 	}
 
-
+	ptr_mesh_.request_face_normals();
 	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin(); 
 		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{
@@ -533,6 +528,7 @@ void RenderingWidget::DrawFace(bool bv)
 		return;
 	}
 
+	ptr_mesh_.request_face_normals();
 	for (TriMesh::FaceIter f_it = ptr_mesh_.faces_begin();
 		f_it != ptr_mesh_.faces_end(); ++f_it)
 	{

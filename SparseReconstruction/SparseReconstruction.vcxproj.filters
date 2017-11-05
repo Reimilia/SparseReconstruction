@@ -139,5 +139,8 @@
     <ClInclude Include="TestSBT.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TriangleIntersectionTest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

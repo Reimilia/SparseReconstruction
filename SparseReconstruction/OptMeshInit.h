@@ -30,15 +30,22 @@ protected:
 	std::vector<Eigen::Vector3d>		query_points_;
 	int *is_mesh_dict;
 	std::vector<int> sample_index;
+	std::queue <int> queue_points_;
+	bool *hash_;
+	TriProj::TriSet triset_;
 
 	ANNkd_tree  *kdtree_;
 
+	//Dictionary Mesh
+	TriMesh mesh_;
+	bool has_mesh_created_;
 
 private:
-	bool IsTriangleInMesh(TriMesh mesh, TriProj::Triangle triangle, TriMesh::FaceHandle &F );
-	bool IsFeasible(TriMesh mesh, TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z);
+	bool IsTriangleInMesh(TriProj::Triangle triangle, TriMesh::FaceHandle &F );
+	TriMesh::FaceHandle IsFeasible(TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z);
 
-	bool ManifoldCheck(TriMesh mesh,TriProj::Triangle triangle);
+	//This function will change mesh topology as well
+	TriMesh::FaceHandle ManifoldCheck(TriProj::Triangle triangle);
 	// Pick initial dict for that problem
 	bool GenerateInitialDict(std::vector<Eigen::Vector3d> input_points);
 	// Generate sparse encoding
@@ -48,16 +55,17 @@ public:
 	OptMeshInit();
 	~OptMeshInit();
 
-	/*Only pass triangles, since sparse matrix will only need for V-subproblem
-	We don't necessarily need it in B-subproblem since we will instead maintain
-	the prioirty queue, which exactly maintains the mesh topology. And after
-	that , the B mesh can be rebuild from the pair (point,face).
+	void GetResultMesh(TriMesh &mesh);
+
+	
+	//After Initialization, each make one pair
+	bool PairOneQueryPoint();
+
+	/*Only pass mesh, since we can recover matrix from mesh topology
 	*/
 	bool BuildInitialSolution(
 		OptSolverParaSet para,
-		std::vector<Eigen::Vector3d> input_points,
-		TriMesh	&initial_mesh,
-		std::vector<TriProj::Triangle> &sparse_encoding
+		TriMesh initial_mesh
 		);
 
 	bool TestPossionDiskSampling(

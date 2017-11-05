@@ -30,6 +30,49 @@ namespace TriProj
 
 		BaryCoord_ = B.colPivHouseholderQr().solve(P_prime_ext);
 
+		//Do some dirty thing here:
+		/*if (BaryCoord_[1] < zero && BaryCoord_[2] < zero)
+		{
+			BaryCoord_ = Vec3d(1, 0, 0);
+		}
+		else
+			if (BaryCoord_[0] < zero && BaryCoord_[2] < zero)
+			{
+				BaryCoord_ = Vec3d(0, 1, 0);
+			}
+			else
+				if (BaryCoord_[0] < zero && BaryCoord_[1] < zero)
+				{
+					BaryCoord_ = Vec3d(0, 0, 1);
+				}
+				else
+					if (BaryCoord_[0] < zero)
+					{
+						double lambda = ((Z_ - X_)[0] * (P_prime_ - X_)[1] - (Z_ - X_)[1] * (P_prime_ - X_)[0]) /
+							((Y_-Z_)[1] * (P_prime_ - X_)[0] - (Y_ - Z_)[0] * (P_prime_ - X_)[1]);
+						if (lambda < 0)
+							std::cout << "Wrong!\n";
+						BaryCoord_ = Vec3d(0, lambda, 1.0 - lambda);
+					}
+		else
+		if (BaryCoord_[1] < zero)
+		{
+			double lambda = ((X_ - Y_)[0] * (P_prime_ - Y_)[1] - (X_ - Y_)[1] * (P_prime_ - Y_)[0]) /
+				((Z_ - X_)[1] * (P_prime_ - Y_)[0] - (Z_ - X_)[0] * (P_prime_ - Y_)[1]);
+			if (lambda < 0)
+				std::cout << "Wrong!\n";
+			BaryCoord_ = Vec3d(1.0 - lambda, 0, lambda);
+		}
+		else
+		if (BaryCoord_[2] < zero)
+		{
+			double lambda = ((Y_ - Z_)[0] * (P_prime_ - Z_)[1] - (Y_ - Z_)[1] * (P_prime_ - Z_)[0]) /
+				((X_ - Y_)[1] * (P_prime_ - Z_)[0] - (X_ - Y_)[0] * (P_prime_ - Z_)[1]);
+			if (lambda < 0)
+				std::cout << "Wrong!\n";
+			BaryCoord_ = Vec3d(lambda, 1.0 - lambda, 0);
+		}
+		*/
 		is_calculated_ = true;
 		BarycentricValidity();
 		energy_ = RegEnergy();
@@ -227,7 +270,7 @@ namespace TriProj
 	{
 		if (!IsBarycentricValid())
 			return inf;
-		return pow(ProjectedErrorNorm(), 2) +
+		return pow(ProjectedErrorNorm(), 1.3) +
 			2.5*EdgeRegSquaredNorm() / 3.0;
 	}
 

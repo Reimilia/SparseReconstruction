@@ -161,6 +161,7 @@
     <ClInclude Include="SparseEncodingSolver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TestSBT.h" />
+    <ClInclude Include="TriangleIntersectionTest.h" />
     <ClInclude Include="TriIntersection.h" />
     <ClInclude Include="TriProjEnergy.h" />
     <ClInclude Include="OptMeshInit.h" />

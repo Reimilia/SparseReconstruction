@@ -15,8 +15,11 @@ namespace TriProj
 
 	TriSet::~TriSet()
 	{
-		if(kdtree_)
+		if (kdtree_)
+		{
 			delete kdtree_;
+			kdtree_ = NULL;
+		}
 	}
 
 	bool TriSet::GenerateNearestPointSet(Vec3d query_point, std::vector<int>& point_indexes)
