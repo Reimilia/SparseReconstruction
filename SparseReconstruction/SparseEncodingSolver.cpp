@@ -141,9 +141,10 @@ void SparseEncodingSolver::EdgeFlipUpdate(TriMesh::EdgeHandle eh_)
 		mesh_.data(f2).set_point_index(new_index_f2);
 
 		mesh_.data(f1).is_calculated = false;
-		mesh_.data(f1).face_energy = face_tri_energy(f1);
 		mesh_.data(f2).is_calculated = false;
+		mesh_.data(f1).face_energy = face_tri_energy(f1);
 		mesh_.data(f2).face_energy = face_tri_energy(f2);
+		
 
 		UpdatePrioirtyQueue(eh_);
 	}

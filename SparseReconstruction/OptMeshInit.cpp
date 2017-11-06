@@ -44,7 +44,7 @@ void OptMeshInit::GetResultMesh(TriMesh &out_mesh)
 bool OptMeshInit::PairOneQueryPoint()
 {
 	//If queue is empty, we cannot push it back
-	if (query_points_.empty())
+	if (queue_points_.empty())
 		return false;
 
 	//Clear status
@@ -211,6 +211,14 @@ bool OptMeshInit::IsTriangleInMesh(
 
 TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z)
 {
+	//special case, three points are brand new.
+	bool is_isolated = (mesh_.is_isolated(X) && mesh_.is_isolated(Y) && mesh_.is_isolated(Z));
+	if (is_isolated)
+	{
+		TriMesh::FaceHandle f = mesh_.add_face(X, Y, Z);
+		return f;
+	}
+		
 	bool is_boundary = (mesh_.is_boundary(X) && mesh_.is_boundary(Y) && mesh_.is_boundary(Z));
 	if (!is_boundary)
 		return TriMesh::InvalidFaceHandle;
@@ -231,9 +239,12 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		if ( (h2.is_valid() && mesh_.is_boundary(h2)) || !h2.is_valid())
 			if ( (h3.is_valid() && mesh_.is_boundary(h3)) || !h3.is_valid())
 	{
+		if (!h1.is_valid() && !h2.is_valid() && !h3.is_valid())
+			return TriMesh::InvalidFaceHandle;
 		std::cout << "Pass1!\n";
 		f = mesh_.add_face(X, Y, Z);
-			
+		if (!f.is_valid())
+			return TriMesh::InvalidFaceHandle;
 		// If adding this face will not cause manifold violation
 		flag = (mesh_.is_boundary(X) || mesh_.is_manifold(X))
 			&& (mesh_.is_boundary(Y) || mesh_.is_manifold(Y))
@@ -247,9 +258,13 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		if ((h2o.is_valid() && mesh_.is_boundary(h2o)) || !h2o.is_valid())
 			if ((h3o.is_valid() && mesh_.is_boundary(h3o)) || !h3o.is_valid())
 	{
+		if (!h1o.is_valid() && !h2o.is_valid() && !h3o.is_valid())
+			return TriMesh::InvalidFaceHandle;
 		// If opposite halfedges are outer boundary(possible to add face)
 		std::cout << "Pass2!\n";
 		f = mesh_.add_face(X, Z, Y);
+		if (!f.is_valid())
+			return TriMesh::InvalidFaceHandle;
 		flag = (mesh_.is_boundary(X) || mesh_.is_manifold(X))
 			&& (mesh_.is_boundary(Y) || mesh_.is_manifold(Y))
 			&& (mesh_.is_boundary(Z) || mesh_.is_manifold(Z));
@@ -378,16 +393,16 @@ bool OptMeshInit::BuildInitialSolution(
 		Since you cannot judge the self-intersection between
 		two triangles easily.
 	*/
-	triset_= TriProj::TriSet(
-			para.triangle_set_control_num_,
-			mesh_points_
-		);
+	triset_.SetQuerySize(para.triangle_set_control_num_);
+	triset_.SetInputPoints(mesh_points_);
+
 	hash_ = new bool[query_points_.size()];
 	//Add points in order
 	for (int i = 0; i < query_points_.size(); i++)
 	{
 		//queue_points_.push(i);
 		hash_[i] = false;
+		
 		TriMesh::Point vertex(query_points_[i].data());
 		TriMesh::VertexHandle vh_ = mesh_.add_vertex(vertex);
 		mesh_.data(vh_).is_mesh_point_ = is_mesh_dict[i];
@@ -398,9 +413,8 @@ bool OptMeshInit::BuildInitialSolution(
 
 	queue_points_.push(0);
 	hash_[0] = true;
-	return true;
 	while (PairOneQueryPoint()) ;
-
+	return true;
 }
 
 bool OptMeshInit::TestPossionDiskSampling(

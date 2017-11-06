@@ -5,9 +5,11 @@ namespace TriProj
 
 	TriSet::TriSet()
 	{
+		kdtree_ = NULL;
 	}
 	TriSet::TriSet(int kNN_size, std::vector<Eigen::Vector3d> input_points)
 	{
+		is_initialized_ = false;
 		SetQuerySize(kNN_size);
 		SetInputPoints(input_points);
 		SetupKdTree();
@@ -29,6 +31,12 @@ namespace TriProj
 			std::cerr << "This kNN search size is incorrect!\n";
 			return false;
 		}
+
+		if (!is_initialized_)
+		{
+			SetupKdTree();
+		}
+
 		ANNidxArray ANN_index;
 		ANNdistArray ANN_dist;
 		ANNpoint	ANN_point;
@@ -141,6 +149,7 @@ namespace TriProj
 			return false;
 		}
 		kNN_size_ = k;
+		is_initialized_ = false;
 		return true;
 	}
 
@@ -151,6 +160,8 @@ namespace TriProj
 		{
 			points_.push_back(input_points[i]);
 		}
+		point_set_size_ = points_.size();
+		is_initialized_ = false;
 		return true;
 	}
 
@@ -175,11 +186,15 @@ namespace TriProj
 		}
 
 		//build up kdTree
+		if (kdtree_)
+			delete kdtree_;
 		kdtree_ = new ANNkd_tree(
 			ANN_input_points,
 			point_set_size_,
 			dim
 		);
+
+		is_initialized_ = true;
 	}
 	bool TriSet::energy_cmp(Triangle A, Triangle B)
 	{

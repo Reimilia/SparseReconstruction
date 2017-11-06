@@ -18,11 +18,15 @@ has_lighting_(false), is_draw_point_(true), is_draw_edge_(false), is_draw_face_(
 	eye_goal_[0] = eye_goal_[1] = eye_goal_[2] = 0.0;
 	eye_direction_[0] = eye_direction_[1] = 0.0;
 	eye_direction_[2] = 1.0;
+
+	is_init_initialized_ = false;
+	test_init_ = NULL;
 }
 
 RenderingWidget::~RenderingWidget()
 {
 	SafeDelete(ptr_arcball_);
+	SafeDelete(test_init_);
 }
 
 void RenderingWidget::initializeGL()
@@ -368,16 +372,16 @@ void RenderingWidget::QuickTest()
 	try
 	{
 		
-		temp_.clear();
 		/*test->TestPossionDiskSampling(
 			para,
 			points,
 			ptr_mesh_
 		);*/
 		test->BuildInitialSolution(
-			para,
-			ptr_mesh_
-		);
+				para,
+				ptr_mesh_
+			);
+		is_init_initialized_ = true;
 		test->GetResultMesh(ptr_mesh_);
 	}
 	catch (const std::exception&)
@@ -397,7 +401,7 @@ void RenderingWidget::TopoUpdateTest()
 	{
 		test->GetSparseEncodingResult(temp_);
 		ptr_mesh_ = test->GetMesh();
-	}
+	}      
 	catch (const std::exception&)
 	{
 		std::cerr << "Something is wrong with the dictionary update test!\n";

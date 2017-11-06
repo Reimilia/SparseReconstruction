@@ -87,6 +87,8 @@ public:
 	MainWindow					*ptr_mainwindow_;
 	CArcBall					*ptr_arcball_;
 	TriMesh						ptr_mesh_;
+	OptMeshInit					*test_init_;
+	bool						is_init_initialized_;
 	std::vector<TriProj::Triangle> temp_;
 	// Texture
 	GLuint						texture_[1];
