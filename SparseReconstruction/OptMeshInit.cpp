@@ -212,6 +212,7 @@ bool OptMeshInit::IsTriangleInMesh(
 TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z)
 {
 	//special case, three points are brand new.
+	
 	bool is_isolated = (mesh_.is_isolated(X) && mesh_.is_isolated(Y) && mesh_.is_isolated(Z));
 	if (is_isolated)
 	{
@@ -234,7 +235,7 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 	h3o = mesh_.find_halfedge(X, Z);
 
 	bool flag = false;
-	//Triangle inexist?
+	//If all three edges are available?
 	if ( (h1.is_valid() && mesh_.is_boundary(h1)) || !h1.is_valid())
 		if ( (h2.is_valid() && mesh_.is_boundary(h2)) || !h2.is_valid())
 			if ( (h3.is_valid() && mesh_.is_boundary(h3)) || !h3.is_valid())
@@ -244,11 +245,13 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		std::cout << "Pass1!\n";
 		f = mesh_.add_face(X, Y, Z);
 		if (!f.is_valid())
+		{
 			return TriMesh::InvalidFaceHandle;
+		}
+
 		// If adding this face will not cause manifold violation
-		flag = (mesh_.is_boundary(X) || mesh_.is_manifold(X))
-			&& (mesh_.is_boundary(Y) || mesh_.is_manifold(Y))
-			&& (mesh_.is_boundary(Z) || mesh_.is_manifold(Z));
+		flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
+		std::cout << "Pass1.1\n";
 		if (flag)
 			return f;
 		mesh_.delete_face(f, false);
@@ -264,12 +267,14 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		std::cout << "Pass2!\n";
 		f = mesh_.add_face(X, Z, Y);
 		if (!f.is_valid())
+		{
 			return TriMesh::InvalidFaceHandle;
-		flag = (mesh_.is_boundary(X) || mesh_.is_manifold(X))
-			&& (mesh_.is_boundary(Y) || mesh_.is_manifold(Y))
-			&& (mesh_.is_boundary(Z) || mesh_.is_manifold(Z));
+		}
+		flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
+		std::cout << "Pass2.1\n";
 		if (flag)
 			return f;
+
 		mesh_.delete_face(f, false);
 		mesh_.garbage_collection();
 	}

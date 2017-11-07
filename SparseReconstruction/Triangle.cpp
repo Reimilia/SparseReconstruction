@@ -31,7 +31,8 @@ namespace TriProj
 		BaryCoord_ = B.colPivHouseholderQr().solve(P_prime_ext);
 
 		//Do some dirty thing here:
-		/*if (BaryCoord_[1] < zero && BaryCoord_[2] < zero)
+		/*
+		if (BaryCoord_[1] < zero && BaryCoord_[2] < zero)
 		{
 			BaryCoord_ = Vec3d(1, 0, 0);
 		}
@@ -71,8 +72,8 @@ namespace TriProj
 			if (lambda < 0)
 				std::cout << "Wrong!\n";
 			BaryCoord_ = Vec3d(lambda, 1.0 - lambda, 0);
-		}
-		*/
+		}*/
+		
 		is_calculated_ = true;
 		BarycentricValidity();
 		energy_ = RegEnergy();
