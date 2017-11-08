@@ -14,7 +14,10 @@ namespace TriProj
 
 		//Projection Formula
 		P_prime_ = P_ - N*((P_ - Z_).dot(N));
-
+		if ((P_ - Z_).dot(N) < 0)
+			is_projection_positive_ = false;
+		else
+			is_projection_positive_ = true;
 		//Now calculate barycentric coordinates via 
 		Eigen::Vector4d P_prime_ext;
 		P_prime_ext(0) = 1.0;
@@ -265,6 +268,11 @@ namespace TriProj
 			CalcResult();
 			return is_barycentric_valid_;
 		}
+	}
+
+	bool Triangle::IsProjectionPositive()
+	{
+		return is_projection_positive_;
 	}
 
 	double Triangle::RegEnergy()

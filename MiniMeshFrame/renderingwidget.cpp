@@ -372,16 +372,22 @@ void RenderingWidget::QuickTest()
 	try
 	{
 		
-		/*test->TestPossionDiskSampling(
-			para,
-			points,
-			ptr_mesh_
-		);*/
 		test->BuildInitialSolution(
+			para,
+			ptr_mesh_
+		);
+		/*if (is_init_initialized_)
+			test_init_->PairOneQueryPoint();
+		else 
+		{
+			test_init_ = new OptMeshInit();
+			test_init_->BuildInitialSolution(
 				para,
 				ptr_mesh_
 			);
-		is_init_initialized_ = true;
+			is_init_initialized_ = true;
+
+		}*/
 		test->GetResultMesh(ptr_mesh_);
 	}
 	catch (const std::exception&)

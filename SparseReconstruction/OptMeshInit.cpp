@@ -58,15 +58,18 @@ bool OptMeshInit::PairOneQueryPoint()
 	queue_points_.pop();
 	//if (!is_mesh_dict[i]) continue;
 	std::cout << "point " << i << std::endl;
+	if (is_mesh_dict[i] != -1)
+	{
+		std::cout << "Watch out!\n";
+		//return true;
+	}
+
 	int j = 0;
 	triset_.GenerateTriangleSet(
 		query_points_[i],
 		triangles
 	);
-	if (is_mesh_dict[i] != -1)
-	{
-		std::cout << "Watch out!\n";
-	}
+	
 	for (j = 0; j < triangles.size(); j++)
 	{
 		int idx, idy, idz;
@@ -240,9 +243,10 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		if ( (h2.is_valid() && mesh_.is_boundary(h2)) || !h2.is_valid())
 			if ( (h3.is_valid() && mesh_.is_boundary(h3)) || !h3.is_valid())
 	{
+		//reject the case when it does not share an edge with some exist triangles
 		if (!h1.is_valid() && !h2.is_valid() && !h3.is_valid())
 			return TriMesh::InvalidFaceHandle;
-		std::cout << "Pass1!\n";
+
 		f = mesh_.add_face(X, Y, Z);
 		if (!f.is_valid())
 		{
@@ -250,14 +254,16 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		}
 
 		// If adding this face will not cause manifold violation
-		flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
-		std::cout << "Pass1.1\n";
+		std::cout << "Add face passed\n";
+		return f;
+		/*flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
+		
 		if (flag)
 			return f;
 		mesh_.delete_face(f, false);
-		mesh_.garbage_collection();
+		mesh_.garbage_collection();*/
 	}
-	if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
+	/*if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
 		if ((h2o.is_valid() && mesh_.is_boundary(h2o)) || !h2o.is_valid())
 			if ((h3o.is_valid() && mesh_.is_boundary(h3o)) || !h3o.is_valid())
 	{
@@ -277,7 +283,7 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 
 		mesh_.delete_face(f, false);
 		mesh_.garbage_collection();
-	}
+	}*/
 	return TriMesh::InvalidFaceHandle;
 }
 
@@ -294,13 +300,37 @@ TriMesh::FaceHandle OptMeshInit::ManifoldCheck(TriProj::Triangle triangle)
 	idx = sample_index[idx];
 	idy = sample_index[idy];
 	idz = sample_index[idz];
+
+
+	
+
 	TriMesh::VertexHandle X, Y, Z;
 	X = mesh_.vertex_handle(idx);
 	Y = mesh_.vertex_handle(idy);
 	Z = mesh_.vertex_handle(idz);
 	std::cout << idx << ' ' << idy << ' ' << idz << std::endl;
 	// Check if we have space to insert the triangle
-	return IsFeasible(X, Y, Z);
+	
+	/*
+	One error I should point out is that:
+
+	when I am doing point projection on the triangle, there is
+	only one orientation available for the current triangle.
+
+	So, it is incorrect if I test two triangles,i.e. (XYZ and XZY) I should first figure
+	out which triangle is in correct orientation.
+
+	Sad story
+	Yi
+	*/
+	//Quickly check which orientation is correct
+
+	if (triangle.IsProjectionPositive())
+		return IsFeasible(X, Y, Z);
+	else
+		return IsFeasible(X, Z, Y);
+
+	
 }
 
 bool OptMeshInit::GenerateInitialDict(
@@ -415,9 +445,10 @@ bool OptMeshInit::BuildInitialSolution(
 		//Copy normal info.
 		mesh_.set_normal(vh_, input_mesh.normal(input_mesh.vertex_handle(i)));
 	}
-
-	queue_points_.push(0);
-	hash_[0] = true;
+	int k = 0;
+	while (is_mesh_dict[k] != -1) k++;
+	queue_points_.push(k);
+	hash_[k] = true;
 	while (PairOneQueryPoint()) ;
 	return true;
 }
