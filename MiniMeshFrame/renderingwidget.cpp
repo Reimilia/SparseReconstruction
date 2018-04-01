@@ -376,6 +376,7 @@ void RenderingWidget::QuickTest()
 			para,
 			ptr_mesh_
 		);
+		test->GetResultMesh(ptr_mesh_);
 		/*if (is_init_initialized_)
 			test_init_->PairOneQueryPoint();
 		else 
@@ -387,8 +388,8 @@ void RenderingWidget::QuickTest()
 			);
 			is_init_initialized_ = true;
 
-		}*/
-		test->GetResultMesh(ptr_mesh_);
+		}
+		test_init_->GetResultMesh(ptr_mesh_);*/
 	}
 	catch (const std::exception&)
 	{

@@ -69,6 +69,8 @@ bool OptMeshInit::PairOneQueryPoint()
 		query_points_[i],
 		triangles
 	);
+
+	bool flag = false;
 	
 	for (j = 0; j < triangles.size(); j++)
 	{
@@ -95,18 +97,42 @@ bool OptMeshInit::PairOneQueryPoint()
 			std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
 				<< ' ' << idz << std::endl;
 			mesh_.data(fh_).add_point_index(i);
+			flag = true; 
 			break;
 		}
+	}
 
-		//std::cout << triangles[j].RegEnergy() << std::endl;
-		fh_ = ManifoldCheck(triangles[j]);
-		if (fh_.is_valid())
+	if (flag == false)
+	{
+		for (j = 0; j < triangles.size(); j++)
 		{
-			mesh_.data(fh_).clear_point_index();
-			mesh_.data(fh_).add_point_index(i);
-			break;
-		}
+			int idx, idy, idz;
+			triangles[j].GetTrianglePointIndex(idx, idy, idz);
+			idx = sample_index[idx];
+			idy = sample_index[idy];
+			idz = sample_index[idz];
+			//std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+			//	<< ' ' << idz << std::endl;
+			if (triangles[j].RegEnergy() == TriProj::inf)
+			{
+				j = triangles.size();
+				break;
+			}
+			mesh_.request_halfedge_status();
+			mesh_.request_vertex_status();
+			mesh_.request_face_status();
+			// Add triangle into mesh and test if this is the manifold
+			TriMesh::FaceHandle fh_;
+			//std::cout << triangles[j].RegEnergy() << std::endl;
+			fh_ = ManifoldCheck(triangles[j]);
+			if (fh_.is_valid())
+			{
+				mesh_.data(fh_).clear_point_index();
+				mesh_.data(fh_).add_point_index(i);
+				break;
+			}
 
+		}
 	}
 
 	ANNidxArray		ANN_index;
@@ -263,7 +289,7 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		mesh_.delete_face(f, false);
 		mesh_.garbage_collection();*/
 	}
-	/*if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
+	if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
 		if ((h2o.is_valid() && mesh_.is_boundary(h2o)) || !h2o.is_valid())
 			if ((h3o.is_valid() && mesh_.is_boundary(h3o)) || !h3o.is_valid())
 	{
@@ -276,14 +302,15 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		{
 			return TriMesh::InvalidFaceHandle;
 		}
-		flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
+		//flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
 		std::cout << "Pass2.1\n";
-		if (flag)
+		/*if (flag)
 			return f;
 
 		mesh_.delete_face(f, false);
-		mesh_.garbage_collection();
-	}*/
+		mesh_.garbage_collection();*/
+		return f;
+	}
 	return TriMesh::InvalidFaceHandle;
 }
 
