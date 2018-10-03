@@ -100,8 +100,30 @@ bool OptMeshInit::PairOneQueryPoint()
 			flag = true; 
 			break;
 		}
-		else
+	}
+
+	if (flag == false)
+	{
+		for (j = 0; j < triangles.size(); j++)
 		{
+			int idx, idy, idz;
+			triangles[j].GetTrianglePointIndex(idx, idy, idz);
+			idx = sample_index[idx];
+			idy = sample_index[idy];
+			idz = sample_index[idz];
+			//std::cout << triangles[j].RegEnergy() << ' ' << idx << ' ' << idy
+			//	<< ' ' << idz << std::endl;
+			if (triangles[j].RegEnergy() == TriProj::inf)
+			{
+				j = triangles.size();
+				break;
+			}
+			mesh_.request_halfedge_status();
+			mesh_.request_vertex_status();
+			mesh_.request_face_status();
+			// Add triangle into mesh and test if this is the manifold
+			TriMesh::FaceHandle fh_;
+			//std::cout << triangles[j].RegEnergy() << std::endl;
 			fh_ = ManifoldCheck(triangles[j]);
 			if (fh_.is_valid())
 			{
@@ -109,6 +131,7 @@ bool OptMeshInit::PairOneQueryPoint()
 				mesh_.data(fh_).add_point_index(i);
 				break;
 			}
+
 		}
 	}
 
@@ -219,14 +242,12 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 {
 	//special case, three points are brand new.
 	
-	int isolated_num = mesh_.is_isolated(X)+mesh_.is_isolated(Y)+mesh_.is_isolated(Z);
-	if (isolated_num==3)
+	bool is_isolated = (mesh_.is_isolated(X) && mesh_.is_isolated(Y) && mesh_.is_isolated(Z));
+	if (is_isolated)
 	{
 		TriMesh::FaceHandle f = mesh_.add_face(X, Y, Z);
 		return f;
 	}
-
-	bool is_not_isolated = (!mesh_.is_isolated(X) && !mesh_.is_isolated(Y) && !mesh_.is_isolated(Z));
 		
 	bool is_boundary = (mesh_.is_boundary(X) && mesh_.is_boundary(Y) && mesh_.is_boundary(Z));
 	if (!is_boundary)
@@ -248,15 +269,10 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		if ( (h2.is_valid() && mesh_.is_boundary(h2)) || !h2.is_valid())
 			if ( (h3.is_valid() && mesh_.is_boundary(h3)) || !h3.is_valid())
 	{
-		//reject the case when it does not share an edge with some existing triangles
-		//If there is one isolated vertex
-		//And reject the case where it does not share with two edges if 
-		// no isolated vertices
-		int validity_num = h1.is_valid() + h2.is_valid() + h3.is_valid();
-		if (validity_num == 0)
+		//reject the case when it does not share an edge with some exist triangles
+		if (!h1.is_valid() && !h2.is_valid() && !h3.is_valid())
 			return TriMesh::InvalidFaceHandle;
-		if (isolated_num == 0 && validity_num < 2)
-			return TriMesh::InvalidFaceHandle;
+
 		f = mesh_.add_face(X, Y, Z);
 		if (!f.is_valid())
 		{
@@ -277,10 +293,7 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		if ((h2o.is_valid() && mesh_.is_boundary(h2o)) || !h2o.is_valid())
 			if ((h3o.is_valid() && mesh_.is_boundary(h3o)) || !h3o.is_valid())
 	{
-		int validity_num = h1.is_valid() + h2.is_valid() + h3.is_valid();
-		if (validity_num == 0)
-			return TriMesh::InvalidFaceHandle;
-		if (isolated_num == 0 && validity_num < 2)
+		if (!h1o.is_valid() && !h2o.is_valid() && !h3o.is_valid())
 			return TriMesh::InvalidFaceHandle;
 		// If opposite halfedges are outer boundary(possible to add face)
 		std::cout << "Pass2!\n";

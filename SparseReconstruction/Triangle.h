@@ -80,7 +80,9 @@ namespace TriProj
 		
 	};
 
-
+	/*
+		This one is currently not working anymore.
+	*/
 	class Cmp_Triangle : public std::binary_function
 		<Triangle, Triangle,bool> 
 	{

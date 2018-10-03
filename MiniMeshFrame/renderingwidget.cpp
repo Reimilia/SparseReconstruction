@@ -368,6 +368,7 @@ void RenderingWidget::QuickTest()
 {
 	OptSolverParaSet para;
 	para.SetDefaultPara();
+	para.initial_dict_ratio_ = 0.3;
 	OptMeshInit *test = new OptMeshInit();
 	try
 	{
@@ -390,6 +391,7 @@ void RenderingWidget::QuickTest()
 
 		}
 		test_init_->GetResultMesh(ptr_mesh_);*/
+		
 	}
 	catch (const std::exception&)
 	{
