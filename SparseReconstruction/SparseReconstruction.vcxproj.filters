@@ -139,7 +139,7 @@
     <ClInclude Include="TestSBT.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="TriangleIntersectionTest.h">
+    <ClInclude Include="TriangleIntersection.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

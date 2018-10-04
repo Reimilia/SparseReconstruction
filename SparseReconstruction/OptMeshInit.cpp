@@ -65,10 +65,18 @@ bool OptMeshInit::PairOneQueryPoint()
 	}
 
 	int j = 0;
+	
 	triset_.GenerateTriangleSet(
 		query_points_[i],
 		triangles
 	);
+	
+	/*
+	triset_.GenerateTriangleSet(
+		query_points_[i],
+		query_normals_[i],
+		triangles
+	);*/
 
 	bool flag = false;
 	
@@ -416,6 +424,7 @@ bool OptMeshInit::BuildInitialSolution(
 	TriMesh input_mesh)
 {
 	std::vector<Eigen::Vector3d> input_points;
+	std::vector<Eigen::Vector3d> input_normals;
 	for (int i = 0; i < input_mesh.n_vertices(); i++)
 	{
 		TriMesh::Point p = input_mesh.point(input_mesh.vertex_handle(i));

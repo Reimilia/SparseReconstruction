@@ -8,6 +8,7 @@
 #include "OptSolverParaSet.h"
 #include "PoissonSampling.h"
 
+
 // Generate the mesh we need
 /*
 	This follows the initialization process and shall determine three things:
@@ -28,6 +29,7 @@ protected:
 
 	// approximated points
 	std::vector<Eigen::Vector3d>		query_points_;
+	std::vector<Eigen::Vector3d>		query_normals_;
 	int *is_mesh_dict;
 	std::vector<int> sample_index;
 	std::queue <int> queue_points_;

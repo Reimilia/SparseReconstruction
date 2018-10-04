@@ -26,6 +26,9 @@ namespace TriProj
 		//additional points
 		bool	is_p_set_ = false;
 		Vec3d	P_;
+
+		bool	is_pn_set_ = false;
+		Vec3d   PN_;
 		bool	is_projection_positive_ = false;
 		
 		//additional calculation storage
@@ -44,6 +47,8 @@ namespace TriProj
 		Triangle(Vec3d X, Vec3d Y, Vec3d Z);
 		Triangle(Vec3d P, Vec3d X, Vec3d Y, Vec3d Z);
 		Triangle(Vec3d P, Vec3d X, int X_id,
+			Vec3d Y, int Y_id, Vec3d Z, int Z_id);
+		Triangle(Vec3d P, Vec3d PN, Vec3d X, int X_id,
 			Vec3d Y, int Y_id, Vec3d Z, int Z_id);
 		~Triangle();
 
@@ -65,6 +70,7 @@ namespace TriProj
 		
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
 		bool SetProjPoint(Vec3d P);
+		bool SetProjNormal(Vec3d PN);
 
 		Vec3d ProjectedPoint();
 		Vec3d BarycentricCoord();
@@ -72,7 +78,7 @@ namespace TriProj
 		double ProjectedErrorNorm();
 		double EdgeRegNorm();
 		double EdgeRegSquaredNorm();
-		double NormalRegNorm(Vec3d PNormal);
+		double NormalRegNorm();
 		bool IsBarycentricValid();
 		bool IsProjectionPositive();
 		double RegEnergy();

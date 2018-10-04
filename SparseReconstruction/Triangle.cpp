@@ -120,6 +120,21 @@ namespace TriProj
 		CalcResult();
 	}
 
+	Triangle::Triangle(Vec3d P, Vec3d PN, Vec3d X, int X_id, Vec3d Y, int Y_id, Vec3d Z, int Z_id)
+	{
+		is_p_set_ = true;
+		is_calculated_ = false;
+		X_ = X;
+		Y_ = Y;
+		Z_ = Z;
+		P_ = P;
+		PN_ = PN;
+		index_[0] = X_id;
+		index_[1] = Y_id;
+		index_[2] = Z_id;
+		CalcResult();
+	}
+
 
 	Triangle::~Triangle()
 	{
@@ -150,6 +165,13 @@ namespace TriProj
 		is_calculated_ = false;
 		CalcResult();
 		return true;
+	}
+
+	bool Triangle::SetProjNormal(Vec3d PN)
+	{
+		// This only affects energy calculation
+		PN_ = PN;
+		is_pn_set_ = true;
 	}
 
 	Vec3d Triangle::ProjectedPoint()
@@ -236,21 +258,23 @@ namespace TriProj
 		return (X_ - Y_).squaredNorm() + (Y_ - Z_).squaredNorm() + (Z_ - X_).squaredNorm();
 	}
 
-	double Triangle::NormalRegNorm(Vec3d PNormal)
+	double Triangle::NormalRegNorm()
 	{
+		if (!is_pn_set_)
+			return 0.0;
 		if (is_calculated_)
-			return PNormal.dot(X_ - Y_)*PNormal.dot(X_ - Y_) +
-			PNormal.dot(Y_ - Z_)*PNormal.dot(Y_ - Z_) +
-			PNormal.dot(Z_ - X_)*PNormal.dot(Z_ - X_);
+			return PN_.dot(X_ - Y_)*PN_.dot(X_ - Y_) +
+			PN_.dot(Y_ - Z_)*PN_.dot(Y_ - Z_) +
+			PN_.dot(Z_ - X_)*PN_.dot(Z_ - X_);
 		else
 			if (is_p_set_)
 			{
 				CalcResult();
 				if (!is_barycentric_valid_)
 					std::cout << "Projection not lies in triangle! Use this at your risk!" << std::endl;
-				return PNormal.dot(X_ - Y_)*PNormal.dot(X_ - Y_) +
-					PNormal.dot(Y_ - Z_)*PNormal.dot(Y_ - Z_) +
-					PNormal.dot(Z_ - X_)*PNormal.dot(Z_ - X_);
+				return PN_.dot(X_ - Y_)*PN_.dot(X_ - Y_) +
+					PN_.dot(Y_ - Z_)*PN_.dot(Y_ - Z_) +
+					PN_.dot(Z_ - X_)*PN_.dot(Z_ - X_);
 			}
 			else
 			{
@@ -280,7 +304,7 @@ namespace TriProj
 		if (!IsBarycentricValid())
 			return inf;
 		return pow(ProjectedErrorNorm(), 0.3) +
-			2.5*EdgeRegSquaredNorm()/3.0;
+			2.5*EdgeRegSquaredNorm()/3.0 + 2.0*NormalRegNorm()/3.0;
 	}
 
 	bool Triangle::operator<(const Triangle &X)

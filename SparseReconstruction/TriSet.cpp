@@ -100,6 +100,35 @@ namespace TriProj
 		return true;
 	}
 
+	bool TriSet::GenerateTriangleSet(Vec3d query_point,
+		Vec3d query_point_normal,
+		std::vector<TriProj::Triangle> & triangle_set)
+	{
+		std::vector <int> point_indexes;
+		
+		if (!GenerateNearestPointSet(query_point, point_indexes))
+			return false;
+
+		if (triangle_set.size() > 0)
+			triangle_set.clear();
+
+		//Generate Triangle Sets
+
+		for (int i = 0; i < kNN_size_; i++)
+			for (int j = i+1; j < kNN_size_; j++)
+				for (int k = j + 1; k < kNN_size_; k++)
+				{
+					triangle_set.push_back(TriProj::Triangle(
+						query_point, query_point_normal,
+						points_[point_indexes[i]], point_indexes[i],
+						points_[point_indexes[j]], point_indexes[j],
+						points_[point_indexes[k]], point_indexes[k]
+					));
+				}
+		std::sort(triangle_set.begin(), triangle_set.end());
+		return true;
+	}
+
 	bool TriSet::GenerateTriangleSet(Vec3d query_point, 
 		std::vector<TriProj::Triangle>& triangle_set, 
 		bool is_include_query_point,
