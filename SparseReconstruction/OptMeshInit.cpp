@@ -66,17 +66,22 @@ bool OptMeshInit::PairOneQueryPoint()
 
 	int j = 0;
 	
-	triset_.GenerateTriangleSet(
-		query_points_[i],
-		triangles
-	);
-	
-	/*
-	triset_.GenerateTriangleSet(
-		query_points_[i],
-		query_normals_[i],
-		triangles
-	);*/
+	if (para_.is_normal_reg_on_)
+	{
+		triset_.GenerateTriangleSet(
+			query_points_[i],
+			query_normals_[i],
+			triangles
+		);
+	}
+	else
+	{
+		triset_.GenerateTriangleSet(
+			query_points_[i],
+			triangles
+		);
+
+	}
 
 	bool flag = false;
 	
@@ -281,7 +286,7 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		mesh_.delete_face(f, false);
 		mesh_.garbage_collection();*/
 	}
-	if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
+	/*if ((h1o.is_valid() && mesh_.is_boundary(h1o)) || !h1o.is_valid())
 		if ((h2o.is_valid() && mesh_.is_boundary(h2o)) || !h2o.is_valid())
 			if ((h3o.is_valid() && mesh_.is_boundary(h3o)) || !h3o.is_valid())
 	{
@@ -299,13 +304,13 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 		}
 		//flag = (mesh_.is_manifold(X) && mesh_.is_manifold(Y) && mesh_.is_manifold(Z));
 		std::cout << "Pass2.1\n";
-		/*if (flag)
+		if (flag)
 			return f;
 
 		mesh_.delete_face(f, false);
-		mesh_.garbage_collection();*/
+		mesh_.garbage_collection();
 		return f;
-	}
+	}*/
 	return TriMesh::InvalidFaceHandle;
 }
 
@@ -327,32 +332,42 @@ TriMesh::FaceHandle OptMeshInit::ManifoldCheck(TriProj::Triangle triangle)
 	
 
 	TriMesh::VertexHandle X, Y, Z;
+	TriMesh::Point PX, PY, PZ;
 	X = mesh_.vertex_handle(idx);
 	Y = mesh_.vertex_handle(idy);
 	Z = mesh_.vertex_handle(idz);
+
+	PX = mesh_.point(X);
+	PY = mesh_.point(Y);
+	PZ = mesh_.point(Z);
+
 	std::cout << idx << ' ' << idy << ' ' << idz << std::endl;
 	// Check if we have space to insert the triangle
 	
-	/*
-	One error I should point out is that:
+	for (TriMesh::FaceIter fiter = mesh_.faces_begin(); fiter != mesh_.faces_end(); ++fiter)
+	{
+		TriMesh::FaceVertexIter fv_iter = mesh_.fv_iter(*fiter);
+		TriMesh::Point x, y, z;
+		x = mesh_.point(*fv_iter);
+		if ((++fv_iter).is_valid()) y = mesh_.point(*fv_iter);
+		if ((++fv_iter).is_valid()) z = mesh_.point(*fv_iter);
+		bool tag = TriProj::IsTriTriIntersect(
+			TriProj::Triangle(
+				TriProj::Vec3d(x.data()),
+				TriProj::Vec3d(y.data()),
+				TriProj::Vec3d(z.data())
+			),
+			TriProj::Triangle(
+				TriProj::Vec3d(PX.data()),
+				TriProj::Vec3d(PY.data()),
+				TriProj::Vec3d(PZ.data())
+			)
+		);
+		if (tag)
+			return TriMesh::InvalidFaceHandle;
+	}
 
-	when I am doing point projection on the triangle, there is
-	only one orientation available for the current triangle.
-
-	So, it is incorrect if I test two triangles,i.e. (XYZ and XZY) I should first figure
-	out which triangle is in correct orientation.
-
-	Sad story
-	Yi
-	*/
-	//Quickly check which orientation is correct
-
-	if (triangle.IsProjectionPositive())
-		return IsFeasible(X, Y, Z);
-	else
-		return IsFeasible(X, Z, Y);
-
-	
+	return IsFeasible(X, Y, Z);
 }
 
 bool OptMeshInit::GenerateInitialDict(
@@ -386,10 +401,7 @@ bool OptMeshInit::GenerateInitialDict(
 		mesh_points_.push_back(points[sample_index[i]]);
 		is_mesh_dict[sample_index[i]] = i;
 	}
-	for (int i = 0; i < points.size(); i++)
-	{
-		query_points_.push_back(points[i]);	
-	}
+
 
 	//Generate ANN kdtree
 	int dim = 3;
@@ -423,21 +435,26 @@ bool OptMeshInit::BuildInitialSolution(
 	OptSolverParaSet para,
 	TriMesh input_mesh)
 {
-	std::vector<Eigen::Vector3d> input_points;
-	std::vector<Eigen::Vector3d> input_normals;
+	para_ = para;
 	for (int i = 0; i < input_mesh.n_vertices(); i++)
 	{
 		TriMesh::Point p = input_mesh.point(input_mesh.vertex_handle(i));
-		input_points.push_back(Eigen::Vector3d(p.data()));
+		query_points_.push_back(Eigen::Vector3d(p.data()));
+		if (para.is_normal_reg_on_)
+		{
+			TriMesh::Normal n = input_mesh.normal(input_mesh.vertex_handle(i));
+			query_normals_.push_back(Eigen::Vector3d(n.data()));
+		}
+		
 	}
 
 	mesh_.clean();
 	mesh_.garbage_collection();
-	input_size_ = input_points.size();
+	input_size_ = query_points_.size();
 	mesh_size_ = round(para.initial_dict_ratio_*input_size_);
 
 	//Step 1: Resampling
-	if (!GenerateInitialDict(input_points))
+	if (!GenerateInitialDict(query_points_))
 	{
 		std::cerr << "Something goes wrong when"
 			"resampling from point clouds!" << std::endl;

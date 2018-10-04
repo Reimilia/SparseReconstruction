@@ -42,6 +42,9 @@ protected:
 	TriMesh mesh_;
 	bool has_mesh_created_;
 
+	//Parameter
+	OptSolverParaSet para_;
+
 private:
 	bool IsTriangleInMesh(TriProj::Triangle triangle, TriMesh::FaceHandle &F );
 	TriMesh::FaceHandle IsFeasible(TriMesh::VertexHandle X, TriMesh::VertexHandle Y, TriMesh::VertexHandle Z);

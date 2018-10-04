@@ -2,6 +2,7 @@
 
 #include <Eigen\Core>
 #include <Eigen\Dense>
+#include "TriIntersection.h"
 /*
 
 	Include but not only include:
@@ -22,7 +23,7 @@ namespace TriProj
 	{
 	protected:
 		//triangle
-		Vec3d	X_, Y_, Z_;
+		Vec3d	X_, Y_, Z_, N_;
 		//additional points
 		bool	is_p_set_ = false;
 		Vec3d	P_;
@@ -65,7 +66,11 @@ namespace TriProj
 			Y_id = index_[1];
 			Z_id = index_[2];
 		}
+		Vec3d X() { return X_; }
+		Vec3d Y() { return Y_; }
+		Vec3d Z() { return Z_; }
 		Vec3d P() { return P_; }
+		Vec3d N() { return N_; }
 		
 		
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
@@ -112,5 +117,6 @@ namespace TriProj
 
 	};
 
+	bool IsTriTriIntersect(Triangle A, Triangle B);
 }
 

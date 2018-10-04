@@ -12,7 +12,6 @@
 #include <ANN\ANN.h>
 #include <Eigen\Sparse>
 #include "Triangle.h"
-#include "TriMesh.h"
 
 namespace TriProj
 {
@@ -27,7 +26,6 @@ namespace TriProj
 		bool is_initialized_ = false;
 
 		ANNkd_tree	*kdtree_;
-		TriMesh		*aux_mesh_;
 		
 		std::vector<Eigen::Vector3d> points_;
 

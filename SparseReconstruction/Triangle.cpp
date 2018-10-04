@@ -11,6 +11,7 @@ namespace TriProj
 		//First get the normal vector
 		Vec3d N = (Z_ - Y_).cross(X_ - Y_);
 		N = N / N.norm();
+		N_ = N;
 
 		//Projection Formula
 		P_prime_ = P_ - N*((P_ - Z_).dot(N));
@@ -172,6 +173,7 @@ namespace TriProj
 		// This only affects energy calculation
 		PN_ = PN;
 		is_pn_set_ = true;
+		return true;
 	}
 
 	Vec3d Triangle::ProjectedPoint()
@@ -313,4 +315,59 @@ namespace TriProj
 	}
 
 
+	bool IsTriTriIntersect(Triangle A, Triangle B)
+	{
+		/*First rule out the possibility that exactly one edge conincides*/
+		int count = 0;
+		if (A.X() == B.X() || A.X() == B.Y() || A.X() == B.Z())
+			count += 1;
+		if (A.Y() == B.X() || A.Y() == B.Y() || A.Y() == B.Z())
+			count += 1;
+		if (A.Z() == B.X() || A.Z() == B.Y() || A.Z() == B.Z())
+			count += 1;
+		if (count >= 2)
+			return false;
+
+
+		// Then do a fine check
+		TriIntersect::ATriangle T1, T2;
+
+		T1.Vertex_1[0] = A.X()[0];
+		T1.Vertex_1[1] = A.X()[1];
+		T1.Vertex_1[2] = A.X()[2];
+
+		T1.Vertex_2[0] = A.Y()[0];
+		T1.Vertex_2[1] = A.Y()[1];
+		T1.Vertex_2[2] = A.Y()[2];
+
+		T1.Vertex_3[0] = A.Z()[0];
+		T1.Vertex_3[1] = A.Z()[1];
+		T1.Vertex_3[2] = A.Z()[2];
+
+		T1.Normal_0[0] = A.N()[0];
+		T1.Normal_0[1] = A.N()[1];
+		T1.Normal_0[2] = A.N()[2];
+
+		T2.Vertex_1[0] = B.X()[0];
+		T2.Vertex_1[1] = B.X()[1];
+		T2.Vertex_1[2] = B.X()[2];
+
+		T2.Vertex_2[0] = B.Y()[0];
+		T2.Vertex_2[1] = B.Y()[1];
+		T2.Vertex_2[2] = B.Y()[2];
+
+		T2.Vertex_3[0] = B.Z()[0];
+		T2.Vertex_3[1] = B.Z()[1];
+		T2.Vertex_3[2] = B.Z()[2];
+
+		T2.Normal_0[0] = B.N()[0];
+		T2.Normal_0[1] = B.N()[1];
+		T2.Normal_0[2] = B.N()[2];
+
+		TriIntersect::TopologicalStructure tag = TriIntersect::judge_triangle_topologicalStructure(&T1, &T2);
+		if (tag == TriIntersect::TopologicalStructure::INTERSECT)
+			return true;
+		else
+			return false;
+	}
 }

@@ -1,34 +1,40 @@
 #pragma once
 
-namespace TriIntersection{
+/*
+This is not what I have written
 
-    typedef float float3[3];
+Yi
+*/
+
+namespace TriIntersect {
+
+    typedef double double3[3];
 
     enum TopologicalStructure
     {
         INTERSECT, NONINTERSECT
     };
 
-    struct Triangle
+    struct ATriangle
     {
-        float3 Normal_0;
-        float3 Vertex_1, Vertex_2, Vertex_3;
+        double3 Normal_0;
+        double3 Vertex_1, Vertex_2, Vertex_3;
     };
 
     struct point
     {
-        float x, y;
+        double x, y;
     };
 
-    static void copy_point(point& p, float3 f)
+    static void copy_point(point& p, double3 f)
     {
         p.x = f[0];
         p.y = f[1];
     }
 
-    inline float get_vector4_det(float3 v1, float3 v2, float3 v3, float3 v4)
+    inline double get_vector4_det(double3 v1, double3 v2, double3 v3, double3 v4)
     {
-        float a[3][3];
+        double a[3][3];
         for (int i = 0; i != 3; ++i)
         {
             a[0][i] = v1[i] - v4[i];
@@ -93,7 +99,7 @@ namespace TriIntersection{
         return 0;
     }
   
-    inline bool line_triangle_intersert_inSamePlane(Triangle* tri, float3 f1, float3 f2)
+    inline bool line_triangle_intersert_inSamePlane(ATriangle* tri, double3 f1, double3 f2)
     {
         point p1, p2, p3, p4;
 
@@ -132,7 +138,7 @@ namespace TriIntersection{
     }
 
 
-    inline void get_central_point(float3 &centralPoint, Triangle* tri)
+    inline void get_central_point(double3 &centralPoint, ATriangle* tri)
     {
         centralPoint[0] = (tri->Vertex_1[0] + tri->Vertex_2[0] + tri->Vertex_3[0]) / 3;
 
@@ -142,7 +148,7 @@ namespace TriIntersection{
     }
 
 
-    inline void get_vector_diff(float3& aimV, const float3 a, const float3 b)
+    inline void get_vector_diff(double3& aimV, const double3 a, const double3 b)
     {
         aimV[0] = b[0] - a[0];
 
@@ -152,31 +158,31 @@ namespace TriIntersection{
     }
 
 
-    inline float Dot(const float3& v1, const float3& v2)
+    inline double Dot(const double3& v1, const double3& v2)
     {
         return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
     }
 
-    inline bool is_point_within_triangle(Triangle* tri, float3 point)
+    inline bool is_point_within_triangle(ATriangle* tri, double3 point)
     {
-        float3 v0;
+        double3 v0;
         get_vector_diff(v0, tri->Vertex_1, tri->Vertex_3);
-        float3 v1;
+        double3 v1;
         get_vector_diff(v1, tri->Vertex_1, tri->Vertex_2);
-        float3 v2;
+        double3 v2;
         get_vector_diff(v2, tri->Vertex_1, point);
-        float dot00 = Dot(v0, v0);
-        float dot01 = Dot(v0, v1);
-        float dot02 = Dot(v0, v2);
-        float dot11 = Dot(v1, v1);
-        float dot12 = Dot(v1, v2);
-        float inverDeno = 1 / (dot00* dot11 - dot01* dot01);
-        float u = (dot11* dot02 - dot01* dot12) * inverDeno;
+        double dot00 = Dot(v0, v0);
+        double dot01 = Dot(v0, v1);
+        double dot02 = Dot(v0, v2);
+        double dot11 = Dot(v1, v1);
+        double dot12 = Dot(v1, v2);
+        double inverDeno = 1 / (dot00* dot11 - dot01* dot01);
+        double u = (dot11* dot02 - dot01* dot12) * inverDeno;
         if (u < 0 || u > 1) // if u out of range, return directly  
         {
             return false;
         }
-        float v = (dot00* dot12 - dot01* dot02) * inverDeno;
+        double v = (dot00* dot12 - dot01* dot02) * inverDeno;
         if (v < 0 || v > 1) // if v out of range, return directly  
         {
             return false;
@@ -185,7 +191,7 @@ namespace TriIntersection{
     }
 
   
-    inline bool triangle_intersert_inSamePlane(Triangle* tri1, Triangle* tri2)
+    inline bool triangle_intersert_inSamePlane(ATriangle* tri1, ATriangle* tri2)
     {
         if (line_triangle_intersert_inSamePlane(tri2, tri1->Vertex_1, tri1->Vertex_2))
         {
@@ -201,7 +207,7 @@ namespace TriIntersection{
         }
         else
         {
-            float3 centralPoint1, centralPoint2;
+            double3 centralPoint1, centralPoint2;
 
             get_central_point(centralPoint1, tri1);
 
@@ -217,13 +223,13 @@ namespace TriIntersection{
     }
 
 
-    inline TopologicalStructure judge_triangle_topologicalStructure(Triangle* tri1, Triangle* tri2)
-    {  
-        float p1_tri2_vertex1 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_1);
+    inline TopologicalStructure judge_triangle_topologicalStructure(ATriangle* tri1, ATriangle* tri2)
+    {   
+        double p1_tri2_vertex1 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_1);
 
-        float p1_tri2_vertex2 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_2);
+        double p1_tri2_vertex2 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_2);
 
-        float p1_tri2_vertex3 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_3);
+        double p1_tri2_vertex3 = get_vector4_det(tri1->Vertex_1, tri1->Vertex_2, tri1->Vertex_3, tri2->Vertex_3);
 
 
         if (p1_tri2_vertex1 > 0 && p1_tri2_vertex2 > 0 && p1_tri2_vertex3 > 0)
@@ -238,7 +244,7 @@ namespace TriIntersection{
 
 
         if (p1_tri2_vertex1 == 0 && p1_tri2_vertex2 == 0 && p1_tri2_vertex3 == 0)
-        {
+        {   
             if (triangle_intersert_inSamePlane(tri1, tri2))
             {
                 return INTERSECT;
@@ -286,11 +292,11 @@ namespace TriIntersection{
 
 
 
-        float p2_tri1_vertex1 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_1);
+        double p2_tri1_vertex1 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_1);
 
-        float p2_tri1_vertex2 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_2);
+        double p2_tri1_vertex2 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_2);
 
-        float p2_tri1_vertex3 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_3);
+        double p2_tri1_vertex3 = get_vector4_det(tri2->Vertex_1, tri2->Vertex_2, tri2->Vertex_3, tri1->Vertex_3);
 
 
         if (p2_tri1_vertex1 > 0 && p2_tri1_vertex2 > 0 && p2_tri1_vertex3 > 0)
@@ -342,12 +348,12 @@ namespace TriIntersection{
 
 
 
-        float* tri1_a = tri1->Vertex_1, *tri1_b = tri1->Vertex_2, *tri1_c = tri1->Vertex_3
+        double* tri1_a = tri1->Vertex_1, *tri1_b = tri1->Vertex_2, *tri1_c = tri1->Vertex_3
             , *tri2_a = tri2->Vertex_1, *tri2_b = tri2->Vertex_2, *tri2_c = tri2->Vertex_3;
 
-        float* m;
+        double* m;
 
-        float im;
+        double im;
 
         if (p2_tri1_vertex2 * p2_tri1_vertex3 >= 0 && p2_tri1_vertex1 != 0)
         {

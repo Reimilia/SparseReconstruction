@@ -118,11 +118,18 @@ namespace TriProj
 			for (int j = i+1; j < kNN_size_; j++)
 				for (int k = j + 1; k < kNN_size_; k++)
 				{
+					// Two possibility of normals
 					triangle_set.push_back(TriProj::Triangle(
 						query_point, query_point_normal,
 						points_[point_indexes[i]], point_indexes[i],
 						points_[point_indexes[j]], point_indexes[j],
 						points_[point_indexes[k]], point_indexes[k]
+					));
+					triangle_set.push_back(TriProj::Triangle(
+						query_point, query_point_normal,
+						points_[point_indexes[i]], point_indexes[i],
+						points_[point_indexes[k]], point_indexes[k],
+						points_[point_indexes[j]], point_indexes[j]
 					));
 				}
 		std::sort(triangle_set.begin(), triangle_set.end());

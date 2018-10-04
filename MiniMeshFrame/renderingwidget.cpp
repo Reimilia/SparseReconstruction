@@ -368,7 +368,9 @@ void RenderingWidget::QuickTest()
 {
 	OptSolverParaSet para;
 	para.SetDefaultPara();
-	para.initial_dict_ratio_ = 0.3;
+	para.initial_dict_ratio_ = 0.04;
+	para.is_normal_reg_on_ = true;
+
 	OptMeshInit *test = new OptMeshInit();
 	try
 	{
