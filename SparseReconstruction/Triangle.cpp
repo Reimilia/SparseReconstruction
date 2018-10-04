@@ -306,7 +306,7 @@ namespace TriProj
 		if (!IsBarycentricValid())
 			return inf;
 		return pow(ProjectedErrorNorm(), 0.3) +
-			2.5*EdgeRegSquaredNorm()/3.0 + 2.0*NormalRegNorm()/3.0;
+			2.5*EdgeRegSquaredNorm()/3.0 + 1.6*NormalRegNorm()/3.0;
 	}
 
 	bool Triangle::operator<(const Triangle &X)

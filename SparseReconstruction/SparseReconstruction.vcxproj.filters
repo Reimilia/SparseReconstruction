@@ -75,6 +75,9 @@
     <ClCompile Include="TestSBT.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="OptMeshSubdiv.cpp">
+      <Filter>源文件\SparseReconstruction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\.gitattributes">
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="TriangleIntersection.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OptMeshSubdiv.h">
+      <Filter>头文件\SparseReconstrucion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

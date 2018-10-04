@@ -125,11 +125,12 @@ bool OptMeshInit::PairOneQueryPoint()
 		}
 	}
 
+	/*
 	ANNidxArray		ANN_index;
 	ANNdistArray	ANN_dist;
 	ANNpoint		ANN_point;
-	ANN_index = new ANNidx[10];
-	ANN_dist = new ANNdist[10];
+	ANN_index = new ANNidx[100];
+	ANN_dist = new ANNdist[100];
 	ANN_point = annAllocPt(3);
 
 	for (int k = 0; k < 3; k++)
@@ -137,13 +138,13 @@ bool OptMeshInit::PairOneQueryPoint()
 
 	kdtree_->annkSearch(
 		ANN_point,
-		10,
+		100,
 		ANN_index,
 		ANN_dist,
 		0.0
 	);
-
-	for (int k = 0; k < 10; k++)
+	
+	for (int k = 0; k < 100; k++)
 	{
 		if (!hash_[ANN_index[k]])
 		{
@@ -157,7 +158,7 @@ bool OptMeshInit::PairOneQueryPoint()
 		delete ANN_dist;
 	if (ANN_point)
 		delete ANN_point;
-
+	*/
 	if (j >= triangles.size())
 	{
 		std::cout << "Error at" << i << ", No triangle will be paired "
@@ -485,10 +486,21 @@ bool OptMeshInit::BuildInitialSolution(
 		mesh_.set_normal(vh_, input_mesh.normal(input_mesh.vertex_handle(i)));
 	}
 	int k = 0;
+	/*
 	while (is_mesh_dict[k] != -1) k++;
 	queue_points_.push(k);
 	hash_[k] = true;
-	while (PairOneQueryPoint()) ;
+	*/
+	while (k < input_size_)
+	{
+		if (is_mesh_dict[k] == -1)
+		{
+			queue_points_.push(k);
+			hash_[k] = true;
+		}
+		++k;
+	}
+	//while (PairOneQueryPoint());
 	return true;
 }
 

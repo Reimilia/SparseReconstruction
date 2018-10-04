@@ -138,6 +138,7 @@
     <ClCompile Include="ANNtest.cpp" />
     <ClCompile Include="DictionaryUpdate.cpp" />
     <ClCompile Include="DictMesh.cpp" />
+    <ClCompile Include="OptMeshSubdiv.cpp" />
     <ClCompile Include="PoissonSampling.cpp" />
     <ClCompile Include="SparseEncodingSolver.cpp" />
     <ClCompile Include="TestSBT.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="ANNtest.h" />
     <ClInclude Include="DictionaryUpdate.h" />
     <ClInclude Include="DictMesh.h" />
+    <ClInclude Include="OptMeshSubdiv.h" />
     <ClInclude Include="PoissonSampling.h" />
     <ClInclude Include="SizeBalancedTree.h" />
     <ClInclude Include="SparseEncodingSolver.h" />
