@@ -75,6 +75,9 @@ void MainWindow::CreateActions()
 	action_test_Vsub_ = new QAction(tr("Vupdate"), this);
 	connect(action_test_Vsub_, SIGNAL(triggered()), renderingwidget_, SLOT(DictUpdateTest()));
 
+	action_test_subdiv_ = new QAction(tr("SubDiv!"), this);
+	connect(action_test_subdiv_, SIGNAL(triggered()), renderingwidget_, SLOT(SubdivisionTest()));
+
 
 	action_loadmesh_ = new QAction(tr("readOBJ"), this);
 	action_loadtexture_ = new QAction(tr("LoadTexture"), this);
@@ -109,6 +112,7 @@ void MainWindow::CreateToolBars()
 	toolbar_basic_->addAction(action_test_sth_);
 	toolbar_basic_->addAction(action_test_Bsub_);
 	toolbar_basic_->addAction(action_test_Vsub_);
+	toolbar_basic_->addAction(action_test_subdiv_);
 }
 
 void MainWindow::CreateStatusBar()

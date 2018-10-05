@@ -46,14 +46,6 @@ protected:
 	void UpdatePrioirtyQueue(TriMesh::EdgeHandle eh_);
 	void UpdateEdgeStatus(TriMesh::EdgeHandle eh_);
 
-
-	//Overwrite this function if the energy is changed
-	double tri_energy(TriProj::Triangle tri)
-	{
-		return pow(tri.ProjectedErrorNorm(), para_.q_norm_)
-			+ para_.edge_reg_weight_ *tri.EdgeRegSquaredNorm() / 3.0;
-	}
-
 	double edge_tri_energy(int edge_handle_index);
 	double edge_tri_energy(TriMesh::EdgeHandle eh_);
 

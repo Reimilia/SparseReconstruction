@@ -14,7 +14,7 @@
 #include "SparseReconstruction\OptMeshInit.h"
 #include "SparseReconstruction\SparseEncodingSolver.h"
 #include "SparseReconstruction\DictionaryUpdate.h"
-
+#include "SparseReconstruction\OptMeshSubdiv.h"
 #include "SparseReconstruction\TriMesh.h"
 #include "HE_mesh\Vec.h"
 
@@ -66,6 +66,7 @@ private:
 	void QuickTest();
 	void TopoUpdateTest();
 	void DictUpdateTest();
+	void SubdivisionTest();
 
 	void CheckDrawPoint(bool bv);
 	void CheckDrawEdge(bool bv);
@@ -89,6 +90,10 @@ public:
 	TriMesh						ptr_mesh_;
 	OptMeshInit					*test_init_;
 	bool						is_init_initialized_;
+
+	OptMeshSubdiv				*test_subdiv_;
+	bool						is_subdiv_initalized_;
+
 	std::vector<TriProj::Triangle> temp_;
 	// Texture
 	GLuint						texture_[1];

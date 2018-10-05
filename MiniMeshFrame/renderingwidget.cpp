@@ -20,6 +20,7 @@ has_lighting_(false), is_draw_point_(true), is_draw_edge_(false), is_draw_face_(
 	eye_direction_[2] = 1.0;
 
 	is_init_initialized_ = false;
+	is_subdiv_initalized_ = false;
 	test_init_ = NULL;
 }
 
@@ -27,6 +28,7 @@ RenderingWidget::~RenderingWidget()
 {
 	SafeDelete(ptr_arcball_);
 	SafeDelete(test_init_);
+	SafeDelete(test_subdiv_);
 }
 
 void RenderingWidget::initializeGL()
@@ -428,6 +430,28 @@ void RenderingWidget::DictUpdateTest()
 	DictionaryUpdate *test = new DictionaryUpdate(ptr_mesh_);
 	ptr_mesh_ = test->solver();
 	delete test;
+	updateGL();
+}
+
+void RenderingWidget::SubdivisionTest()
+{
+	try
+	{
+
+		if (is_subdiv_initalized_)
+			test_subdiv_->OneStepSubdivision();
+		else
+		{
+			test_subdiv_ = new OptMeshSubdiv(ptr_mesh_);
+			test_subdiv_->SetThreshold(0.1);
+			is_subdiv_initalized_ = true;
+		}
+		test_subdiv_->GetResultMesh(ptr_mesh_);
+	}
+	catch (const std::exception&)
+	{
+		std::cerr << "Something is wrong with the dictionary update test!\n";
+	}
 	updateGL();
 }
 

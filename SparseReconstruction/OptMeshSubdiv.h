@@ -4,7 +4,7 @@
 
 #include "Triangle.h"
 #include "TriMesh.h"
-
+#include "DictionaryUpdate.h"
 // An alternative way to get through all the stuff
 /*
 
@@ -14,18 +14,43 @@
 3.	Optimize V and B if necessary.
 */
 
+
+/*
+	Temporially try to update only V first.
+*/
+
 class OptMeshSubdiv
 {
 protected:
-	
+	// control when to apply subdivision
+	double		threshold_;
+	TriMesh		mesh_;
+
+
 private:
-
-
+	// Very stupid method to obtain topological correctness
+	bool intialize_tetrahedron();
+	// Assign in one face with three coordinates
+	bool reset_assignment(TriMesh::FaceHandle fh, std::vector<int> idxs);
 
 protected:
+	bool subdivide();
+	bool vertexupdate();
+	bool assign_points(TriMesh::FaceHandle fh);
+	double face_tri_energy(TriMesh::FaceHandle fh);
+	double face_tri_energy(TriMesh::HalfedgeHandle fh);
+
 
 public:
 	OptMeshSubdiv();
+	OptMeshSubdiv(TriMesh mesh);
 	~OptMeshSubdiv();
+
+	bool SetThreshold(double threshold_);
+
+	bool OneStepSubdivision();
+
+	bool OptMeshSubdiv::GetResultMesh(TriMesh &mesh);
+	
 };
 
