@@ -368,19 +368,19 @@ void RenderingWidget::QuickTest()
 {
 	OptSolverParaSet para;
 	para.SetDefaultPara();
-	para.initial_dict_ratio_ = 0.02;
-	para.is_normal_reg_on_ = false;
+	para.initial_dict_ratio_ = 0.004;
+	para.is_normal_reg_on_ = true;
 
 	OptMeshInit *test = new OptMeshInit();
 	try
 	{
 		
-		/*test->BuildInitialSolution(
+		test->BuildInitialSolution(
 			para,
 			ptr_mesh_
 		);
-		test->GetResultMesh(ptr_mesh_);*/
-		if (is_init_initialized_)
+		test->GetResultMesh(ptr_mesh_);
+		/*if (is_init_initialized_)
 			test_init_->PairOneQueryPoint();
 		else 
 		{
@@ -392,7 +392,7 @@ void RenderingWidget::QuickTest()
 			test_init_->PairOneQueryPoint();
 			is_init_initialized_ = true;
 		}
-		test_init_->GetResultMesh(ptr_mesh_);
+		test_init_->GetResultMesh(ptr_mesh_);*/
 		
 	}
 	catch (const std::exception&)
@@ -557,7 +557,6 @@ void RenderingWidget::DrawFace(bool bv)
 			TriMesh::Point v_pos = ptr_mesh_.point(*v_it);
 			const GLdouble  vertex[3] = { v_pos[0], v_pos[1], v_pos[2] };
 			glVertex3dv(vertex);
-
 		}
 		glEnd();
 	}

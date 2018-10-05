@@ -125,12 +125,11 @@ bool OptMeshInit::PairOneQueryPoint()
 		}
 	}
 
-	/*
 	ANNidxArray		ANN_index;
 	ANNdistArray	ANN_dist;
 	ANNpoint		ANN_point;
-	ANN_index = new ANNidx[100];
-	ANN_dist = new ANNdist[100];
+	ANN_index = new ANNidx[10];
+	ANN_dist = new ANNdist[10];
 	ANN_point = annAllocPt(3);
 
 	for (int k = 0; k < 3; k++)
@@ -138,13 +137,13 @@ bool OptMeshInit::PairOneQueryPoint()
 
 	kdtree_->annkSearch(
 		ANN_point,
-		100,
+		10,
 		ANN_index,
 		ANN_dist,
 		0.0
 	);
-	
-	for (int k = 0; k < 100; k++)
+
+	for (int k = 0; k < 10; k++)
 	{
 		if (!hash_[ANN_index[k]])
 		{
@@ -158,7 +157,8 @@ bool OptMeshInit::PairOneQueryPoint()
 		delete ANN_dist;
 	if (ANN_point)
 		delete ANN_point;
-	*/
+
+	
 	if (j >= triangles.size())
 	{
 		std::cout << "Error at" << i << ", No triangle will be paired "
@@ -234,10 +234,17 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 	//special case, three points are brand new.
 	
 	int isolated_num = mesh_.is_isolated(X)+mesh_.is_isolated(Y)+mesh_.is_isolated(Z);
-	if (isolated_num==3)
+	if (isolated_num == 3)
 	{
-		TriMesh::FaceHandle f = mesh_.add_face(X, Y, Z);
-		return f;
+		if (mesh_.n_faces() == 0)
+		{
+			TriMesh::FaceHandle f = mesh_.add_face(X, Y, Z);
+			return f;
+		}
+		else
+		{
+			return TriMesh::InvalidFaceHandle;
+		}
 	}
 
 	bool is_not_isolated = (!mesh_.is_isolated(X) && !mesh_.is_isolated(Y) && !mesh_.is_isolated(Z));
@@ -252,9 +259,9 @@ TriMesh::FaceHandle OptMeshInit::IsFeasible(TriMesh::VertexHandle X, TriMesh::Ve
 	h2 = mesh_.find_halfedge(Y, Z);
 	h3 = mesh_.find_halfedge(Z, X);
 
-	h1o = mesh_.find_halfedge(Y, X);
-	h2o = mesh_.find_halfedge(Z, Y);
-	h3o = mesh_.find_halfedge(X, Z);
+	//h1o = mesh_.find_halfedge(Y, X);
+	//h2o = mesh_.find_halfedge(Z, Y);
+	//h3o = mesh_.find_halfedge(X, Z);
 
 	bool flag = false;
 	//If all three edges are available?
@@ -380,7 +387,7 @@ bool OptMeshInit::GenerateInitialDict(
 		point_pool.push_back(points[i].data());
 	}
 	PoissonSampling sampler(point_pool);
-	sampler.SetRaduis(1.0/mesh_size_);
+	sampler.SetRaduis(1.0/sqrt(1.0*mesh_size_));
 
 	
 	if (!sampler.GenerateSamples(mesh_size_, sample_index))
@@ -486,12 +493,13 @@ bool OptMeshInit::BuildInitialSolution(
 		mesh_.set_normal(vh_, input_mesh.normal(input_mesh.vertex_handle(i)));
 	}
 	int k = 0;
-	/*
-	while (is_mesh_dict[k] != -1) k++;
+	
+	//while (is_mesh_dict[k] != -1) k++;
 	queue_points_.push(k);
 	hash_[k] = true;
-	*/
-	while (k < input_size_)
+	
+
+	/*while (k < input_size_)
 	{
 		if (is_mesh_dict[k] == -1)
 		{
@@ -499,8 +507,9 @@ bool OptMeshInit::BuildInitialSolution(
 			hash_[k] = true;
 		}
 		++k;
-	}
-	//while (PairOneQueryPoint());
+	}*/
+
+	while (PairOneQueryPoint());
 	return true;
 }
 

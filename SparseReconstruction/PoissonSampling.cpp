@@ -25,7 +25,7 @@ PoissonSampling::PoissonSampling(std::vector<double*> points)
 			mins[j] = (mins[j] < points[i][j] ? mins[j] : points[i][j]);
 		}
 	}
-	radius_maximum_ = pow((maxs[0] - mins[0])*(maxs[1] - mins[1])*(maxs[2] - mins[2]), 0.33) / 50.0;
+	radius_maximum_ = pow((maxs[0] - mins[0])*(maxs[1] - mins[1])*(maxs[2] - mins[2]), 0.33);
 	std::cout << radius_maximum_ << std::endl;
 	pool_size_ = pool_.size();
 	radius_ = radius_maximum_;
@@ -52,7 +52,7 @@ bool PoissonSampling::SetSamplingPool(std::vector<double*> points)
 			mins[j] = (mins[j] < points[i][j] ? mins[j] : points[i][j]);
 		}
 	}
-	radius_maximum_ = pow((maxs[0] - mins[0])*(maxs[1] - mins[1])*(maxs[2] - mins[2]), 0.33) / 10.0;
+	radius_maximum_ = pow((maxs[0] - mins[0])*(maxs[1] - mins[1])*(maxs[2] - mins[2]), 0.33);
 	pool_size_ = pool_.size();
 	return true;
 }

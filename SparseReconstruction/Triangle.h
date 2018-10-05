@@ -71,8 +71,7 @@ namespace TriProj
 		Vec3d Z() { return Z_; }
 		Vec3d P() { return P_; }
 		Vec3d N() { return N_; }
-		
-		
+
 		bool SetTriangle(Vec3d X, Vec3d Y, Vec3d Z);
 		bool SetProjPoint(Vec3d P);
 		bool SetProjNormal(Vec3d PN);
