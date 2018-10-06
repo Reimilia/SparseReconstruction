@@ -66,6 +66,7 @@ public:
 	bool SetUpQueryPoints(std::vector <Eigen::Vector3d> query_point);
 	
 	bool GetSparseEncodingResult(std::vector <TriProj::Triangle> &B);
+	bool GetSparseEncodingResult();
 
 	TriMesh GetMesh() {
 		return mesh_;

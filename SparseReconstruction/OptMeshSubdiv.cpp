@@ -109,6 +109,18 @@ bool OptMeshSubdiv::subdivide()
 	return true;
 }
 
+bool OptMeshSubdiv::topologyupdate()
+{
+	SparseEncodingSolver *solver = new SparseEncodingSolver(mesh_);
+
+	solver->GetSparseEncodingResult();
+	mesh_ = solver->GetMesh();
+
+	delete solver;
+
+	return false;
+}
+
 
 bool OptMeshSubdiv::vertexupdate()
 {
@@ -121,7 +133,6 @@ bool OptMeshSubdiv::vertexupdate()
 
 	// Update each face by reassigning all points (which is necessary since
 	// energy has changed)
-
 
 	return false;
 }

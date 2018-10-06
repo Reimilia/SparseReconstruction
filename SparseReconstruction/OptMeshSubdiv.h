@@ -5,6 +5,7 @@
 #include "Triangle.h"
 #include "TriMesh.h"
 #include "DictionaryUpdate.h"
+#include "SparseEncodingSolver.h"
 // An alternative way to get through all the stuff
 /*
 
@@ -35,6 +36,7 @@ private:
 
 protected:
 	bool subdivide();
+	bool topologyupdate();
 	bool vertexupdate();
 	bool assign_points(TriMesh::FaceHandle fh);
 	double face_tri_energy(TriMesh::FaceHandle fh);
@@ -49,7 +51,6 @@ public:
 	bool SetThreshold(double threshold_);
 
 	bool OneStepSubdivision();
-
 	bool OptMeshSubdiv::GetResultMesh(TriMesh &mesh);
 	
 };

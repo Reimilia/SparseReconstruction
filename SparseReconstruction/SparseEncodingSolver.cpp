@@ -474,3 +474,35 @@ bool SparseEncodingSolver::GetSparseEncodingResult(std::vector<TriProj::Triangle
 
 	return false;
 }
+
+bool SparseEncodingSolver::GetSparseEncodingResult()
+{
+	// Lower the energy through edge-based operation
+	while (!sorted_tree_.empty())
+	{
+		CheckOneEdge();
+	}
+
+	// See if we can remove triangle with zero energy
+	mesh_.request_edge_status();
+	mesh_.request_face_status();
+	mesh_.request_vertex_status();
+
+	for (TriMesh::FaceIter f_it_ = mesh_.faces_begin();
+		f_it_ != mesh_.faces_end(); f_it_++)
+	{
+		if (mesh_.data(*f_it_).face_energy == 0)
+			mesh_.delete_face(*f_it_, false);
+	}
+
+	//This will throw out the deleted element from memory.
+	mesh_.garbage_collection();
+
+	//Don't forget to update normal
+	mesh_.request_face_normals();
+	mesh_.request_halfedge_normals();
+	mesh_.request_vertex_normals();
+	mesh_.update_normals();
+
+	return false;
+}

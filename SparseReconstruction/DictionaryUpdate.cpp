@@ -66,7 +66,7 @@ DictionaryUpdate::DictionaryUpdate(TriMesh _mesh_)
 	gamma_ = 0.3;
 	SetMatrixFromMesh();
 	Z_ = P_ - V_ * B_;
-	std::cout << Z_.col(1) << std::endl;
+	std::cout << Z_.col(0) << std::endl;
 	std::cout << Z_.norm() << std::endl;
 	D_.resize(3, wid_P_);
 	D_.setZero();
@@ -89,7 +89,7 @@ bool DictionaryUpdate::test()
 
 TriMesh DictionaryUpdate::solver()
 {
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		PrimalUpdate();
 		DualUpdate();
@@ -203,13 +203,7 @@ double DictionaryUpdate::ComputeEnergy()
 
 void DictionaryUpdate::SolveSubZ()
 {
-	double lambda_ = 1 / (wid_P_ * gamma_);
 	double z_ = 1.;
-	double beta_a = pow((2. * lambda_ * (1. - q)), (1. / (2. - q)));
-	double h_a = beta_a + lambda_ * q * pow(beta_a, q - 1); 
-	std::cout << "lambda:" << lambda_ << std::endl;
-	std::cout << "beta_a:" << beta_a << std::endl;
-	std::cout << "h_a:" << h_a << std::endl;
 	MatrixXd X_;
 	X_= P_ - V_ * B_ - D_ / gamma_;
 	std::cout << "norm_Z:" << Z_.norm() << std::endl;
@@ -218,11 +212,11 @@ void DictionaryUpdate::SolveSubZ()
 	{
 		double x_norm_ = (X_.col(i)).norm();
 		//x close to zero, no need to solve
-		if (x_norm_ < 1e-5)
+		/*if (x_norm_ < 1e-5)
 		{
 			Z_.col(i) = Vector3d(0, 0, 0);
 			continue;
-		}
+		}*/
 		double lambda_ = pow(x_norm_,q-2) / (wid_P_ * gamma_);
 		double beta_a = pow((2. * lambda_ * (1. - q)), (1. / (2. - q)));
 		double h_a = beta_a + lambda_ * q * pow(beta_a, q - 1);
@@ -241,7 +235,7 @@ void DictionaryUpdate::SolveSubZ()
 			}
 			//std::cout << beta_ << std::endl;
 			//std::cout << "End some iteration!\n\n";
-			Z_.col(i) = beta_ / z_ * X_.col(i);
+			Z_.col(i) = beta_ * X_.col(i);
 		}
 	}
 	std::cout << "norm_Z:" << Z_.norm() << std::endl;
@@ -312,7 +306,7 @@ void DictionaryUpdate::SolveSubV()
 
 void DictionaryUpdate::PrimalUpdate()
 {
-	for (int i = 0; i < 1; i++)								
+	for (int i = 0; i < 5; i++)								
 	{
 		SolveSubZ();
 		SolveSubV();
@@ -326,5 +320,5 @@ void DictionaryUpdate::DualUpdate()
 
 void DictionaryUpdate::PenaltyUpdate()
 {
-	
+	gamma_ *= 0.97;
 }
